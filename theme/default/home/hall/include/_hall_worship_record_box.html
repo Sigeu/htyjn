@@ -1,0 +1,74 @@
+<div class="worship_box" id="worship_box">
+    <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+    <div class="bread_route">
+        {if $info.hall_type eq 1}
+        您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+        &gt; 祭拜记录
+        {else /}
+        祭拜记录
+        {/if}
+    </div>
+    <!--- 祭拜记录列表表述--->
+
+    <ul class="PaiHang-nav">
+        {if $rankType eq 'day_rank'}
+        <li class="on">日排行</li>
+        <li><a href="{:url('/home/hall/worshiprecord', ['id'=>$info['id'], 'rank_type'=>'total_rank', 'page'=>1])}">总排行</a></li>
+        {else /}
+        <li><a href="{:url('/home/hall/worshiprecord', ['id'=>$info['id'], 'rank_type'=>'day_rank', 'page'=>1])}">日排行</a></li>
+        <li class="on">总排行</li>
+        {/if}
+    </ul>
+
+    <div class="worship_list" id="paihang_list">
+        <ul>
+            {foreach $worshipRank['list'] as $vo}
+            <li class="PaiHang-list{if $vo.memorial_order lt 4}1{else /}2{/if}">
+                <div class="PaiHang-paiming">
+                    {if $vo.memorial_order lt 4}
+                    <img src="__PUBLIC__/static/home/images/PaiHang-{$vo.memorial_order}.png">
+                    {else /}
+                    {$vo.memorial_order}
+                    {/if}
+                </div>
+                <div class="jibai-head">
+                    <img class="lazy" data-original="{:quick_pic_thumb($vo.member_avatar, '@53w_53h')}" width="53" height="53"><i></i>
+                </div>
+                <div class="jibai-name">
+                    <a href="javascript:">{$vo.member_nickname}</a>
+                </div>
+
+                <div class="PaiHang-count">{$vo.hall_integral}</div>
+            </li>
+            {/foreach}
+        </ul>
+
+        <div class="PaiHang-on">
+            {if $rankType eq 'day_rank'}
+                {if $worshipRank['current_order']}
+                尊敬的<span>{if $user.member_name eq null}{$user.member_mobile}{else/}{$user.member_name}{/if}</span>
+                您现在排在第{$worshipRank['current_order']}位
+                {else /}
+                您当日无祭拜记录,没有名次!
+                {/if}
+            {else /}
+                {if $worshipRank['current_order']}
+                尊敬的<span>{if $user.member_name eq null}{$user.member_mobile}{else/}{$user.member_name}{/if}</span>
+                您现在排在第{$worshipRank['current_order']}位
+                {else /}
+                您无祭拜记录,没有名次!
+                {/if}
+            {/if}
+        </div>
+
+        <!--- 翻页--->
+        {$worshipRank['pageHtml']}
+
+    </div>
+
+</div>
+
+<!-- 我要祭拜按钮 upimg_btn -->
+<div class="upworship_btn">
+    <a href="{:url('/home/hall/worshipHall', ['id'=>$info['id']])}">我要祭拜</a>
+</div>

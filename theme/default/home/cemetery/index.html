@@ -1,0 +1,235 @@
+{include file='home/cemetery/common/_header'}
+
+<!--<link href="css/web_index.css" rel="stylesheet">-->
+{load href="/static/home/css/shop-index.css" /}
+<div class="home-focus-layout">
+    <div class="focus">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {foreach :get_banner(4,3) as $key=>$vo}
+                <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+                {/foreach}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {foreach :get_banner(4, 3) as $key=>$vo}
+                <div class="item {if $key eq 0}active{/if}">
+                    <img src="{$vo.image}" alt="{$vo.title}">
+                </div>
+                {/foreach}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="serve-block">
+    <div class="wrapper">
+        <div class="gongmu-title">
+            <i></i>
+        </div>
+        <div class="shop-classed">
+            <div class="cemetery-search">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <h3 class="navbar-brand">陵园搜索</h3>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <form action="{:url('/home/cemetery/scity')}" method="post">
+                            <ul class="nav navbar-nav sliny">
+                                <li class="dropdown active" style="line-height:50px;margin-right:10px;">
+                                    <span class="dropdown-toggle">省份:</span>
+                                    <select name="ddlProvince"  id="ddlProvince">
+                                        <option value="-1">全部</option>
+                                        {foreach $area as $areas}
+                                        <option  value="{$areas['id']}">{$areas['province']}</option>
+                                        {/foreach}
+                                    </select>
+                                </li>
+                                <li class="dropdown" style="line-height:50px">
+                                    <span class="dropdown-toggle">城市:</span>
+                                    <select name="ddlCity" id="ddlCity">
+                                        <option id="city1" value="-1">全部</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <button type="submit" class="btn btn-success"  style="margin-top: 10px; margin-left: 5px;">搜索</button>
+                        </form>
+                        <div class="navbar-form navbar-left">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <div class="serve-classed">
+                <h4>价格区间:</h4>
+                <ul>
+                    <li class="active"><a href="{:url('home/cemetery/sprice',['p_min'=>0,'p_max'=>0,'p'=>0])}">全部</a></li>
+                    {volist name='price' id='pvo'}
+                    <li><a href="{:url('home/cemetery/sprice',['p_min'=>$pvo.price_min,'p_max'=>$pvo.price_max])}">{$pvo.price_min}-{$pvo.price_max}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="hr"></div>
+            <div class="serve-classed">
+                <h4>墓型分类:</h4>
+                <ul>
+                    <li class="active"><a href="{:url('/home/cemetery/search',['id'=>0])}">全部</a></li>
+                    {volist name='cate' id='cates'}
+                    <li><a href="{:url('/home/cemetery/search',['id'=>$cates.id])}">{$cates.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="classed-fixed">
+                <a href="{:url('/home/cemetery/search',['id'=>0])}">更多 >></a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="nch-g-list wrapper">
+            <ul class="list_pic">
+                {volist name="cemetery" id="vo" length='24'}
+                <li class="item">
+                    <div class="sell-list">
+                        <div class="sell-block">
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">
+                                <img style="width:263px;height: 175px;" class="imgXk lazy" data-original="{$vo.image_id}" alt="">
+                            </a>
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">{$vo.name}/{$vo.grave_province}{$vo.grave_city}</a>
+                            <span>价格: <i>￥{$vo.price_min}</i>起</span>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="shop-rank">
+            <div class="serve-consult">
+                <div class="serve-issue">
+                    <div class="rank-bg">
+                        <div class="consult-title">
+                            <h3><i></i>星级排行</h3>
+                            <!--<a href="#">查看更多 &gt;&gt;</a>-->
+                        </div>
+                        <div class="issue-block">
+                            {volist name="staCm" id='svo'}
+                            <a href="{:url('/home/grave/index',['id'=>$svo.id])}">
+                                <p class="wen"><i></i>{$svo.name} <span>{$svo.start_level}星</span></p>
+                            </a>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+                <div class="serve-issue">
+                    <div class="rank-bg">
+                        <div class="consult-title">
+                            <h3><i></i>热度排行</h3>
+                            <!--<a href="#">查看更多 &gt;&gt;</a>-->
+                        </div>
+                        <div class="issue-block">
+                            {volist name="cliCm" id="cvo"}
+                            <a href="{:url('/home/grave/index',['id'=>$cvo.id])}">
+                                <p class="wen"><i></i>{$cvo.name} <span>{$cvo.click_amount}</span></p>
+                            </a>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+                <div class="serve-issue" style="margin: 0;">
+                    <div class="rank-bg">
+                        <div class="consult-title">
+                            <h3><i></i>最新加入</h3>
+                            <!--<a href="#" class="rank-btn">申请</a>-->
+                        </div>
+                        <div class="issue-block">
+                            {volist name="newCm" id="nvo"}
+                            <a href="{:url('/home/grave/index',['id'=>$nvo.id])}">
+                                <p class="wen"><i></i>{$nvo.name} <span>{$nvo.start_level}星</span></p>
+                            </a>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="serve-block">
+            <div class="wrapper">
+                <div class="zx-title sm-title">
+                    <i></i>
+                    <a ></a>
+                </div>
+                <div class="shop-explain">
+                    <div class="jibai">
+                        <a >
+                            <i></i>
+                            <span>无论在何时何地都能祭奠故人，并留下思念悼文</span>
+                        </a>
+                    </div>
+                    <div class="jibai explain-wx">
+                        <a>
+                            <i></i>
+                            <span>无结合微信来祭奠故人，并能分享哀思</span>
+                        </a>
+                    </div>
+                    <div class="jibai explain-dk">
+                        <a>
+                            <i></i>
+                            <span>远在他乡也能到陵园鲜花，扫墓。寄托思念</span>
+                        </a>
+                    </div>
+                    <div class="jibai explain-kf">
+                        <a>
+                            <i></i>
+                            <span>在线解答您在使用本站时遇到的困难</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shop-rank shop-info">
+            <div class="serve-consult">
+                {foreach $cecate as $key=>$value}
+                <div class="serve-issue">
+                    <div class="rank-bg">
+                        <div class="consult-title">
+                            <h3><i></i>{$value.title}</h3>
+                            <a href="{:url('home/cemetery/document',['id'=>$value.id])}">更多 &gt;&gt;</a>
+                        </div>
+                        <div class="issue-block">
+                            {foreach $value.list as $va}
+                            <a href="{:url('/home/cemetery/doc_detail',['id'=>$va.id])}">
+                                <p class="wen"><i></i>{$va.title}</p>
+                            </a>
+                            {/foreach}
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+{include file='home/cemetery/common/_footer'}
+

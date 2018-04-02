@@ -1,0 +1,179 @@
+{include file="/home/member/common/header" /}
+
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/order-pay.css">
+
+<div class="fn-cart-pay">
+    <!-- cart-title -->
+    <div class="wrapper1190">
+
+        <div class="layout after-ta order-ha">
+            <div class="erhuh">
+                <i class="icon-succ"></i>
+
+                <h3>订单提交成功，请您尽快付款！</h3>
+
+                <p class="succ-p">
+                    订单号：&nbsp;&nbsp;{$order.pd_sn}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                    付款金额（元）：&nbsp;&nbsp;<b>{$order.pd_amount}</b>&nbsp;<b>元</b>
+                </p>
+                <div class="succ-tip">
+                    <div class="countdown">支付剩余时间：<span id="_j_expire_time"></span>，超时则订单关闭</div>
+                </div>
+            </div>
+
+            <form action="{:U('/home/Payment/getCode')}" method="post" name="cart4_form" id="cart4_form">
+
+                <div class="orde-sjyy">
+                    <h3 class="titls">选择支付方式</h3>
+
+                    <div class="bsjy-g">
+                        <dl>
+                            <dd>
+                                <div class="order-payment-area">
+                                    <div class="dsfzfpte">
+                                        <b>选择支付方式</b>
+                                    </div>
+                                    <div class="po-re dsfzf-ee">
+                                        <ul>
+                                            <li>
+                                                <div class="payment-area">
+                                                    <input type="radio" id="input-ALIPAY-1" value="pay_code=alipay" class="radio vam" name="pay_radio">
+                                                    <label for="">
+                                                        <img src="/plugins/payment/alipay/logo.jpg" width="120" height="40" onClick="change_pay(this);"/>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="payment-area">
+                                                    <input type="radio" id="input-ALIPAY-2" value="pay_code=weixin" class="radio vam" name="pay_radio">
+                                                    <label for="">
+                                                        <img src="/plugins/payment/weixin/logo.jpg" width="120" height="40" onClick="change_pay(this);"/>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </dd>
+                        </dl>
+                        <div class="order-payment-action-area">
+                            <a class="button-style-5 button-confirm-payment" href="javascript:void(0);" onClick="$('#cart4_form').submit();">确认支付方式</a>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="master_order_sn" value=""/>
+                <input type="hidden" name="order_id" value="{$order['pd_id']}"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--微信扫一扫支付对话框  -->
+<div id="wchatQrcodeDlg" class="g-cartpay-dlg" style="display: none;" data-show="">
+    <div class="g-cartpay-content">
+        <div class="g-h"><span class="u-close"></span></div>
+        <div class="g-c">
+            <div class="g-t"> 使用微信支付<span>￥<small class='wx_amount'>{$order.pd_amount}</small></span></div>
+            <div class="g-qrcode"><img alt="使用微信支付" src="images/loading.gif"/></div>
+        </div>
+        <div class="g-f fixed"><i class="icon_scan"></i>
+
+            <div class="u-label">
+                <p>请使用微信扫一扫<br>
+                    扫描二维码完成支付</p>
+            </div>
+        </div>
+    </div>
+    <div class="u-mask"></div>
+</div>
+<!--微信扫一扫支付对话框 / -->
+<div id="addCardNewBind"></div>
+
+<script>
+    $(document).ready(function () {
+        $("input[name='pay_radio']").first().trigger('click');
+    });
+    // 切换支付方式
+    function change_pay(obj) {
+        $(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+    }
+</script>
+
+
+
+<script>
+
+    /**
+     * 订单倒计时
+     * @type {{a: string, b: string, c: string}}
+     */
+    var jsDate = {
+        a: '',
+        b: '',
+        c: ''
+    };
+    var day = 0,
+        hour = 0,
+        minute = 0,
+        second = 0; //时间默认值
+    var b = '{$restTime}';
+    if (b > 0) {
+        day = Math.floor(b / (60 * 60 * 24));
+        hour = Math.floor(b / (60 * 60)) - day * 24;
+        minute = Math.floor(b / 60) - day * 24 * 60 - hour * 60;
+        second = Math.floor(b) - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60;
+    }else {
+        window.location.href = "{:url('/home/Member/user_order')}";
+    }
+    jsDate.a = hour;
+    jsDate.b = minute;
+    jsDate.c = second;
+
+    var intDiff = parseInt(b); //倒计时总秒数量
+    function timer(intDiff) {
+        jsDate.a = 0;
+        jsDate.b = 0;
+        jsDate.c = 0;
+        window.setInterval(function () {
+            var day = 0,
+                hour = 0,
+                minute = 0,
+                second = 0; //时间默认值
+
+            if (intDiff > 0) {
+                day = Math.floor(intDiff / (60 * 60 * 24));
+                hour = Math.floor(intDiff / (60 * 60)) - day * 24;
+                minute = Math.floor(intDiff / 60) - day * 24 * 60 - hour * 60;
+                second = Math.floor(intDiff) - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60;
+            }else {
+
+                // 订单已超时 修改订单状态为超时 跳转到订单列表页面
+                layer.alert('订单已超时，页面即将跳转', {
+                    icon: 1
+                    ,skin: 'layer-ext-moon'
+                    ,time: 3000
+                    ,end: function () {
+                        // 回调函数
+                        window.location.href = "{:url('/home/Member/user_order')}";
+                    }
+                })
+            }
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+
+            document.getElementById('_j_expire_time').innerHTML = day + "天" + hour + "时" + minute + "分" + second + "秒";
+            jsDate.a = hour;
+            jsDate.b = minute;
+            jsDate.c = second;
+            intDiff--;
+        }, 1000);
+    }
+    $(function () {
+        timer(intDiff);
+    });
+
+</script>
+
+{include file="/home/member/common/footer" /}

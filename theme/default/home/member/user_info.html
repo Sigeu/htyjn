@@ -1,0 +1,280 @@
+{include file="/home/member/common/header" /}
+
+<style type="text/css">
+    /*.u_profile .u-profile-row .profile-row-content .select {
+        margin: 0;
+        line-height: 28px;
+        font-size: 14px;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: url(http://image.meilele.com/images/user/arrow.png) 90% 50% no-repeat;
+        font-family: "Microsoft Yahei";
+    }
+
+    select::-ms-expand {
+        display: none;
+    }*/
+</style>
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <!--<div class="user_menu" style="height: 593px;">
+            <div class="navs" id="JS_u_navs">
+                <h3>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    账户设置</h3>
+                <ul>
+                    <li><a class="active" href="{:url('/home/member/user_info')}">个人资料</a></li>
+                    <li><a href="{:url('/home/member/user_bind')}">账号绑定</a></li>
+                    <li><a href="{:url('/home/member/user_safe')}">账户安全</a></li>
+                </ul>
+
+            </div>
+        </div>-->
+        <div class="user_main">
+
+            <div class="white_box u_profile clearfix">
+                <h3 class="title-h3">个人资料</h3>
+                <form method="post" action="{:url('/home/member/user_info')}" id="form-user">
+                <table class="user-info Left">
+                    <tbody><tr>
+                        <td align="center">
+                            <div class="avatar-container">
+                                <div id="queue"></div>
+                                <!--用来存放item-->
+                                <div id="fileList" class="uploader-list"></div>
+                            </div>
+                            <div id="uploader-demo">
+                                <input id="aabbcc" type="hidden" name="member_avatar" />
+                                <div id="filePicker">更换头像</div>
+                            </div>
+                        </td>
+                        <td style="padding-top:8px;" id="user-check">
+                            <div class="u-profile-row clearfix">
+                                <label class="profile-row-name u_w100 grey"><span class="red">* </span>用户名：</label>
+                                <div class="profile-row-content">
+                                    <input  class="input-s w194 yahei" type="text" value="" name="member_name">
+                                </div>
+                            </div>
+                            <div class="u-profile-row clearfix">
+                                <label class="profile-row-name u_w100 grey"><span class="red">* </span>手机号：</label>
+                                <div class="profile-row-content">
+                                    <span class="ptext">{:session('m_user.member_mobile')}</span> <span style="color:#aaa;font-size:13px;"><i class="success"></i>已认证</span>                    </div>
+                            </div>
+                            <div class="u-profile-row clearfix">
+                                <label class="profile-row-name u_w100 grey"><span class="red">* </span>电子邮箱：</label>
+                                <div class="profile-row-content">
+                                    <input  class="input-s w194 yahei" type="email" value="" name="member_email">
+                                </div>
+                            </div>
+                            <div class="u-profile-row clearfix">
+                                <label class="profile-row-name u_w100 grey">真实姓名：</label>
+                                <div class="profile-row-content">
+                                    <input id="JS_alias" class="input-s w194 yahei" type="text" value="" name="member_truename">
+                                </div>
+                            </div>
+                          <div class="u-profile-row clearfix">
+                                     <label class="profile-row-name u_w100 grey"><span class="red">*</span>性别：</label>
+                                     <div class="profile-row-content">
+                                         <label>
+                                             <input type="radio" name="member_sex" value="3" checked="checked"  />保密</label>
+                                         <label>
+                                             <input type="radio" name="member_sex" value="1"  />男</label>
+                                         <label>
+                                             <input type="radio" name="member_sex" value="2"  />女</label>
+                                     </div>
+                                 </div>
+                            <div class="u-profile-row clearfix" style="height:auto;">
+                                <label class="profile-row-name u_w100 grey">所在地：</label>
+                                <div class="profile-row-content">
+                                    <select id="s_province" name="member_province"></select>  
+                                    <select id="s_city" name="member_city" ></select>  
+                                    <select id="s_county" name="member_area"></select>
+
+                                    <script type="text/javascript" src="__PUBLIC__/static/home/js/area.js"></script>
+                                    <script type="text/javascript">_init_area();</script>
+                                    <div id="show"></div>
+                                    <div style="margin-top:10px;">
+                                        <input class="input-s w320" type="text" name="member_areainfo" value="" placeholder="详细地址">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="u-profile-row clearfix">
+                                <input type="hidden" name="member_id" value="{:session('m_user.member_id')}">
+                                <input type="submit"  class="u-btn-submit" value="保存信息">
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var Gid  = document.getElementById ;
+    var showArea = function(){
+        Gid('show').innerHTML = "<h3>省" + Gid('s_province').value + " - 市" +
+            Gid('s_city').value + " - 县/区" +
+            Gid('s_county').value + "</h3>"
+    }
+    Gid('s_county').setAttribute('onchange','showArea()');
+</script>
+
+
+<script type="text/javascript">
+    // 添加全局站点信息
+    var BASE_URL = '/webuploader';
+</script>
+<script type="text/javascript" src="http://fex.baidu.com/webuploader/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://fex.baidu.com/webuploader/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://fex.baidu.com/webuploader/js/global.js"></script>
+
+<script>
+ // 图片上传demo
+    jQuery(function() {
+        var $ = jQuery,
+            $list = $('#fileList'),
+            // 优化retina, 在retina下这个值是2
+            ratio = window.devicePixelRatio || 1,
+
+            // 缩略图大小
+            thumbnailWidth = 100 * ratio,
+            thumbnailHeight = 100 * ratio,
+
+            // Web Uploader实例
+            uploader;
+
+        // 初始化Web Uploader
+        uploader = WebUploader.create({
+
+            // 自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: BASE_URL + '/js/Uploader.swf',
+
+            // 文件接收服务端。
+            server: "{:url('/home/member/uploadify')}",
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择文件，可选。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+
+
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            var $li = $(
+                    '<div id="' + file.id + '" class="file-item thumbnail">' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</div>'
+                ),
+                $img = $li.find('img');
+
+            $list.append( $li );
+
+            // 创建缩略图
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr( 'src', src );
+            }, thumbnailWidth, thumbnailHeight );
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if ( !$percent.length ) {
+                $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo( $li )
+                    .find('span');
+            }
+
+            $percent.css( 'width', percentage * 100 + '%' );
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function(file, response) {
+            var asdZ = response.data.path
+            $('#aabbcc').val(asdZ);
+            $( '#'+file.id ).addClass('upload-state-done');
+        });
+        // 文件上传失败，现实上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+
+            // 避免重复创建
+            if ( !$error.length ) {
+                $error = $('<div class="error"></div>').appendTo( $li );
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+            $( '#'+file.id ).find('.progress').remove();
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $().ready(function() {
+// 在键盘按下并释放及提交后验证提交表单
+        $("#form-user").validate({
+            rules:{
+                member_name:{
+                    required:true,
+                    minlength:4,
+                    maxlength:16
+                },
+                member_sex:{
+                    required:true,
+                },
+                phone:{
+                    required:true,
+                    isPhone:true,
+                },
+                member_email:{
+                    required:true,
+                    email:true,
+                },
+                member_truename:{
+                    required:true,
+                },
+            },
+            messages: {
+                member_truename: "请输入您的名字",
+                username: {
+                    required: "请输入用户名",
+                    minlength: "用户名长度为4-16位"
+                },
+                email: "请输入一个正确的邮箱",
+            }
+        })
+</script>
+{include file="/home/member/common/footer" /}

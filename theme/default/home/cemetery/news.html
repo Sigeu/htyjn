@@ -1,0 +1,36 @@
+{include file='home/cemetery/common/_header'}
+{load href="/static/home/css/shop-info.css" /}
+<div class="container">
+    <div class="shop-info">
+        <div class="shop-discount-title">
+            <h3>商城资讯</h3>
+        </div>
+        <ul class="shop-info-list">
+            {volist name='news' id='vo'}
+            <li>
+                <a href="{:url('/home/cemetery/detail',['id'=>$vo.id])}"> <img src="{$vo.image_id}" alt="">
+                    <div class="m-info"> <strong>{$vo.title}</strong>
+                        <dl>
+                            <dt>{$vo.create_time}</dt>
+                            <dd> {$vo.content|mb_substr=0,90} </dd>
+                        </dl>
+
+                        <!--<p><span data-id="142" class="u-praise">1064</span>-->
+                            <!--<span class="u-eye">966</span> </p>-->
+                    </div>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+        <div class="tc m-t-20 m-b-20">
+            <div class="pagination">
+                <ul>
+                   {$news->render()}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file='home/cemetery/common/_footer'}

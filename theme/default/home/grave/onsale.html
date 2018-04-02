@@ -1,0 +1,91 @@
+{include file='/home/grave/common/_head'}
+    <div class="navBox">
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><a href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                    <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                    <li><a href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                    <li><a  class="currentnav" href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                    <li><a href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                    <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                    <li><a href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div><!--墓园首页banner-->
+<div class="contentBox">
+    <div class="container">
+        <div class="weizhi_title txt-gray">
+            <a href="" style="color:#999">首页 &gt;</a> {$grave.name}&gt; <span class="txt-hdark">在售墓穴</span>
+        </div>
+        <div class="sub_nav">
+            <div class="leixing">
+                <span>墓型：</span>
+                <ul>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}" {if $data.c_id eq 0 } class="active"{/if}>不限</a></li>
+                    {volist name="cate" id="cate"}
+                    <li><a href="{:url('/home/grave/sale_search',['id'=>$grave.id,'c_id'=>$cate.id])}" {if $data.c_id eq $cate.id } class="active"{/if}>{$cate.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="leixing">
+                <span>朝向：</span>
+                <ul>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}"  {if $data.dire eq null } class="active"{/if} >不限</a></li>
+                    {volist name="dire" id="dire"}
+                    <li><a href="{:url('/home/grave/sale_search',['id'=>$grave.id,'dire'=>$dire])}"  {if $data.dire eq $dire } class="active"{/if}>{$dire}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+
+        </div>
+
+        {if isset($tombs)}
+        <div class="tuijian tuijian_a">
+
+            {volist name='tombs' id='to'}
+            <a class="tj txt-gray" href="{:url('/home/grave/tomb',['id'=>$grave.id,'tid'=>$to.id])}">
+                <div class="tj_pic txt-white">
+                    <img src="{$to.image_id}">
+                </div>
+                <div class="tj_con">
+                    <span class="txt-hdark">{$to.name}</span>
+                    <!--<span class="txt-green">[墓园]</span>-->
+                    <span>价格：<b class="txt-red">￥{$to.price_min}</b>起</span>
+                </div>
+            </a>
+            {/volist}
+        </div>
+        <div class="page mb30">
+            {$tombs->render()}
+        </div>
+        {else/}
+        <div class="tuijian tuijian_a">
+            {volist name='search' id='to'}
+            <a class="tj txt-gray" href="{:url('/home/grave/tomb',['id'=>$grave.id,'tid'=>$to.id])}">
+                <div class="tj_pic txt-white">
+                    <img src="{$to.image_id}">
+                </div>
+                <div class="tj_con">
+                    <span class="txt-hdark">{$to.name}</span>
+                    <!--<span class="txt-green">[墓园]</span>-->
+                    <span>价格：<b class="txt-red">￥{$to.price_min}</b>起</span>
+                </div>
+            </a>
+            {/volist}
+        </div>
+        <div class="page mb30">
+            {$search->render()}
+        </div>
+        {/if}
+    </div>
+</div>
+
+
+<!--foot-->
+{include file='/home/grave/common/_footer'}
+
+</body>
+</html>

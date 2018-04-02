@@ -1,0 +1,275 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/hall/worship-hall.css">
+<div  class="{if $info.hall_type eq 1}single_container{else /}yuan_container{/if}">
+
+     <!-- 祭拜大厅场景 -->
+    <div class="jBbody" id="App">
+        <img class="jBbodyBjM" :src="dtBjm" alt="">
+        <!--预加载-->
+        <div class="mtK" v-show="yjz">
+            <img class="Yjz" src="__PUBLIC__/static/home/images/hall/yjazai.gif" alt="">
+        </div>
+
+        <!--模态框-->
+        <div class="mtK" v-show="mtK">
+            <img class="mtKruter" @click="mtKon()" src="__PUBLIC__/static/home/images/hall/return.png" alt="">
+            <div class="goodsMt">
+                <div class="goodsMtCent">
+                    <img :src="mtData.image" alt="">
+                </div>
+                <h3>{{mtData.name}}</h3>
+                <span class="sp2">（ {{mtData.price}}纪念币）</span>
+                <div class="goodsMtCent">
+                    <div class="sp2">剩余时间:</div><div class="sp1">{{mtData.duration}}小时</div>
+                </div>
+                <h3>寓意</h3>
+                <span class="sp1">{{mtData.summary}}</span>
+                <div class="goodsMtCent" style="padding:0 0 20px 0">
+                    <button @click="postGoods" >祭拜</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!--右侧tab-->
+        <div class="rightTab">
+            <div class="tbaT" @click="tabOn(1)">
+                <img src="__PUBLIC__/static/home/images/hall/jb1_on.png" alt="">
+                <span>行礼</span>
+            </div>
+            <div class="tbaT" @click="tabOn(2)">
+                <img src="__PUBLIC__/static/home/images/hall/jb2_on.png" alt="">
+                <span>贡品</span>
+            </div>
+            <div class="tbaT" @click="tabOn(3)">
+                <img src="__PUBLIC__/static/home/images/hall/jb3_on.png" alt="">
+                <span>火供</span>
+            </div>
+            <div class="tbaT" @click="tabOn(4)">
+                <img src="__PUBLIC__/static/home/images/hall/jb4_on.png" alt="">
+                <span>法事</span>
+            </div>
+        </div>
+
+        <!--相框-->
+        <div class="xiangK"  v-if="dtTx != '' && dtTx1=='' ">
+                <img class="xkImg" :src="dtTx" alt="">
+        </div>
+        <div  class="xiangK2" v-if="dtTx1 != ''&& dtTx=='' " >
+            <img class="xkImg" :src="dtTx1" alt="">
+            <img class="xkImg" :src="dtTx2" alt="">
+        </div>
+        <div class="xiangP" v-else="">
+            <div class="xiangPdiv1 xiangPdiv">
+                <p style="">{{family_libeiren}}</p>
+            </div>
+            <div class="xiangPdiv">
+                <p >{{family_theme}}</p>
+            </div>
+            <div class="xiangPdiv">
+                <p >{{family_ancestral_home}}</p>
+            </div>
+
+        </div>
+
+        <div class="GonPin">
+            <!--香，排位-->
+            <div class="paiWei x_3001">
+                <!--<img src="__PUBLIC__/static/home/images/hall/span1.png" alt="">-->
+                <img id="x2" :src="xianA.image"  @mouseenter="moGoods(xianA.name,xianA.duration)" @mouseleave="muGoods()" :nameI="xianA.name"  :align="xianA.duration"  alt="">
+                <div class="paiWeiImg" >
+                    <div v-show="dtPaiWei != ''">
+                        <img  :src="dtPaiWei" :align="xianA.duration"  alt="">
+                    </div>
+                    <div class="paiWeiImg" v-show="dtPaiWei1 != '' || dtPaiWei2 != ''">
+                        <img style="margin-right: 3px" :src="dtPaiWei1" :align="xianA.duration"  alt="">
+                        <img  :src="dtPaiWei2" :align="xianA.duration"  alt="">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--蜡烛-->
+            <div class="laZhu lz_3002">
+                <img :src="laZhuA.image" id="lazhu1" @mouseenter="moGoods(laZhuA.name,laZhuA.duration)" @mouseleave="muGoods()" :nameI="laZhuA.name"   :align="laZhuA.duration" alt="">
+                <img :src="laZhuB.image" id="lazhu2" @mouseenter="moGoods(laZhuB.name,laZhuB.duration)" @mouseleave="muGoods()" :nameI="laZhuB.name"  :align="laZhuB.duration" alt="">
+            </div>
+
+            <!--花圈-->
+            <div class="huaQuan hqClass">
+                <img class="hqImg" id="hq1" :src="huaQuan1.image" @mouseenter="moGoods(huaQuan1.name,huaQuan1.duration)" @mouseleave="muGoods()" :nameI="huaQuan1.name"   :align="huaQuan1.duration" alt="">
+                <img class="hqImg" id="hq2" :src="huaQuan2.image" @mouseenter="moGoods(huaQuan2.name,huaQuan2.duration)" @mouseleave="muGoods()" :nameI="huaQuan2.name"   :align="huaQuan2.duration" alt="">
+            </div>
+
+            <!--贡品-->
+            <div class="gongPin gpClass">
+                <img class="gpImg1" id="gp1" :src="gongPin1.image" @mouseenter="moGoods(gongPin1.name,gongPin1.duration)" @mouseleave="muGoods()" :nameI="gongPin1.name"   :align="gongPin1.duration" alt="">
+                <img id="gp2" :src="gongPin2.image" @mouseenter="moGoods(gongPin2.name,gongPin2.duration)" @mouseleave="muGoods()" :nameI="gongPin2.name"   :align="gongPin2.duration" alt="">
+                <img class="gpImg2" id="gp3" :src="gongPin3.image" @mouseenter="moGoods(gongPin3.name,gongPin3.duration)" @mouseleave="muGoods()" :nameI="gongPin3.name"   :align="gongPin3.duration" alt="">
+                <img class="gpImg3" id="gp4" :src="gongPin4.image" @mouseenter="moGoods(gongPin4.name,gongPin4.duration)" @mouseleave="muGoods()" :nameI="gongPin4.name"  :align="gongPin4.duration"  alt="">
+                <img class="gpImg4" id="gp5" :src="gongPin5.image" @mouseenter="moGoods(gongPin5.name,gongPin5.duration)" @mouseleave="muGoods()" :nameI="gongPin5.name"   :align="gongPin5.duration" alt="">
+                <img  id="gp6" :src="gongPin6.image" @mouseenter="moGoods(gongPin6.name,gongPin6.duration)" @mouseleave="muGoods()" :nameI="gongPin6.name"   :align="gongPin6.duration" alt="">
+                <img id="gp7" :src="gongPin7.image" @mouseenter="moGoods(gongPin7.name,gongPin7.duration)" @mouseleave="muGoods()" :nameI="gongPin7.name"   :align="gongPin7.duration" class="gpImg5" alt="">
+                <img id="gp8" :src="gongPin8.image" @mouseenter="moGoods(gongPin8.name,gongPin7.duration)" @mouseleave="muGoods()" :nameI="gongPin8.name"   :align="gongPin8.duration"  alt="">
+            </div>
+
+        </div>
+
+
+        <!--gif播放窗口-->
+        <div class="gifPc" v-show="gifMk">
+            <img class="gifImg"  src="__PUBLIC__/static/home/images/hall/none.png" alt="">
+        </div>
+
+        <!--祭祀品有效期-->
+        <div class="goodsXq" v-show="gifPc2.a != 0">
+            献祭:{{gifPc1}};剩余时间:{{gifPc2.a}}时{{gifPc2.b}}分{{gifPc2.c}}秒
+        </div>
+
+        <!--商品内容-->
+        <!--<div class="goodsPc">-->
+        <!--<div  class="jsPinBtn">-->
+        <!--<button v-for="int,index in goods2" @click="goodsBtn(index)">{{int.name}} {{index}} </button>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;商品列表页面&ndash;&gt;-->
+        <!--<div v-for="int,index in goods2" v-show="index ==goodsNun"  class="jsPinShon">-->
+        <!--<div class="goodsLi"  v-for="ins in int.goods">-->
+        <!--<p class="goodsLip1">{{ins.name}}</p>-->
+        <!--<div class="goodsLiImg">-->
+        <!--<img  :src="ins.image" alt="">-->
+        <!--</div>-->
+
+        <!--<p class="goodsLip2">{{ins.price}}</p>-->
+
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <!--商品列表-->
+        <img class="goodsReturn" @click="goodShow()"  v-show="goodsNun != 0" src="__PUBLIC__/static/home/images/hall/return.png" alt="">
+        <div class="goodsPc"  v-show="goodsNun != 0">
+            <div class="goodsCont1" v-show="goodsNun ==1">
+                <div class="goodsCont" >
+                    <div  class="jsPinShon" v-for="(int,a) in goods1">
+                        <div class="goodsBtn">
+                            <button>{{int.name}}</button>
+                        </div>
+                        <div class="goodsLiT" >
+                            <div class="goodsLi" v-for=" (ins,b) in int.goods" @click="onGoods(a,b,goods1)">
+                                <p class="goodsLip1" v-if="ins.name != 666"  >{{ins.name}}</p>
+                                <p class="goodsLip1" v-else="" >&nbsp&nbsp</p>
+                                <div class="goodsLiImg">
+                                    <img :src="ins.image" alt="">
+                                </div>
+                                <div class="mut">
+                                    <p class="goodsLip2" v-show=" ins.price != 666" >{{ins.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="muTz" src="__PUBLIC__/static/home/images/hall/muT.png" alt="">
+
+                    </div>
+                </div>
+            </div>
+            <div class="goodsCont1" v-show="goodsNun ==2">
+                <div class="goodsCont" >
+                    <div  class="jsPinShon" v-for="(int,a) in goods2">
+                        <div class="goodsBtn">
+                            <button>{{int.name}}</button>
+                        </div>
+                        <div class="goodsLiT" >
+                            <div class="goodsLi" v-for=" (ins,b) in int.goods" @click="onGoods(a,b,goods2)">
+                                <p class="goodsLip1" v-if="ins.name != 666"  >{{ins.name}}</p>
+                                <p class="goodsLip1" v-else="" >&nbsp&nbsp</p>
+                                <div class="goodsLiImg">
+                                    <img :src="ins.image" alt="">
+                                </div>
+                                <div class="mut">
+                                    <p class="goodsLip2" v-show=" ins.price != 666" >{{ins.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="muTz" src="__PUBLIC__/static/home/images/hall/muT.png" alt="">
+
+                    </div>
+                </div>
+            </div>
+            <div class="goodsCont1" v-show="goodsNun ==3">
+                <div class="goodsCont" >
+                    <div  class="jsPinShon" v-for="(int,a) in goods3">
+                        <div class="goodsBtn">
+                            <button>{{int.name}}</button>
+                        </div>
+                        <div class="goodsLiT" >
+                            <div class="goodsLi" v-for=" (ins,b) in int.goods" @click="onGoods(a,b,goods3)">
+                                <p class="goodsLip1" v-if="ins.name != 666"  >{{ins.name}}</p>
+                                <p class="goodsLip1" v-else="" >&nbsp&nbsp</p>
+                                <div class="goodsLiImg">
+                                    <img :src="ins.image" alt="">
+                                </div>
+                                <div class="mut">
+                                    <p class="goodsLip2" v-show=" ins.price != 666" >{{ins.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="muTz" src="__PUBLIC__/static/home/images/hall/muT.png" alt="">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="goodsCont1" v-show="goodsNun ==4">
+                <div class="goodsCont" >
+                    <div  class="jsPinShon" v-for="(int,a) in goods4">
+                        <div class="goodsBtn">
+                            <button>{{int.name}}</button>
+                        </div>
+                        <div class="goodsLiT" >
+                            <div class="goodsLi" v-for=" (ins,b) in int.goods" @click="onGoods(a,b,goods4)">
+                                <p class="goodsLip1" v-if="ins.name != 666"  >{{ins.name}}</p>
+                                <p class="goodsLip1" v-else="" >&nbsp&nbsp</p>
+                                <div class="goodsLiImg">
+                                    <img :src="ins.image" alt="">
+                                </div>
+                                <div class="mut">
+                                    <p class="goodsLip2" v-show=" ins.price != 666" >{{ins.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="muTz" src="__PUBLIC__/static/home/images/hall/muT.png" alt="">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        //通信接口
+        var userdata = {$userData};
+//        var userdata = {
+//            "token":"9e847bc09207ccac96931eb79e4a3834",
+//            "user_id":"3",
+//            "hall_id":"26",
+//            "goods_id":"",
+//            "goods_num":'1'
+//        };
+
+        var jsDate = {
+            a:'',
+            b:'',
+            c:''
+        }
+    </script>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.min.js"></script>
+    <script src="__PUBLIC__/static/home/js/hall/worship-hall-connection.js"></script>
+    <script src="__PUBLIC__/static/home/js/hall/worship-hall.js "></script>
+</div>
+{/block}

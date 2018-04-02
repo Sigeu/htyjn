@@ -1,0 +1,41 @@
+<!--导航-->
+<div class="top">
+    <div class="topTab">
+        <div class="centBk" >
+            <div class="hez-navbar-left">
+                <p><a href="/">[云纪念]</a> —— 大型网上纪念馆平台，绿色网上祭奠、网上扫墓、纪念亲友</p>
+            </div>
+            <div class="hez-navbar-right toH">
+                {if is_login()}
+                <span>欢迎，<a href="{:url('/home/member/index',['id'=>$user.member_id])}">{if $user.member_name eq null}{$user.member_mobile}{else/}{$user.member_name}{/if}</a>用户</span>
+                {else/}
+                <span onclick=window.location.href="http://bz.yjn100.com/member/index.php?act=login&ref_url=http://www.yjn100.com/"><img src="__PUBLIC__/static/home/images/top1.png" alt="" > 用户登录</span>
+                <span onclick=window.location.href="http://bz.yjn100.com/member/index.php?act=login&op=register&ref_url=http://www.yjn100.com/"><img src="__PUBLIC__/static/home/images/top2.png" alt="">免费注册</span>
+                {/if}
+                <span><img src="__PUBLIC__/static/home/images/top3.png" alt="">帮助中心</span>
+            </div>
+        </div>
+    </div>
+    <div class="topTad">
+        <div style="width: 1200px; margin: 0 auto; position:relative;height: 170px;">
+            <div class="hez-navbar-left index-logo">
+                <img onclick=window.location.href="/" src="{:sysconf('site_logo')}" alt="{:sysconf('web_title')}">
+            </div>
+            <div class="souSuo hez-navbar-right">
+                <form id="search-form" action="/home/Hall/searchHall">
+                    <input name="keyword" type="text" value="{$keyword}" placeholder="请输入关键词..." style="line-height: 50px;">
+                    <span class="search-button"><img class="center-block" src="__PUBLIC__/static/home/images/souS.png" alt=""></span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="navTab">
+        <div class="centBk">
+            <div class="nanXx " >
+                {foreach $menu as $vo}
+                <div class="hez-navbar-left"><a href="{$vo.url}" target="{$vo.target}">{$vo.title}</a></div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>

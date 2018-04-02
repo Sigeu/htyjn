@@ -1,0 +1,190 @@
+{include file="/home/member/common/header" /}
+
+<script src="__PUBLIC__/static/plugs/audiojs/audio.min.js"></script>
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <!-- 内容区域 -->
+        <div class="user_main">
+
+            <!-- 纪念馆管理页面 顶部菜单栏 -->
+            {include file="home/member/include/_hall_top" /}
+
+            <!-- 纪念馆表单内容区 -->
+            <div class="content-list block">
+                <form class="layui-form layui-form-pane" action="">
+
+                    <!-- 逝者基本信息 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">逝者姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="one_name" value="{$vo.one_name|default=''}" lay-verify="required|one_name" placeholder="请输入逝者姓名" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-upload">
+                            <div class="layui-upload-list">
+                                <!--<img class="layui-upload-img" id="demo1" src="">-->
+                                {if isset($vo.one_img)}
+                                <img class="layui-upload-img" id="demo1" src="{:quick_pic_thumb($vo.one_img, '@182w_242h')}" alt="">
+                                {else /}
+                                <img class="layui-upload-img" id="demo1" src="{:quick_pic_thumb('', '@182w_242h')}" alt="">
+                                {/if}
+                                <p id="demoText"></p>
+                            </div>
+                            <input id="one-img" type="hidden" name="one_img" value="{$vo.one_img|default=''}" />
+                            <button type="button" class="layui-btn" id="test1">上传图片</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-inline">
+                            {if isset($vo.one_sex)}
+
+                            <input type="radio" name="one_sex" value="1" title="男" {if $vo.one_sex eq 1} checked {/if}>
+                            <input type="radio" name="one_sex" value="2" title="女" {if $vo.one_sex eq 2} checked {/if}>
+                            <input type="radio" name="one_sex" value="3" title="保密" {if $vo.one_sex eq 3} checked {/if}>
+
+                            {else /}
+
+                            <input type="radio" name="one_sex" value="1" title="男">
+                            <input type="radio" name="one_sex" value="2" title="女">
+                            <input type="radio" name="one_sex" value="3" title="保密" checked>
+
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">民族</label>
+                        <div class="layui-input-inline">
+                            <select name='one_ethnic' class='layui-select full-width'>
+                                <option value="">请选择民族</option>
+                                {foreach $nationList as $k=>$v}
+                                <option {eq name='k' value="$vo.one_ethnic|default=0"}selected="selected"{/eq}  value='{$k}'>{$v}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">出生日期</label>
+                            <div class="layui-input-block">
+                                {if isset($vo.one_birthday)}
+                                <input class="layui-input" value="{$vo.one_birthday|unixtime_to_date='Y-m-d', ###}" placeholder="请选择出生日期" required="required" title="请选择出生日期"  id="dateChu" name="one_birthday">
+                                {else /}
+                                <input class="layui-input" value="" placeholder="请选择出生日期" required="required" title="请选择出生日期"  id="dateChu" name="one_birthday">
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">逝世日期</label>
+                            <div class="layui-input-block">
+                                {if isset($vo.one_death)}
+                                <input class="layui-input" value="{$vo.one_death|unixtime_to_date='Y-m-d', ###}" placeholder="请选择逝世日期" required="required" title="请选择逝世日期"  id="dateShi" name="one_death">
+                                {else /}
+                                <input class="layui-input" value="" placeholder="请选择逝世日期" required="required" title="请选择逝世日期"  id="dateShi" name="one_death">
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="layui-bg-gray">
+
+                    <!-- 纪念馆相关风格 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纪念馆风格</label>
+                        <div class="layui-input-inline">
+                            <input id="hall-style" type="text" disabled placeholder="请选择纪念馆风格" value="{$vo.hall_style_name|default=''}" autocomplete="off" class="layui-input">
+                            <input id="hall-style-id" type="hidden" name="hall_style" value="{$vo.hall_style|default=''}">
+                        </div>
+                        <a id="style-1" class="layui-btn">选择</a>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">祭拜大厅风格</label>
+                        <div class="layui-input-inline">
+                            <input id="hall-worship-style" type="text" disabled placeholder="请选择祭拜大厅风格" value="{$vo.hall_worship_style_name|default=''}" autocomplete="off" class="layui-input">
+                            <input id="hall-worship-style-id" type="hidden" name="hall_worship_style" value="{$vo.hall_worship_style|default=''}">
+                        </div>
+                        <a id="style-2" class="layui-btn">选择</a>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纪念馆音乐</label>
+                        <div class="layui-input-inline">
+                            <input id="hall-music" type="text" disabled placeholder="请选择纪念馆音乐" value="{$vo.hall_music_name|default=''}" autocomplete="off" class="layui-input">
+                            <input id="hall-music-id" type="hidden" name="hall_music" value="{$vo.hall_music|default=''}">
+                        </div>
+                        <a id="style-3" class="layui-btn">选择</a>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">灵牌位样式</label>
+                        <div class="layui-input-inline">
+                            <input id="hall-lingpai-style" type="text" disabled placeholder="请选择灵牌位样式" value="{$vo.one_lingpai_style_name|default=''}" autocomplete="off" class="layui-input">
+                            <input id="hall-lingpai-style-id" type="hidden" name="one_lingpai_style" value="{$vo.one_lingpai_style|default=''}">
+                        </div>
+                        <a id="style-4" class="layui-btn">选择</a>
+                    </div>
+
+                    <hr class="layui-bg-gray">
+
+                    <!-- 其他信息 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纪念关系</label>
+                        <div class="layui-input-inline">
+                            <select name='one_relation' class='layui-select full-width'>
+                                <option value="">请选择纪念关系</option>
+                                {foreach $relationShip as $key=>$v}
+                                <option {eq name='v' value="$vo.one_relation|default=''"}selected="selected"{/eq}  value='{$v}'>{$v}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">安息地</label>
+                        <div class="layui-input-inline anXi">
+                            <input type="text" name="one_rest_address" value='{$vo.one_rest_address|default=""}' placeholder="请输入安息地" lay-verify="one_rest_address" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">限制字数20字。</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">墓志铭</label>
+                        <div class="layui-input-inline anXi">
+                            <input type="text" name="one_epitaph" value='{$vo.one_epitaph|default=""}' placeholder="请输入墓志铭" lay-verify="one_epitaph"  class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">限制字数20字。</div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">生平事迹</label>
+                        <div class="layui-input-block">
+                            <!-- 加载编辑器的容器 -->
+                            <!--<textarea placeholder="请输入生平事迹" id="editor" name="hall_describe" type="text/plain" style="width: 100%;height: 300px;">{$vo.hall_describe|default=""}</textarea>-->
+                            <textarea placeholder="请输入馆介绍" class="layui-textarea" name="hall_describe" id="editor" style="display: none">{$vo.hall_describe|default=""}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- 表单提交按钮 -->
+                    <div class="col-sm-12 creation-btn">
+                        {if isset($vo['id'])}
+                        <button type="button" data-action="user_hall_edit" data-id="{$vo['id']}" lay-submit="" lay-filter="publish_hall" class="_j_edit_hall btn btn-default">更新</button>
+                        {else /}
+                        <button type="button" data-action="user_hall_add" lay-submit="" lay-filter="publish_hall" class="_j_edit_hall btn btn-default">创建</button>
+                        {/if}
+                    </div>
+
+                    <input type="hidden" name="id" value="{$vo['id']|default=0}" />
+                    <input type="hidden" name="hall_type" value="{$hallType}" />
+                    <input type="hidden" name="is_famous" value="{$isFamous}" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 纪念馆管理页面 编辑纪念馆风格html -->
+{include file="home/member/include/_hall_styles" /}
+
+
+
+{include file="/home/member/common/footer" /}

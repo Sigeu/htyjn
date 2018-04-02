@@ -1,0 +1,55 @@
+<div class="right-bg">
+    <!--<h2 class="private-title">追忆文选</h2>-->
+    <div class="article_box">
+        <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+        <div class="bread_route">
+            {if $info.hall_type eq 1}
+            <!-- 发表追忆文选按钮 upimg_btn -->
+            {if is_login() && is_login() eq $info.hall_member_id}
+            <a class="app_btn" href="{:url('/home/Hall/addHallArticle', ['id' => $info['id']])}">我要发表文选</a>
+            {/if}
+            <!--<a class="app_btn" target="_blank" href="{:url('/home/Hall/addHallArticle', ['id' => $info['id']])}">我要发表文选</a>-->
+            您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+            &gt;
+            追忆文选
+            {else /}
+            追忆文选
+            {/if}
+        </div>
+        <!--- 追忆文选列表表述--->
+        <div class="article_list">
+
+            <ul class="nav">
+                <li class="num"></li>
+                <li class="tit">文章名称</li>
+                <li class="date">发表时间</li>
+                <li class="author">发表会员ID</li>
+
+            </ul>
+            <div class="mt10">
+            </div>
+            {foreach $list['list'] as $vo}
+            <ul class="list">
+                <li class="num"></li>
+                <li class="tit">
+
+                    <a href="{:url('home/hall/articleDetail', ['id' => $info['id'], 'article_id' => $vo.id])}" title="{$vo.article_title}">
+                        {$vo.article_title}
+                    </a>
+                </li>
+                <li class="date">
+                    {$vo.create_at|date="Y-m-d",###}
+                </li>
+                <li class="author"><a href="javascript:;" title="点击查看该会员信息">{$info.member.member_id}</a></li>
+            </ul>
+            {/foreach}
+
+        </div>
+        <!--- 翻页--->
+        {$list.pageHtml}
+    </div>
+    <!-- 发表追忆文选按钮 upimg_btn
+    <div class="uparticle_btn">
+        <a href="javascript:;" id="LoadArticleAdd">发表追忆文选</a>
+    </div> -->
+</div>

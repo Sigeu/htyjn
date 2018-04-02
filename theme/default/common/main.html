@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- IE chrome 兼容问题 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>{$seo_title}</title>
+    <meta name="keywords" content="{$seo_keywords}"/>
+    <meta name="description" content="{$seo_description}"/>
+
+    <!-- 验证header代码 -->
+    {:sysconf('web_header_code')}
+
+    <!-- ly common header footer css -->
+    <!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/home_new2017.css">-->
+
+    <!-- Bootstrap -->
+    <link href="__PUBLIC__/static/home/css/bootstrap.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+
+    <!--<link href="__PUBLIC__/static/home/css/common/backgroundsize.min.css" rel="stylesheet">-->
+    <![endif]-->
+
+    <script>
+        window.Env = {$windowEnv};
+    </script>
+
+
+    {block name="script-head"}{/block} {// 顶部script}
+
+
+    {block name="css-head"}{/block} {// 顶部css}
+    <link rel="stylesheet" href="__PUBLIC__/static/home/css/common/header.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/home/css/common/footer.css">
+
+    <!-- common css -->
+    <!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/private_index.css">-->
+
+    <!-- header footer css -->
+    <!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/header_v1.css">-->
+
+
+
+    <!-- QQ客服 -->
+    <link rel="stylesheet" href="__PUBLIC__/static/home/css/common/qqkf.css">
+
+    {block name="js-head"}{/block} {// 顶部js}
+
+    {block name="lib-head"}{/block} {// 顶部js库}
+
+    <style>
+        /** {
+            -webkit-box-sizing: initial;
+            -moz-box-sizing: initial;
+            box-sizing: initial;
+        }*/
+    </style>
+</head>
+<body>
+
+<!--导航-->
+{block name="header"}
+{include file="common/header"}
+{/block}
+
+
+<!-- 内容区 -->
+{block name="content"}{/block}
+
+
+<!--关于 顶部区 -->
+{block name="footer"}
+{include file="common/footer"}
+{/block}
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="__PUBLIC__/static/home/js/jquery.js"></script>
+<!--<script src="__PUBLIC__/static/home/js/jqthumb.min.js"></script>-->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="__PUBLIC__/static/home/js/bootstrap.js"></script>
+
+<!-- QQ客服 -->
+<script src="__PUBLIC__/static/home/js/common/qqkf.js"></script>
+
+{block name="js-foot"}{/block} {// 顶部js}
+
+{block name="lib-foot"}{/block} {// 顶部js库}
+
+<script>
+
+    $('.search-button').click(function () {
+        $('#search-form').submit();;
+    })
+
+
+</script>
+
+<script>
+    /* 百度站长平台 链接自动推送 */
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else{
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+<!-- cnzz 统计 -->
+<!--<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1262310516'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1262310516%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>-->
+
+<!--[if lt IE 9]>
+<script type="text/javascript">
+//    if (screen.width <= 1200) {
+//        var link = document.createElement('link');
+//        link.rel = "stylesheet";
+//        link.type = "text/css";
+//        link.href = "__PUBLIC__/static/home/css/common/private_index_1000_v1.css";
+//        document.getElementsByTagName('body')[0].appendChild(link);
+//    }
+</script>
+<![endif]-->
+
+
+<script>
+    $("#footer .show_link_more").on("click", function () {
+        $(this).parent("div").toggleClass("open")
+    })
+</script>
+
+<script>
+    $(function(){
+        //判断浏览器是否支持placeholder属性
+        supportPlaceholder='placeholder'in document.createElement('input'),
+                placeholder=function(input){
+                    var text = input.attr('placeholder'),
+                            defaultValue = input.defaultValue;
+                    if(!defaultValue){
+                        input.val(text).addClass("phcolor");
+                    }
+                    input.focus(function(){
+                        if(input.val() == text){
+                            $(this).val("");
+                        }
+                    });
+                    input.blur(function(){
+                        if(input.val() == ""){
+                            $(this).val(text).addClass("phcolor");
+                        }
+                    });
+                    //输入的字符不为灰色
+                    input.keydown(function(){
+                        $(this).removeClass("phcolor");
+                    });
+                };
+        //当浏览器不支持placeholder属性时，调用placeholder函数
+        if(!supportPlaceholder){
+            $('input').each(function(){
+                text = $(this).attr("placeholder");
+                if($(this).attr("type") == "text"){
+                    placeholder($(this));
+                }
+            });
+        }
+    });
+</script>
+
+<!-- 图片懒加载插件-->
+<script src="__PUBLIC__/static/home/js/jquery.lazyload.min.js"></script>
+
+<!-- 若在ajax中使用懒加载 请将以下代码放到ajax html后面-->
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $("img.lazy").lazyload({effect: "fadeIn"});
+    });
+</script>
+
+<!-- layer 3.0 -->
+<script src="__PUBLIC__/static/plugs/layer/layer.js"></script>
+
+</body>
+</html>

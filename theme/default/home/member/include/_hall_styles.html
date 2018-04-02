@@ -1,0 +1,687 @@
+<!--纪念馆风格-->
+<div id="style-tab-1" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        {foreach $hall_style as $cKey=>$hallCate}
+        <li {if $cKey eq 0}class="layui-this"{/if}>{$hallCate.name}</li>
+        {/foreach}
+
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $hall_style as $sKey=>$hallCate}
+        <div class="layui-tab-item{if $sKey eq 0} layui-show{/if}">
+            <div class="layui-form style-content">
+                {foreach $hallCate['hall_style'] as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo1" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="hall-style"
+                           {eq name='hallStyle.id' value="$vo.hall_style|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>
+
+<!--纪念馆大厅风格-->
+<div id="style-tab-2" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        {foreach $hall_worship_style as $cKey=>$hallCate}
+        <li {if $cKey eq 0}class="layui-this"{/if}>{$hallCate.name}</li>
+        {/foreach}
+
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $hall_worship_style as $sKey=>$hallCate}
+        <div class="layui-tab-item{if $sKey eq 0} layui-show{/if}">
+            <div class="layui-form style-content">
+                {foreach $hallCate['hall_worship_style'] as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo2" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="hall-worship-style"
+                           {eq name='hallStyle.id' value="$vo.hall_worship_style|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>
+
+<!--纪念馆音乐-->
+<div id="style-tab-3" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        {foreach $hall_music as $cKey=>$hallCate}
+        <li {if $cKey eq 0}class="layui-this"{/if}>{$hallCate.name}</li>
+        {/foreach}
+
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $hall_music as $sKey=>$hallCate}
+        <div class="layui-tab-item{if $sKey eq 0} layui-show{/if}">
+            <div class="layui-form style-content">
+                {foreach $hallCate['music_list'] as $music}
+                <div class="layui-input-inline audio-block">
+                    <input type="radio" data-id="{$music.id}" name="demo3" value="{$music.music_name}"
+                           title="{$music.music_name}" lay-filter="hall-music"
+                           {eq name='hallStyle.id' value="$vo.hall_music|default=0"}checked="checked"{/eq}>
+                    <!--<audio src="{$music.music_url}"></audio>-->
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>
+
+
+<!-- 个人馆灵牌样式-->
+<div id="style-tab-4" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">默认风格分类</li>
+
+    </ul>
+    <div class="layui-tab-content">
+
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form style-content">
+                {foreach $lingpaiStyle as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo4" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="hall-lingpai-style"
+                           {eq name='hallStyle.id' value="$vo.one_lingpai_style|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 家族馆灵牌样式-->
+<div id="style-tab-5" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">默认风格分类</li>
+
+    </ul>
+    <div class="layui-tab-content">
+
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form style-content">
+                {foreach $lingpaiStyle as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo4" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="family-lingpai-style"
+                           {eq name='hallStyle.id' value="$vo.family_lingpai_style|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 双人馆灵牌样式1-->
+<div id="style-tab-6" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">默认风格分类</li>
+
+    </ul>
+    <div class="layui-tab-content">
+
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form style-content">
+                {foreach $lingpaiStyle as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo4" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="two-lingpai-style1"
+                           {eq name='hallStyle.id' value="$vo.two_lingpai_style1|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 双人馆灵牌样式2-->
+<div id="style-tab-7" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">默认风格分类</li>
+
+    </ul>
+    <div class="layui-tab-content">
+
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form style-content">
+                {foreach $lingpaiStyle as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo4" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="two-lingpai-style2"
+                           {eq name='hallStyle.id' value="$vo.two_lingpai_style2|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+//    audiojs.events.ready(function() {   //音乐
+//        audiojs.createAll();
+//    });
+</script>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'layer','element','upload'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,element = layui.element
+            ,upload = layui.upload;
+
+        // layui 富文本编辑器
+        //创建一个编辑器
+        // 注意：layedit.build 必须放在layedit.set后面
+        var index = layedit.build('editor', {
+            uploadImage: {
+                url: '/api/Tools/uploadLayeditorFile'
+                ,type: 'post'
+            }
+            ,height: 300
+            ,tool: [
+//                'html'
+                ,'strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
+
+                ,'|' //分割线
+
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'link' //超链接
+                ,'unlink' //清除链接
+                ,'face' //表情
+//                ,'image' // TODO 插入图片 暂时不使用，不能设置图片大小，图片上传后替换掉了原来的图片，等此功能完善了再使用
+//                ,'code'
+//                ,'help' //帮助
+            ]
+        });
+
+        //自定义验证规则
+        form.verify({
+//            title: function(value){
+//                if(value.length < 2){
+//                    return '逝者姓名至少得2个字符';
+//                }
+//            },
+            hall_name:function (value) {
+                if(value.length < 2){
+                    return '纪念馆名称至少为2个字符'
+                }
+            },
+            // 个人馆
+            one_name:function (value) {
+                if(value.length < 2){
+                    return '逝者姓名至少为2个字符'
+                }
+            },
+            one_rest_address:function (value) {
+                if(value.length > 20){
+                    return '安息地描述不能大于20个字符'
+                }
+            },
+            one_epitaph:function (value) {
+                if(value.length > 20){
+                    return '墓志铭描述不能大于20个字符'
+                }
+            },
+            // 双人馆
+            two_name1:function (value) {
+                if(value.length < 2){
+                    return '逝者姓名1至少为2个字符'
+                }
+            },
+            two_name2:function (value) {
+                if(value.length < 2){
+                    return '逝者姓名2至少为2个字符'
+                }
+            },
+            two_relation:function (value) {
+                if(value.length > 20){
+                    return '馆成员关系不能大于20个字符'
+                }
+            },
+            //　家族馆
+            family_theme:function (value) {
+                if(value.length > 15){
+                    return '纪念碑主题不能大于15个字符'
+                }
+            },
+            family_libeiren:function (value) {
+                if(value.length > 10){
+                    return '立碑人不能大于10个字符'
+                }
+            },
+            family_ancestral_home:function (value) {
+                if(value.length > 20){
+                    return '家族祖籍不能大于20个字符'
+                }
+            },
+            family_spirit:function (value) {
+                if(value.length > 20){
+                    return '家族精神不能大于20个字符'
+                }
+            }
+
+        });
+
+
+
+        // ajax 提交
+        form.on('submit(publish_hall)', function(data){
+            data.field.hall_describe = layedit.getContent(index); // 获取富文本编辑器中的内容
+            var action = $(this).attr('data-action');
+
+            if (action == 'user_hall_edit') {
+                // 更新操作
+                url = "/home/Member/user_hall_edit";
+            } else {
+                // 新增操作
+                url = "/home/Member/user_hall_add";
+            }
+
+            $.post(url, data.field, function (res) {
+                popup_jump(res, 1);
+            });
+            return false;
+        });
+
+
+        //纪念馆风格tab
+        $('#style-1').on('click', function(){
+
+            var hallStyleName = ''
+                ,hallStyleId = '';
+
+            form.on('radio(hall-style)', function(data){
+                hallStyleName = data.value;
+                hallStyleId = data.elem.getAttribute('data-id');
+//                $("input[type='radio']").removeAttr('checked');
+            });
+
+            // ajax 加载纪念馆风格
+//            var html = '';
+//            $.get('ajax_load_style',
+//                {
+//                    hall_type: '{$hallType}',
+//                    style_name: 'hall_style'
+//                },function(res){
+//                    html = res;
+//                });
+
+            layer.open({
+                title:'纪念馆风格',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-1'),
+                end: function () {
+                    if (hallStyleName !== '') {
+                        $("#hall-style").val(hallStyleName);
+                        $("#hall-style-id").val(hallStyleId);
+                    }
+                }
+            });
+        });
+
+        //祭拜大厅风格tab
+        $('#style-2').on('click', function(){
+            var hallWorshipStyleName = ''
+                ,hallWorshipStyleId = '';
+
+            form.on('radio(hall-worship-style)', function(data){
+                hallWorshipStyleName = data.value;
+                hallWorshipStyleId = data.elem.getAttribute('data-id');
+            });
+
+            // ajax 加载纪念馆风格
+//            var html = '';
+//            $.get('ajax_load_style',
+//                {
+//                    hall_type: '{$hallType}',
+//                    style_name: 'hall_worship_style'
+//                },function(res){
+//                    html = res;
+//                });
+
+            layer.open({
+                title:'纪念馆大厅风格',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-2'),
+                end: function () {
+                    if (hallWorshipStyleName !== '') {
+                        $("#hall-worship-style").val(hallWorshipStyleName);
+                        $("#hall-worship-style-id").val(hallWorshipStyleId);
+                    }
+                }
+            });
+        });
+
+        //纪念馆音乐tab
+        $('#style-3').on('click', function(){
+            var hallMusicName = ''
+                ,hallMusicId = '';
+
+            form.on('radio(hall-music)', function(data){
+                hallMusicName = data.value;
+                hallMusicId = data.elem.getAttribute('data-id');
+            });
+
+            // ajax 加载纪念馆风格
+//            var html = '';
+//            $.get('ajax_load_style',
+//                {
+//                    hall_type: '{$hallType}',
+//                    style_name: 'hall_music'
+//                },function(res){
+//                    html = res;
+//            });
+
+            layer.open({
+                title:'纪念馆音乐',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-3'),
+                end: function () {
+                    if (hallMusicName !== '') {
+                        $("#hall-music").val(hallMusicName);
+                        $("#hall-music-id").val(hallMusicId);
+                    }
+                }
+            });
+        });
+
+        //单人馆灵牌位样式tab
+        $('#style-4').on('click', function(){
+
+            var hallLingpaiStyleName = ''
+                ,hallLingpaiStyleId = '';
+
+            form.on('radio(hall-lingpai-style)', function(data){
+                hallLingpaiStyleName = data.value;
+                hallLingpaiStyleId = data.elem.getAttribute('data-id');
+            });
+            layer.open({
+                title:'灵牌位样式',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-4'),
+                end: function () {
+                    if (hallLingpaiStyleName !== '') {
+                        $("#hall-lingpai-style").val(hallLingpaiStyleName);
+                        $("#hall-lingpai-style-id").val(hallLingpaiStyleId);
+                    }
+                }
+            });
+        });
+
+        //家族馆灵牌位样式tab
+        $('#style-5').on('click', function(){
+
+            var familyLingpaiStyleName = ''
+                ,familyLingpaiStyleId = '';
+
+            form.on('radio(family-lingpai-style)', function(data){
+                familyLingpaiStyleName = data.value;
+                familyLingpaiStyleId = data.elem.getAttribute('data-id');
+            });
+            layer.open({
+                title:'灵牌位样式',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-5'),
+                end: function () {
+                    if (familyLingpaiStyleName !== '') {
+                        $("#family-lingpai-style").val(familyLingpaiStyleName);
+                        $("#family-lingpai-style-id").val(familyLingpaiStyleId);
+                    }
+                }
+            });
+        });
+
+        //双人馆灵牌位样式1 tab
+        $('#style-6').on('click', function(){
+
+            var twoLingpaiStyleName1 = ''
+                ,twoLingpaiStyleId1 = '';
+
+            form.on('radio(two-lingpai-style1)', function(data){
+                twoLingpaiStyleName1 = data.value;
+                twoLingpaiStyleId1 = data.elem.getAttribute('data-id');
+            });
+            layer.open({
+                title:'灵牌位样式',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-6'),
+                end: function () {
+                    if (twoLingpaiStyleName1 !== '') {
+                        $("#two-lingpai-style1").val(twoLingpaiStyleName1);
+                        $("#two-lingpai-style-id1").val(twoLingpaiStyleId1);
+                    }
+                }
+            });
+        });
+
+        //双人馆灵牌位样式2 tab
+        $('#style-7').on('click', function(){
+
+            var twoLingpaiStyleName2 = ''
+                ,twoLingpaiStyleId2 = '';
+
+            form.on('radio(two-lingpai-style2)', function(data){
+                twoLingpaiStyleName2 = data.value;
+                twoLingpaiStyleId2 = data.elem.getAttribute('data-id');
+            });
+            layer.open({
+                title:'灵牌位样式',
+                btn: '确定', //按钮
+                type: 1,
+                area: ['900px', '560px'],
+                content: $('#style-tab-7'),
+                end: function () {
+                    if (twoLingpaiStyleName2 !== '') {
+                        $("#two-lingpai-style2").val(twoLingpaiStyleName2);
+                        $("#two-lingpai-style-id2").val(twoLingpaiStyleId2);
+                    }
+                }
+            });
+        });
+
+        //时间选择器
+        //常规用法
+//        laydate.render({
+//            elem: '#dateShi'
+//            ,value: '2017-8-14'
+//        });
+//        laydate.render({
+//            elem: '#dateChu'
+//            ,value: '2017-8-14'
+//        });
+
+        //单人馆 逝者日期
+        laydate.render({
+            elem: '#dateShi'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+        laydate.render({
+            elem: '#dateChu'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+
+        //双人馆 逝者1日期
+        laydate.render({
+            elem: '#dateShi1'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+        laydate.render({
+            elem: '#dateChu1'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+
+        //双人馆 逝者2日期
+        laydate.render({
+            elem: '#dateShi2'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+        laydate.render({
+            elem: '#dateChu2'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+
+        //单人馆 逝者图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/api/Tools/uploadFile'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code = 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+
+                var imgPath = res.data.short_path;
+                $('#one-img').val(imgPath);
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+        //双人馆 逝者图片1上传
+        var uploadInst21 = upload.render({
+            elem: '#test21'
+            ,url: '/api/Tools/uploadFile'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo21').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code = 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+
+                var imgPath = res.data.short_path;
+                $('#two-img1').val(imgPath);
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText21');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+        //双人馆 逝者图片2上传
+        var uploadInst22 = upload.render({
+            elem: '#test22'
+            ,url: '/api/Tools/uploadFile'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo22').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code = 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+
+                var imgPath = res.data.short_path;
+                $('#two-img2').val(imgPath);
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText22');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+    });
+</script>
+
+<!-- ueditor-->
+<!--<link rel="stylesheet" href="__PUBLIC__/static/plugs/umeditor/themes/default/css/umeditor.css"/>-->
+<!--<script src="__PUBLIC__/static/plugs/umeditor/third-party/jquery.min.js"></script>-->
+<!--<script src="__PUBLIC__/static/plugs/umeditor/third-party/template.min.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/plugs/umeditor/umeditor.config.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/plugs/umeditor/umeditor.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/plugs/umeditor/lang/zh-cn/zh-cn.js"></script>-->
+
+<script>
+//    var um = UM.getEditor('editor', {
+////            imageUrl: '/api/Tools/uploadUmEditorFile',
+////            imagePath: '__PUBLIC__/static/',
+//        imageUrl: '/static/plugs/umeditor/php/imageUp.php',
+//        imagePath: '/',
+////        lang:/^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
+////        langPath:UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
+//        focus: true,
+//        toolbar:[
+//            'source | undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+//            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
+//            '| justifyleft justifycenter justifyright justifyjustify |',
+//            'link unlink | emotion image'
+//        ]
+//    });
+
+
+</script>

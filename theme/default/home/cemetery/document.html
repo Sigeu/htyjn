@@ -1,0 +1,33 @@
+{include file='home/cemetery/common/_header'}
+{load href="/static/home/css/shop-info.css" /}
+<div class="container">
+    <div class="shop-info">
+        <div class="shop-discount-title">
+            <h3>{$cateid.title}</h3>
+        </div>
+        <ul class="shop-info-list">
+            {foreach $doc as $k=>$v}
+            <li>
+                <a href="{:url('/home/cemetery/doc_detail',['id'=>$v.id])}"> <img class="imgXk lazy" data-original="{$v.image}" alt="">
+                    <div class="m-info"> <strong>{$v.title}</strong>
+                        <dl>
+                            <dt>{$v.create_at|date='Y-m-d',###}</dt>
+                            <dd>{$v.description} </dd>
+                        </dl>
+                    </div>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+        <div class="tc m-t-20 m-b-20">
+            <div class="pagination">
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file='home/cemetery/common/_footer'}

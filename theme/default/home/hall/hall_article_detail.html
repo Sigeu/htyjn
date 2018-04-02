@@ -1,0 +1,37 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+{if $info.hall_type eq 1}
+
+<div class="single_container article_bg">
+    <!--- 普通馆个人信息显示 个性馆隐藏 hide_infor--->
+    {include file="home/hall/include/_hall_guan_left"}
+
+    <!-- 追忆文选盒子 video_box -->
+    {include file="home/hall/include/_hall_article_detail_box"}
+
+    <!-- 发表追忆文选按钮 upimg_btn -->
+    {if is_login()}
+    <div class="uparticle_btn">
+        <a href="{:url('/home/Hall/addHallArticle', ['id' => $info['id']])}">我要发表文选</a>
+    </div>
+    {/if}
+</div>
+
+{else /}
+<div class="yuan_container article_bg">
+    <!-- 追忆文选盒子 video_box -->
+    {include file="home/hall/include/_hall_article_detail_box"}
+
+    <!-- 发表追忆文选按钮 upimg_btn -->
+    {if is_login()}
+    <div class="uparticle_btn">
+        <a href="{:url('/home/Hall/addHallArticle', ['id' => $info['id']])}">我要发表文选</a>
+    </div>
+    {/if}
+</div>
+{/if}
+
+{/block}

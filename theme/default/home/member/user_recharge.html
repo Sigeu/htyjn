@@ -1,0 +1,81 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+            <div class="content-list" style="height: 728px;">
+                <div class="c-title">账户充值</div>
+                <div class="order-title-box clearfix">
+                    <ul class="order-nav Left">
+                        <li><a href="javascript:;" class="current">充值套餐</a></li>
+                        <li><a href="javascript:;">充值后可获得纪念币祭拜</a></li>
+                    </ul>
+                </div>
+
+                {foreach $data as $vo}
+                <table class="orders mt20 table-list JS_orderList_table">
+                    <tbody>
+
+                        <tr>
+                            <td colspan="7" class="gray-title">
+                                {$vo.name}：￥{$vo.price} 充值 {$vo.purchase} 纪念币 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nobt">
+                                <div class="Left order-img list-h-l">
+                                    <a href="javascript:;" title="" target="_blank" class="first">
+                                        <img src="__PUBLIC__/static/home/images/user-rech.png" width="100" height="68" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="nobt td-cen">
+                                <p>赠送 {$vo.donate} 纪念币{$vo.remark}</p>
+                            </td>
+                            <td class="nobt td-cen">
+                                <button class="fk-btn submit_order" data-id="{$vo.id}">购买</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                {/foreach}
+
+                <div class="done">
+                    <div class="rech-info">
+                        <span>注：</span>
+                        <p>1、暂时支持支付宝和微信在线支付</p>
+                        <p>2、需通过其他方式充值或在充值过程中遇到问题，请致电 4008-123-789</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    $(".submit_order").click(function () {
+
+        var id = $(this).attr('data-id');
+//            , paytype = $(this).attr('data-pay-type');
+
+        $.ajax({
+            url: '/home/Member/ajaxRechargeJnb',
+            type: "POST",
+            data: {id: id},
+            success: function (data) {
+                popup_jump(data, 1, 0, '_blank');
+            }
+        });
+    })
+</script>
+
+{include file="/home/member/common/footer" /}

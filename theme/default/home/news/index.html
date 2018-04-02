@@ -1,0 +1,192 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link href="__PUBLIC__/static/home/css/style.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/master.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/culture.css" rel="stylesheet" type="text/css">
+
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/share_style0_16.css">-->
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/info.css">
+{/block}
+
+{block name="js-head"}
+<!--<script src="__PUBLIC__/static/home/js/share.js"></script>-->
+{/block}
+
+<!-- content -->
+{block name="content"}
+
+<!-- 广告位 -->
+{notempty name=':get_ad(3)'}
+<div class="pagebanner contentbox top30">
+    <a href="{:get_ad(3)['url']}"><img class="imgborder lazy" data-original="{:get_ad(3)['path']}" width="98%"></a>
+</div>
+{/notempty}
+
+<div id="main">
+    <div class="container">
+        <div class="info-banner">
+            <div class="home-focus-layout">
+                <div class="focus">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            {foreach $latestRecommendList as $key=>$vo}
+                            <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+                            {/foreach}
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            {foreach $latestRecommendList as $key=>$vo}
+                            <div class="item{if $key eq 0} active{/if}">
+                                <a href="{:url('home/News/detail', ['id' => $vo['id']])}">
+                                    <p class="banner-tiao">{$vo.title}</p>
+                                    <img src="{:quick_pic_thumb($vo.image, '@350w_350h')}" alt="{$vo.title}" title="{$vo.title}">
+                                </a>
+                            </div>
+                            {/foreach}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article-tuijian">
+            <div class="serve-dynamic">
+                <div class="consult-title">
+                    <h3><i></i>文章推荐</h3>
+                    <a href="{:url('home/News/column','cid=2')}">查看更多 &gt;&gt;</a>
+                </div>
+                <div class="consule-body">
+                    <div class="media">
+                        {volist name="recommendList" id="vo" offset="0" length='1'}
+                        <div class="media-left">
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                <img class="media-object sm-tu lazy" data-original="{:quick_pic_thumb($vo.image, '@114w_87h')}" alt="{$vo.title}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{$vo.title|msubstr=0,20}</h4>
+                            <p class="media-text">{$vo.description|msubstr=0,60}</p>
+                        </div>
+                        {/volist}
+                    </div>
+                    <ul class="info-list">
+                        {volist name="recommendList" id="vo" key="key" offset="1" length='5'}
+                        <li {if $key eq 6}class="no-border"{/if}>
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                <i></i>{$vo.title|msubstr=0,20}
+                            </a>
+                            <span class="right">{$vo.create_at|date='Y-m-d', ###}</span>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="article-tuijian rank">
+            <div class="serve-dynamic">
+                <div class="consult-title">
+                    <h3><i></i>点击排行</h3>
+                    <a href="{:url('home/News/column','cid=2')}">查看更多 &gt;&gt;</a>
+                </div>
+                <div class="consule-body">
+                    <ul class="info-list">
+                        {volist name="rankList" id="vo" key="key"}
+                        <li {if $key eq 8}class="no-border"{/if}>
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}" title="{$vo.title}">
+                                <i {if $key lt 4}class="rank-yel"{/if}>{$key}</i>{$vo.title|msubstr=0,12}
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {volist name="indexList" id="indexItem" key="indexKey" mod="2"}
+        <div class="article-tuijian {eq name='mod' value='1'}custom{else/}culture{/eq}">
+            <div class="serve-dynamic">
+                <div class="consult-title">
+                    <h3><i></i>{$indexItem.cName}</h3>
+                    <a href="{:url('home/News/column',['cid' => $indexItem['cid']])}">查看更多 &gt;&gt;</a>
+                </div>
+                <div class="consule-body">
+                    <div class="media">
+                        {volist name="indexItem['list']" id="vo" offset="0" length='1'}
+                        <div class="media-left">
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                <img class="media-object md-tu lazy" data-original="{:quick_pic_thumb($vo.image, '@165w_126h')}" alt="{$vo.title}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{$vo.title|msubstr=0,30}</h4>
+                            <p class="media-text">{$vo.description|msubstr=0,90}</p>
+                        </div>
+                        {/volist}
+                    </div>
+                    <ul class="info-list">
+                        {volist name="indexItem['list']" id="vo" offset="1" length='5'}
+                        <li {if $key eq 6}class="no-border"{/if}>
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                <i></i>{$vo.title|msubstr=0,20}
+                            </a>
+                            <span class="right">{$vo.create_at|date='Y-m-d', ###}</span>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {/volist}
+
+        <!-- 图片专栏 -->
+        <div class="article-tuijian img-zl">
+            <div class="serve-dynamic">
+                <div class="consult-title">
+                    <h3><i></i>图片专栏</h3>
+                    <a href="{:url('home/News/column','cid=2')}">查看更多 &gt;&gt;</a>
+                </div>
+                <div class="consule-body">
+                    <div class="home-focus-layout">
+                        <div class="focus">
+                            <div id="carousel-example-generic1" class="carousel slide" data-ride="carousel">
+
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    {foreach $tpzlList as $key=>$tpzl}
+                                    <div class="item {if $key eq 1}active{/if}">
+                                        {foreach $tpzl as $itemKey=>$vo}
+                                        <div class="left img-block {if $itemKey eq 5}mr-0{/if}">
+                                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                                <img src="{:quick_pic_thumb($vo.image, '@177w_135h')}" alt="$vo.title}">
+                                                <p>{$vo.title|msubstr=0,10}</p>
+                                            </a>
+                                        </div>
+                                        {/foreach}
+                                    </div>
+                                    {/foreach}
+                                </div>
+
+                                <!--Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic1" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic1" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{/block}

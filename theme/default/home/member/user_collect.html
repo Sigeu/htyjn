@@ -1,0 +1,202 @@
+{include file="/home/member/common/header" /}
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+            <style type="text/css">
+                .content-list{margin-top: 15px;}
+                .content-list .oper-bar{margin-bottom: 15px;}
+                .content-list .oper-bar a{margin-right: 23px;color: #666;font-size: 13px;}
+                .content-list .oper-bar a i{display: inline-block;width: 16px;height: 16px;background:url(http://image.meilele.com/images/user/user_bg.png) -146px 2px no-repeat;margin-right: 2px;vertical-align: -2px;}
+                .content-list .oper-bar a.checked i{background-position: -216px 2px;}
+                .content-list .oper-bar a .i-del{background-position: -146px -15px;}
+                .content-list .oper-bar a .i-add-cart{background-position: -146px -32px;}
+                .content-list .list-ul li{float: left;margin-right: 30px;margin-bottom: 30px;}
+                .content-list .list-ul li.last{margin-right: 0;}
+                .content-list .list-ul li .txt{width: 215px;overflow: hidden;margin-top: 8px;}
+                .content-list .list-ul li .check-box{display: inline-block;width: 16px;height: 16px;background:url(http://image.meilele.com/images/user/user_bg.png) -146px 1px no-repeat;margin-right: 2px;}
+                .content-list .list-ul li .check-box.checked{background-position: -216px 2px;}
+                .content-list .list-ul .txt a{display:inline-block;color: #333;font-size: 14px;height: 20px;width: 187px;overflow: hidden;}
+                a:hover{color:#ee1f1f;}
+                .content-list .list-ul li .prize{font-size:13px;}
+                /* 加入购物车弹窗样式修改 */
+                .addToCart_LB .in{width:700px !important;}
+                .addToCart_LB .btns a.lightbox_btnsi_1{color:#666;border:solid 1px #dcdcdc;}
+            </style>
+            <div class="content-one">
+                <div class="c-title">我的收藏</div>
+                <div class="c-title-box clearfix">
+                    <ul class="c-title-nav clearfix">
+                        <li><a href="?act=collection_list" class="current">商品收藏</a></li>
+                        <li><a href="?act=collection_shop">店铺收藏</a></li>
+                    </ul>
+                    <ul class="c-title-subn clearfix">
+                        <li><a href="/user/?act=collection_list&amp;collection_cat=" class="current">所有商品 (6)</a></li>
+                        <li><a href="/user/?act=collection_list&amp;collection_cat=277"><span>殡葬商品 (6)</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-list">
+                <div class="oper-bar">
+                    <a href="javascript:;" class="check-a" id="JS_checkall"><i class="i-checkbox"></i>全选</a>
+                    <a href="javascript:;" id="JS_del_collection"><i class="i-del"></i>删除</a>
+                    <a href="javascript:;" id="JS_add_tocart"><i class="i-add-cart"></i>加入购物车</a>
+                </div>
+                <ul class="list-ul clearfix" id="JS_list_ul">
+                    <li>
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                    <li class="last">
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank">
+                            <img src="images/user-good3.png" data-src="" alt="" width="215" height="144">
+                        </a>
+                        <div class="txt">
+                            <span class="check-box js_check" data-goodsid="162729" data-recid="2881184"></span>
+                            <a href="/category-canyi/goods-162729.html" target="_blank">汉白玉骨灰盒石雕寿盒石材</a>
+                            <div class="prize orange">¥3998</div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- <div class="done"> -->
+                <!-- </div> -->
+            </div>
+            <script type="text/javascript">
+                window._onReadyList = window._onReadyList || [];
+                window._onReadyList.push(function(){
+                    $(function($){
+                        //check事件
+                        $('#JS_checkall').click(function(){
+                            if($(this).hasClass('checked')){
+                                $(this).removeClass('checked')
+                                $('#JS_list_ul .js_check').removeClass('checked');
+                            } else {
+                                $(this).addClass('checked');
+                                $('#JS_list_ul .js_check').each(function(){
+                                    if(!$(this).hasClass('checked')) {
+                                        $(this).addClass('checked');
+                                    }
+                                })
+                            }
+                        });
+                        $('#JS_list_ul .js_check').click(function(){
+                            if($(this).hasClass('checked')){
+                                $(this).removeClass('checked');
+                                $('#JS_checkall').removeClass('checked');
+                            } else {
+                                $(this).addClass('checked');
+                                if($('#JS_list_ul .js_check').length && $('#JS_list_ul .js_check').length == $('#JS_list_ul .checked').length) {
+                                    $('#JS_checkall').addClass('checked');
+                                }
+                            }
+                        });
+                        $('#JS_del_collection').click(function(){
+                            var recid = [];
+                            $('#JS_list_ul .checked').each(function(){
+                                recid.push($(this).data('recid'));
+                            });
+                            if(!recid.length){
+                                /*$.alert("请选择要移除的商品！",{mask:true});*/
+                                $.lightBox( '请选择要移除的商品！',{确定:'close'},'','','',true,'c');
+                                return false;
+                            }
+                            /*$.confirm('确定要移除收藏的商品吗?',{mask:true,onOk:function(){
+                             window.location.href='/user/?act=delete_collection&collection_id='+recid.join(',');
+                             }});*/
+                            $.lightBox( '确定要移除收藏的商品吗?',{确定:function(){
+                                var _collection_cat = locationObj().collection_cat ? locationObj().collection_cat : '';
+                                window.location.href='/user/?act=delete_collection&collection_cat='+_collection_cat+'&collection_id='+recid.join(',');
+                            },取消:'close'},'','','',true,'c');
+                            return false;
+                        });
+                        $('#JS_add_tocart').click(function(){
+                            var goodsid = {},count = 0;
+                            $('#JS_list_ul .checked').each(function(){
+                                goodsid[$(this).data('goodsid')] = 1;
+                                count++;
+                            });
+                            if(!count){
+                                /*$.alert("请选择要加入购物车的商品！",{mask:true});*/
+                                $.lightBox( '请选择要加入购物车的商品！',{确定:'close'},'','','',true,'c');
+                                return false;
+                            }
+                            $.addToCart(20363,goodsid);
+                        });
+
+                    });
+
+                });
+                /**
+                 * [locationObj description]获取域名字段
+                 * @return {[type]} [description]返回_args 对象
+                 */
+                function locationObj(){
+                    var _args = {};
+                    var _href = location.search.substring(1);
+                    var _hrefArray = _href.split('&');
+                    for (var i = 0; i < _hrefArray.length; i++) {
+                        var _pos = _hrefArray[i].indexOf('=');
+                        if (_pos == -1) {
+                            continue;
+                        }else{
+                            var _name = _hrefArray[i].substring(0,_pos);
+                            var _value = _hrefArray[i].substring(_pos+1);
+                            /*_value = decodeURIComponent(_value);*/  //进行转译
+                            _args[_name] = _value;
+                        }
+                    }
+                    return _args;
+                }
+            </script>				</div>
+    </div>
+</div>
+{include file="/home/member/common/footer" /}

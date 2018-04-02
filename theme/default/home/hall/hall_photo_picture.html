@@ -1,0 +1,65 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+<!-- 图片上传 -->
+<script src="__PUBLIC__/static/home/js/fileinput.min.js"></script>
+<script src="__PUBLIC__/static/home/js/zh.js"></script>
+<script src="__PUBLIC__/static/home/js/bootstrap.js" type="text/javascript"></script>
+
+
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/jquery.ad-gallery.css">
+<script type="text/javascript" src="__PUBLIC__/static/home/js/jquery.ad-gallery.js"></script>
+
+<!-- 图片上传 -->
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/fileinput.css">
+
+<script type="text/javascript">
+    $(function () {
+        var galleries = $('.ad-gallery').adGallery();  //流量图片显示
+    });
+    function ImgLoad(obj) {
+        var w = obj.width, h = obj.height, maxW, maxH;
+        if (w > h) {
+            $(obj).css('max-height', '60px');
+
+            var ww = ($(obj).width() - 60) / 2;
+            $(obj).css('margin-left', -ww + 'px');
+        }
+        else {
+            $(obj).css('max-width', '60px');
+            var ww = ($(obj).height() - 60) / 2;
+            $(obj).css('margin-top', -ww + 'px');
+        }
+    }
+</script>
+
+{if $info.hall_type eq 1}
+
+<div class="single_container img_delbg">
+    <!--- todo 普通馆个人信息显示 个性馆隐藏 hide_infor--->
+    {include file="home/hall/include/_hall_guan_left"}
+
+    <!-- 回忆相册盒子 story_box -->
+    {include file="home/hall/include/_hall_photo_picture_box"}
+
+</div>
+
+{else /}
+<div class="yuan_container img_delbg">
+    <!-- 回忆相册盒子 story_box -->
+    {include file="home/hall/include/_hall_photo_picture_box"}
+</div>
+{/if}
+
+<!--<form class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--<input id="file-es" name="file-es[]" type="file" multiple>-->
+<!--</form>-->
+<!-- 图片上传 -->
+
+
+
+
+
+{/block}

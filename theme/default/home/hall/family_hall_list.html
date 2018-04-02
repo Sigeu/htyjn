@@ -1,0 +1,378 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<!--<script src="__PUBLIC__/static/home/js/jquery.js"></script>-->
+
+<script src="__PUBLIC__/static/home/js/tabScript.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/web_common.css">
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/web_search.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/family.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/grade.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/service-base.css">
+
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/index.css">
+
+
+
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .gd_ban dl dd span :hover, a:hover {
+        text-decoration: underline;
+        color: Black;
+    }
+
+    .weiduduan {
+        width: 970px;
+        margin: 15px auto 0px;
+    }
+
+    #focus {
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #focus ul {
+        height: 380px;
+        position: absolute;
+    }
+
+    #focus ul li {
+        float: left;
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus ul li div {
+        position: absolute;
+        overflow: hidden;
+    }
+
+    #focus .btnBg {
+        position: absolute;
+        width: 970px;
+        height: 20px;
+        left: 0px;
+        bottom: 0px;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn {
+        position: absolute;
+        width: 780px;
+        height: 10px;
+        padding: 5px 10px;
+        right: 0px;
+        bottom: 0px;
+        text-align: right;
+    }
+
+    #focus .btn span {
+        display: inline-block;
+        width: 25px;
+        height: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn span.on {
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .preNext {
+        width: 45px;
+        height: 100px;
+        position: absolute;
+        top: 90px;
+        background: transparent url("__PUBLIC__/static/home/images/sprite.png") no-repeat scroll 0px 0px;
+        cursor: pointer;
+    }
+
+    #focus .pre {
+        left: 0px;
+    }
+
+    #focus .next {
+        right: 0px;
+        background-position: right top;
+    }
+</style>
+<!--图片切换 以前版本-->
+<!-- 图片切换 以前版本-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/family1.js"></script>-->
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .xpdt_box ul li a:hover {
+        color: Black;
+    }
+
+    .i_zp_box ul li .zp_box dl dd {
+        text-align: left;
+    }
+
+    .title_box {
+        border-width: 1px 1px 3px;
+        border-style: solid;
+        border-color: rgb(206, 206, 206) rgb(206, 206, 206) rgb(255, 132, 0) rgb(255, 132, 0);
+        height: 32px;
+        line-height: 32px;
+        clear: both;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .links_box {
+        padding: 10px 25px;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .border {
+        border-left: 1px solid rgb(204, 204, 204);
+        border-bottom: 1px solid rgb(204, 204, 204);
+        border-right: 1px solid rgb(204, 204, 204);
+    }
+
+    .links_box a {
+        display: inline;
+        margin-right: 20px;
+        line-height: 28px;
+        overflow-wrap: break-word;
+        word-break: normal;
+        white-space: nowrap;
+    }
+</style>
+<script type="text/javascript">
+
+//    $(function () {
+//        // FirstLoadXing(); //第一次加载 艾姓
+//        GetBjxId();
+//    });
+//
+//    /*鼠标移入百家姓 显示信息*/
+//    var GetBjxId = function () {
+//        var currentBjx = $(".bjx_box .list li"); //定位到百家姓
+//        $(currentBjx).hover(function () {
+//            var currentIndex = $(currentBjx).index(this);
+//            var bjx = $(".list li a:eq(" + currentIndex + ")").attr("name"); //获取当前id
+//
+//            //获取姓氏信息
+////                $.ajaxLoad({
+////                    url: "/AjaxJiaPu/HistoryAndMingRen.do",
+////                    data: {bjxId: bjx},
+////                    success: function (msg) {
+////                        $("#HistoryAndMingRen").html(msg);
+////                    }
+////                }, "#HistoryAndMingRen");
+//
+//        }, function () {
+//        });
+//    }
+//
+//    //获取姓氏信息
+//    var FirstLoadXing = function () {
+//        $.ajaxLoad({
+//            url: "/AjaxJiaPu/HistoryAndMingRen.do",
+//            success: function (msg) {
+//                $("#HistoryAndMingRen").html(msg);
+//            }
+//        }, "#HistoryAndMingRen");
+//    }
+
+</script>
+<!--<script src="__PUBLIC__/static/home/js/logger.js"></script>-->
+<!--<script src="__PUBLIC__/static/home/js/index.js"></script>-->
+<link href="__PUBLIC__/static/home/css/bdsstyle.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/family-lb.css" rel="stylesheet" type="text/css">
+{/block}
+
+
+{block name="lib-head"}
+
+{/block}
+
+<!-- content -->
+{block name="content"}
+<div class="serve-block zongCi">
+    <div class="wrapper">
+        <div class="zongci-title">
+            <i></i>
+        </div>
+        <div class="shop-classed">
+            <div class="cemetery-search">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <h3 class="navbar-brand">宗祠搜索</h3>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav sliny">
+                            <li class="dropdown active" style="line-height:50px;margin-right:10px;">
+                                <span class="dropdown-toggle">省份:</span>
+                                <select name="ddlProvince" onchange="javascript:setTimeout('__doPostBack(\'ddlProvince\',\'\')', 0)" id="ddlProvince">
+                                    <option value="-1">全部</option>
+                                    <option value="10110000">北京</option>
+                                    <option value="10120000">天津</option>
+                                    <option value="10130000">河北省</option>
+                                    <option value="10140000">山西省</option>
+                                    <option value="10150000">内蒙古自治区</option>
+                                    <option value="10210000">辽宁省</option>
+                                    <option value="10220000">吉林省</option>
+                                    <option value="10230000">黑龙江省</option>
+                                    <option value="10310000">上海</option>
+                                    <option value="10320000">江苏省</option>
+                                    <option value="10330000">浙江省</option>
+                                    <option value="10340000">安徽省</option>
+                                    <option value="10350000">福建省</option>
+                                    <option value="10360000">江西省</option>
+                                    <option value="10370000">山东省</option>
+                                    <option selected="selected" value="10410000">河南省</option>
+                                    <option value="10420000">湖北省</option>
+                                    <option value="10430000">湖南省</option>
+                                    <option value="10440000">广东省</option>
+                                    <option value="10450000">广西壮族自治区</option>
+                                    <option value="10460000">海南省</option>
+                                    <option value="10500000">重庆</option>
+                                    <option value="10510000">四川省</option>
+                                    <option value="10520000">贵州省</option>
+                                    <option value="10530000">云南省</option>
+                                    <option value="10540000">西藏自治区</option>
+                                    <option value="10610000">陕西省</option>
+                                    <option value="10620000">甘肃省</option>
+                                    <option value="10630000">青海省</option>
+                                    <option value="10640000">宁夏回族自治区</option>
+                                    <option value="10650000">新疆维吾尔自治区</option>
+                                    <option value="10710000">台湾省</option>
+                                    <option value="10810000">香港特别行政区</option>
+                                    <option value="10820000">澳门特别行政区</option>
+
+                                </select>
+                            </li>
+                            <li class="dropdown" style="line-height:50px">
+                                <span class="dropdown-toggle">城市:</span>
+                                <select name="ddlCity" id="ddlCity">
+                                    <option value="-1">全部</option>
+                                    <option value="10410100">郑州市</option>
+                                    <option value="10410200">开封市</option>
+                                    <option value="10410300">洛阳市</option>
+                                    <option value="10410400">平顶山市</option>
+                                    <option value="10410500">安阳市</option>
+                                    <option value="10410600">鹤壁市</option>
+                                    <option value="10410700">新乡市</option>
+                                    <option value="10410800">焦作市</option>
+                                    <option value="10410881">济源市</option>
+                                    <option value="10410900">濮阳市</option>
+                                    <option value="10411000">许昌市</option>
+                                    <option value="10411100">漯河市</option>
+                                    <option value="10411200">三门峡市</option>
+                                    <option value="10411300">南阳市</option>
+                                    <option value="10411400">商丘市</option>
+                                    <option value="10411500">信阳市</option>
+                                    <option value="10411600">周口市</option>
+                                    <option value="10411700">驻马店市</option>
+
+                                </select>
+                            </li>
+                        </ul>
+                        <div class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" style="width:480px;" class="form-control" placeholder="请输入其他查询条件" id="searchother" name="searchother">
+                            </div>
+                            <a href="javascript:void(0);" class="btn btn-success" onclick="return checkSubmit(this);">搜索</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="QR-layout" id="main-nav-holder">
+            <nav class="sort-bar" id="main-nav">
+                <div class="sort-bar-wrap">
+                    <div class="nch-sortbar-array">
+                        <ul class="screen">
+                            <li {if $sortType eq 'view'}class="selected"{/if}>
+                                <a href="{:url('home/hall/familyHallList', ['sort' => 'view'])}" title="点击按纪念馆值从高到低排序">热门<i></i></a>
+                            </li>
+                            <li {if $sortType eq 'create_at'}class="selected"{/if}>
+                                <a href="{:url('home/hall/familyHallList', ['sort' => 'create_at'])}" title="点击按创建时间从高到低排序">最新<i></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="nch-g-list wrapper">
+            <div class="container-fluid zongCi pad-0">
+                <div class="row top">
+                    <div class="centBk">
+
+                        <div class="top2" >
+                            <div class="ciBatT">
+
+                                {foreach $familyHallList as $key=>$vo}
+                                <div class="ciBat  hez-left">
+                                    <a href="{:url('home/hall/detail', ['id' => $vo['id']])}">
+                                        <div class="text-center ciTimg" id="ciT{$key}"  onmousemove="ciTm(this.id)" onmouseout="ciTy(this.id)">
+                                            <img class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@266w_170h')}" alt="">
+                                            <div class="center-block siTspan">
+                                                <span class="span1"></span>
+                                            </div>
+                                        </div>
+                                        <div class= "hez-left navbar-left">
+                                            <h3>{$vo.hall_name}</h3>
+                                            <p>立碑人：{$vo.family_libeiren}</p>
+                                            <p>家族祖籍：{$vo.family_ancestral_home|msubstr=0,6,false}</p>
+                                        </div>
+                                        <div class="hez-right navbar-right">
+                                            <div class="leftCi">
+                                                <img class="img-responsive center-block" src="__PUBLIC__/static/home/images/ciT.png" alt="">
+                                                <p>{$vo.family_member}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {/foreach}
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tc m-t-20 m-b-20">
+                <div class="pagination">
+                    <ul>
+                        {$pageHtml}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+
+{/block}
+
+
+{block name="js-foot"}
+
+<script src="__PUBLIC__/static/home/js/index.js"></script>
+
+<script>
+    $(function(){
+        loadTab();
+    });
+</script>
+{/block}

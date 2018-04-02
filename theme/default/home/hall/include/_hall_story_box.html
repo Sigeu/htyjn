@@ -1,0 +1,36 @@
+<div class="story_box">
+
+    <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+    <div class="bread_route">
+        {if $info.hall_type eq 1}
+        <!-- 修改生平故事按钮 upimg_btn -->
+        {if is_login() && is_login() eq $info.hall_member_id}
+        <!--<a class="app_btn" href="javascript:;">修改</a>-->
+        {/if}
+        您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+        &gt;
+        生平故事
+        {else /}
+        馆介绍
+        {/if}
+    </div>
+    <!--- 生平故事文字表述 pull_box--->
+    <div class="pull_box">
+        {$info.hall_describe}
+    </div>
+</div>
+
+<!--- 普通馆隐藏 个性馆主体信息显示 story_theme--->
+<!--<div class="story_theme">-->
+    <!--<div class="photo_bg">-->
+        <!--<a href="" target="_blank">-->
+            <!--<img src="http://img2.huaien.com/jinian/skin/guan/gexing/3/images/theme.jpg">-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<p class="text">-->
+        <!--<a href="http://img2.huaien.com/jinian/skin/guan/gexing/3/zheme/index.html" target="_blank">生命传记</a>-->
+    <!--</p>&ndash;&gt;-->
+    <!--<p class="btn_demo">-->
+        <!--&lt;!&ndash; <a href="/about/server.htm">申请制作生命传记</a>&ndash;&gt;-->
+    <!--</p>-->
+<!--</div>-->

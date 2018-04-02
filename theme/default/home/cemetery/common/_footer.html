@@ -1,0 +1,193 @@
+<div class="serve-foot">
+    <div id="faq">
+        <div class="wrapper">
+            <ul>
+                {volist name="footerMenu" id="menu" key="k"}
+                <li>
+                    <dl class="s1">
+                        <dt>{$menu.title} </dt>
+                        {volist name="menu['sub']" id="sub"}
+                        <dd><i></i><a href="{$sub.url}">{$sub.title}</a></dd>
+                        {/volist}
+                        <!--<dd><i></i><a href="#" title="">合作伙伴</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">服务条款</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">联系我们</a></dd>-->
+                    </dl>
+                </li>
+                {/volist}
+                <!--<li>-->
+                    <!--<dl class="s1">-->
+                        <!--<dt> 行业资讯 </dt>-->
+                        <!--<dd><i></i><a href="#" title="">传统文化</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">民风民俗</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">姓氏文化</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">中华美德</a></dd>-->
+                        <!--<dd><i></i><a href="#" title="">殡葬文化</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<dl class="s1">-->
+                        <!--<dt> 网上祭奠 </dt>-->
+                        <!--<dd><i></i><a href="#">网上纪念馆</a></dd>-->
+                        <!--<dd><i></i><a href="#">家族宗祠</a></dd>-->
+                        <!--<dd><i></i><a href="#">免费建馆</a></dd>-->
+                        <!--<dd><i></i><a href="#">祭奠商城</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<dl class="s1">-->
+                        <!--<dt> 帮助中心 </dt>-->
+                        <!--<dd><i></i><a href="#">建馆帮助</a></dd>-->
+                        <!--<dd><i></i><a href="#">新手上路</a></dd>-->
+                        <!--<dd><i></i><a href="#">如何网上祭奠</a></dd>-->
+                        <!--<dd><i></i><a href="#">如何创建纪念馆</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <li>
+                    <dl class="s1">
+                        <h4> 安卓APP </h4>
+                        <img src="{:sysconf('android_app_download')}" alt="">
+                    </dl>
+                </li>
+                <h4 style="display: inline-block;margin: 0 -20px;font-size:16px;">手机APP下载</h4>
+                <li>
+                    <dl class="s1">
+                        <h4> 苹果APP </h4>
+                        <img src="{:sysconf('ios_app_download')}" alt="">
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="dibu">
+        <div class="wrapper">
+            <p>Copyright  2017 www.yjn100.com All rights reserved.&nbsp;&nbsp;&nbsp;&nbsp;{:sysconf('site_icp')}</p>
+            <img src="__PUBLIC__/static/home/images/wanggongjian.jpg" alt="">
+        </div>
+    </div>
+</div>
+
+<!-- QQ客服 -->
+<div class="main-im">
+    <div id="open_im" class="open-im">&nbsp;</div>
+    <div class="im_main" id="im_main">
+        <div id="close_im" class="close-im"><a href="javascript:void(0);" title="点击关闭">&nbsp;</a></div>
+        <a href="http://wpa.qq.com/msgrd?v=3&uin={:sysconf('ol_service_qq')}&site=qq&menu=yes" target="_blank" class="im-qq qq-a" title="在线QQ客服">
+            <div class="qq-container"></div>
+            <div class="qq-hover-c"><img class="img-qq" src="__PUBLIC__/static/home/images/common/qq.png"></div>
+            <span> QQ在线咨询</span>
+        </a>
+        <div class="im-tel">
+            <div>售前咨询热线</div>
+            <div class="tel-num">{:sysconf('pre_sale_tel')}</div>
+            <div>售后咨询热线</div>
+            <div class="tel-num">{:sysconf('after_sale_tel')}</div>
+        </div>
+        <div class="im-footer" style="position:relative">
+            <div class="weixing-container">
+                <div class="weixing-show">
+                    <div class="weixing-txt">扫一扫<br>下载APP</div>
+                    <img class="weixing-ma" src="{:sysconf('android_app_download')}">
+                    <div class="weixing-sanjiao"></div>
+                    <div class="weixing-sanjiao-big"></div>
+                </div>
+            </div>
+            <div class="go-top"><a href="javascript:;" title="返回顶部"></a> </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>
+
+<!-- QQ客服 -->
+{load href="/static/home/css/common/qqkf.css" /}
+{load href="/static/home/js/common/qqkf.js" /}
+
+{load href="/static/home/css/jquery.bxslider.css" /}
+{load href="/static/home/js/jquery.bxslider.js" /}
+{load href="/static/home/js/home_index.js" /}
+<script>
+    $(function () {
+        //页内导航条位置
+        $('#nav').onePageNav({
+            filter: ':not(.exception)'
+        });
+        //滚动固定分类导航条
+        $(".pinned").pin({
+            containerSelector: ".main-layout"
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('.aa').hover(function () {
+            $(this).addClass('hover');
+            $(this).find('.sub-class').css('display', 'block');
+        }, function () {
+            $(this).removeClass('hover');
+            $(this).find('.sub-class').css('display', 'none');
+        });
+        $('.call-center').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+        $('.my-cart').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+        $('.my-favorite').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+        $('.my-order').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+        $('.my-mall').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+    });
+</script>
+
+<script>
+    $('#ddlProvince').on('click',function () {
+        var shengfen = $(this).val()
+        if (shengfen != ''){
+            var geturl ='{:url('/home/cemetery/city')}'
+            $.get(geturl,{'pid':shengfen},function (data) {
+                var chengShi =data.result
+                var x = ""
+                var ddlCity = $('#ddlCity');
+                var cityHtml = "";
+
+                for (x in chengShi) {
+                    cityHtml += "<option value='" + chengShi[x].id + "'>" + chengShi[x].city + "</option>";
+                }
+
+                if (cityHtml == '') {
+                    cityHtml = '<option id="city1" value="-1">全部</option>'
+                }
+                document.getElementById('ddlCity').innerHTML = cityHtml;
+            })
+        }
+
+    })
+
+</script>
+
+
+<!-- 图片懒加载插件-->
+<script src="__PUBLIC__/static/home/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $("img.lazy").lazyload({effect: "fadeIn"});
+    });
+</script>
+</body>
+</html>

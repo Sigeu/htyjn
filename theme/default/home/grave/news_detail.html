@@ -1,0 +1,65 @@
+{include file='/home/grave/common/_head'}
+    <div class="navBox">
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><a href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                    <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                    <li><a href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                    <li><a href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                    <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                    <li><a  class="currentnav" href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div><!--墓园首页banner-->
+
+<div class="contentBox">
+    <div class="container">
+        <div class="weizhi_title txt-gray">
+            首页 &gt; <span class="txt-hdark">文章详情页</span>
+        </div>
+        <div class="muyuan my_detail my_d">
+
+            <div class="myL left">
+                <h3 style="margin-bottom: 15px;text-align: center;">{$arti.title}</h3>
+                <span style="margin-bottom: 10px" class="txt-gray1 pull-right">{$arti.create_time}</span>
+                <div class="clearfix"></div>
+                <div class="text shop-xq mb30">
+                    {$arti.content}
+                </div>
+            </div>
+            <div class="myR right">
+                <div class="tj_pic txt-white">
+                    <a href="{:url('/home/grave/index',['id'=>$grave.id])}"><img src="{$grave.image_id}"></a>
+                </div>
+                <div class="tj_con bg_gray">
+                    <span><b class="txt-gray dz">地址：</b>{$grave.address}</span>
+                    <a class="txt-green" href="{:url('/home/grave/traffic',['id'=>$grave.id])}">查看地图&gt;&gt;</a>
+                    <span><b class="txt-gray dz">咨询电话：</b>{$grave.phone}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--foot-->
+{include file='/home/grave/common/_footer'}
+
+
+<!--<script type="text/javascript">-->
+    <!--var destoon_userid = 0;-->
+    <!--var destoon_username = '';-->
+    <!--var destoon_message = 0;-->
+    <!--var destoon_chat = 0;-->
+    <!--var destoon_cart = get_cart();-->
+    <!--var destoon_member = '';-->
+    <!--destoon_member += '<a href="http://www.gmw6688.com/member/login.php">登录</a><a href="http://www.gmw6688.com/member/register.php">注册</a>';-->
+    <!--$('#destoon_member').html(destoon_member);-->
+    <!--$('#destoon_cart').html(destoon_cart > 0 ? '<strong>' + destoon_cart + '</strong>' : 0);-->
+<!--</script>-->
+</body>
+</html>

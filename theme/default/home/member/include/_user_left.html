@@ -1,0 +1,37 @@
+<div class="user_menu" style="height: 610px;">
+    <div class="navs" id="JS_u_navs">
+
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+            {foreach $userLeftMenus as $userLeftMenu}
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="{if $userLeftMenu.url eq ''}javascript:;{elseif $userLeftMenu.isDomain eq 1 /}{$userLeftMenu.url}{else /}{:url($userLeftMenu.url)}{/if}" target="{$userLeftMenu.target}">
+                    {$userLeftMenu.name}
+                    <span class="layui-nav-more"></span>
+                </a>
+                {notempty name='userLeftMenu.sub'}
+                <dl class="layui-nav-child">
+                    {foreach $userLeftMenu['sub'] as $sub}
+                    <dd {if $currentUserLeftMenu eq $sub.url}class="active"{/if}>
+                        <a href="{if $sub.url eq ''}javascript:;{elseif $sub.isDomain eq 1 /}{$sub.url}{else /}{:url($sub.url)}{/if}" target="{$sub.target}">
+                            {$sub.name}
+                        </a>
+                    </dd>
+                    {/foreach}
+                </dl>
+                {/notempty}
+            </li>
+            {/foreach}
+
+        </ul>
+
+
+    </div>
+
+</div>
+
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>

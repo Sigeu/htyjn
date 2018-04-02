@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>layui 分页</title>
+</head>
+<body>
+
+<link rel="stylesheet" href="__PUBLIC__/static/plugs/layui_2.0/css/layui.css">
+
+<script src="__PUBLIC__/static/plugs/layui_2.0/layui.js" charset="utf-8"></script>
+
+
+<style>
+    .site-doc-icon li{width: 222px;}
+    .site-doc-icon li .layui-anim{width: 150px; height: 150px; line-height: 150px; margin: 0 auto 10px; text-align: center; background-color: #009688; cursor: pointer; color: #fff; border-radius: 50%;}
+</style>
+
+<div class="layui-anim" data-anim="layui-anim-up">从最底部往上滑入</div>
+<div class="code">layui-anim-up</div>
+<ul class="site-doc-icon">
+    <li>
+        <div class="layui-anim" data-anim="layui-anim-up">从最底部往上滑入</div>
+        <div class="code">layui-anim-up</div>
+    </li>
+    <li>
+        <div class="layui-anim" data-anim="layui-anim-upbit">微微往上滑入</div>
+        <div class="code">layui-anim-upbit</div>
+    </li>
+    <li>
+        <div class="layui-anim" data-anim="layui-anim-scale">平滑放大</div>
+        <div class="code">layui-anim-scale</div>
+    </li>
+    <li>
+        <div class="layui-anim" data-anim="layui-anim-scaleSpring">弹簧式放大</div>
+        <div class="code">layui-anim-scaleSpring</div>
+    </li>
+</ul>
+<!--建立视图-->
+<div id="view"></div>
+
+<script id="demo" type="text/html">
+
+    <h3>{{ d.title }}</h3>
+    <ul>
+        {{#  layui.each(d.list, function(index, item){ }}
+        <li>
+            <span>{{ item.modname }}</span>
+            <span>{{ item.alias }}：</span>
+            <span>{{ item.site || '' }}</span>
+        </li>
+        {{#  }); }}
+        {{#  if(d.list.length === 0){ }}
+        无数据
+        {{#  } }}
+    </ul>
+</script>
+
+<script>
+    layui.use('jquery', function(){
+        var $ = layui.$;
+
+        //演示动画
+        $('.site-doc-icon .layui-anim').on('click', function(){
+            var othis = $(this), anim = othis.data('anim');
+
+            //停止循环
+            if(othis.hasClass('layui-anim-loop')){
+                return othis.removeClass(anim);
+            }
+
+            othis.removeClass(anim);
+
+            setTimeout(function(){
+                othis.addClass(anim);
+            });
+            //恢复渐隐
+            if(anim === 'layui-anim-fadeout'){
+                setTimeout(function(){
+                    othis.removeClass(anim);
+                }, 1300);
+            }
+        });
+    });
+</script>
+
+<script>
+
+    layui.use('laytpl', function(){
+        var laytpl = layui.laytpl;
+
+
+        //第三步：渲染模版
+        var data = { //数据
+            "title":"Layui常用模块"
+            ,"list":[/*{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}*/]
+        }
+        var getTpl = demo.innerHTML
+            ,view = document.getElementById('view');
+        laytpl(getTpl).render(data, function(html){
+            view.innerHTML = html;
+        });
+
+
+        //直接解析字符
+        laytpl('{{ d.name }}是一位公猿').render({
+            name: '贤心'
+        }, function(string){
+            console.log(string); //贤心是一位公猿
+        });
+
+        //或者同步写法
+        var string =  laytpl('{{ d.name }}是一位公猿').render({
+            name: '贤心'
+        });
+        console.log(string);  //贤心是一位公猿
+
+        //如果模板较大，你也可以采用数据的写法，这样会比较直观一些
+        var string2 = laytpl([
+            '{{ d.name }}是一位公猿'
+            ,'其它字符 {{ d.content }}  其它字符'
+        ].join('')).render({
+            name: 'a'
+            ,content: '很帅！'
+        })
+
+        console.log(string2);
+    });
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+            <div class="content-one">
+                <div class="c-title">管理纪念馆</div>
+                <div class="c-title-box clearfix">
+                    <ul class="c-title-nav clearfix">
+                        <li><a href="?hall_type=1" {if $hallType eq 1} class="current"{/if}>个人纪念馆</a></li>
+                        <li><a href="?hall_type=3" {if $hallType eq 3} class="current"{/if}>家族纪念馆</a></li>
+                        <li><a href="?hall_type=2" {if $hallType eq 2} class="current"{/if}>双人纪念馆</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-list">
+                <div class="jianguan">
+                    <a href="{:url('user_hall_add', ['hall_type' => $hallType])}">创建纪念馆</a>
+                </div>
+
+                <!-- 我的纪念馆列表 -->
+                {foreach $myHallList as $vo}
+                    <div class="guan_block">
+                        <img src="{:quick_pic_thumb($vo.hall_img, '@113w_128h')}" alt="" width="113" height="128">
+                        {if $vo.hall_type eq 1}
+                            <h3 class="guan_year">{$vo.one_birthday|unixtime_to_date='Y.m.d', ###}~{$vo.one_death|unixtime_to_date='Y.m.d', ###}</h3>
+                        {/if}
+                        <div class="guan_info">
+                            <h2>{$vo.hall_name|msubstr=0,6} <span>纪念馆</span></h2>
+                            <p class="guan_name">
+                                <i></i>
+                                {$vo.member_nickname}
+                            </p>
+                            <p class="guan_value">
+                                <i></i>
+                                {$vo.memorial_value}
+                            </p>
+                            <p class="guan_lv">
+                                <i>{if $vo.hall_type eq 1 && $vo.famous_type eq 0}个{elseif $vo.hall_type eq 1 && $vo.famous_type gt 0}<span style="color: #b82914;">名</span>{elseif $vo.hall_type eq 2}双{elseif $vo.hall_type eq 3}家{/if}</i>
+                                <a href="#">LV{$vo.hall_level}</a>
+                            </p>
+                        </div>
+                        <div class="guan_time">
+                            <p>建馆时间：{$vo.create_at|date='Y-m-d', ###}</p>
+                            <p>建馆馆号：{$vo.id}</p>
+                            <div class="guan_btn">
+                                <a href="{:url('user_hall_info', ['id' => $vo['id']])}">编辑</a>
+                                <a href="{:url('/home/hall/worshipHall', ['id' => $vo['id']])}">祭拜大厅</a>
+                                <a href="{:url('user_hall_state', ['id' => $vo['id']])}">状态</a>
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{include file="/home/member/common/footer" /}

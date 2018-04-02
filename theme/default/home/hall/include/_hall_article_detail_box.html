@@ -1,0 +1,41 @@
+<div class="right-bg">
+    <!--<h2 class="private-title">追忆文选</h2>-->
+    <div class="articledel_box">
+        <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+        <div class="bread_route">
+            {if $info.hall_type eq 1}
+            <!-- 发表追忆文选按钮 upimg_btn -->
+            {if is_login() && is_login() eq $info.hall_member_id}
+            <a class="app_btn" href="{:url('/home/Hall/addHallArticle', ['id' => $info['id'], 'article_id' => $articleInfo['id']])}">修改</a>
+            {/if}
+            您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+            &gt;
+            追忆文选
+            {else /}
+            追忆文选
+            {/if}
+        </div>
+        <div class="app_news">
+            <h1>{$articleInfo.article_title}</h1>
+            <p class="date">
+                    <span>
+                        {$articleInfo.create_at|date="Y-m-d H:i:s",###}</span>
+                <span class="ml20">发表人：<a href="javascript:;">{$info.member.member_nickname}</a></span>
+
+            </p>
+        </div>
+        <div class="pull_box">
+            {$articleInfo.article_content}
+        </div>
+        <!-- <div class="updown">
+
+             <a href="/g5028213/n_130153.htm" title="遥望天堂，许下幸福">上一篇：遥望天堂，许下幸福</a>
+
+             |
+
+             <a href="/g5028213/n_129009.htm" title="冰后百日祭">下一篇：冰后百日祭</a>
+
+         </div>-->
+        <!--- 追忆文选列表表述--->
+    </div>
+</div>

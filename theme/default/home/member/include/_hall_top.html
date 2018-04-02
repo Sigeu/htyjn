@@ -1,0 +1,18 @@
+<div class="content-one">
+    <div class="c-title">
+        {if isset($vo['id'])}编辑{else /}创建{/if}纪念馆
+    </div>
+    <div class="c-title-box clearfix">
+        <ul class="c-title-nav clearfix">
+            {if isset($vo['id'])}
+            <li><a {if $hallType eq 1} class="current"{/if} href="javascript:;">个人纪念馆</a></li>
+            <li><a {if $hallType eq 3} class="current"{/if} href="javascript:;">家族纪念馆</a></li>
+            <li><a {if $hallType eq 2} class="current"{/if} href="javascript:;">双人纪念馆</a></li>
+            {else /}
+            <li><a {if $hallType eq 1} class="current"{/if} href="{:url('user_hall_add', ['hall_type' => 1])}">个人纪念馆</a></li>
+            <li><a {if $hallType eq 3} class="current"{/if} href="{:url('user_hall_add', ['hall_type' => 3])}">家族纪念馆</a></li>
+            <li><a {if $hallType eq 2} class="current"{/if} href="{:url('user_hall_add', ['hall_type' => 2])}">双人纪念馆</a></li>
+            {/if}
+        </ul>
+    </div>
+</div>

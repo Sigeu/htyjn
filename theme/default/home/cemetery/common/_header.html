@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,IE=EmulateIE8,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="generator" content="UG93ZXJlZCBCeSBTaG9wTkMubmV0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="author" content="Bizpower-Developers">
+    <title>公墓商城</title>
+    {load href="/static/home/js/jquery.js" /}
+    {load href="/static/home/css/bootstrap.css" /}
+    <!-- ================== 开始基础CSS调用 ================== -->
+    {load href="/static/home/css/service-base.css" /}
+    <link href="http://www.xjlinguo.com/public/css/animate.min.css" rel="stylesheet" type="text/css">
+    {load href="/static/home/css/web_common.css" /}
+    {load href="/static/home/css/master.css" /}
+    {load href="/static/home/css/font-awesome.min.css" /}
+    {load href="/static/home/css/perfect-scrollbar.min.css" /}
+    <!--[if IE 7]>
+    <link href="http://www.xjlinguo.com/static/toolkit/font-awesome/css/font-awesome-ie7.min.css" rel="stylesheet">
+    <![endif]-->
+    <!-- ================== 结束基础CSS调用 ================== -->
+    <!-- ================== 开始页面CSS调用 ================== -->
+    {load href="/static/home/css/home_layout.css" /}
+    <!-- ================== 结束页面CSS调用 ================== -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <!-- ================== 开始基础JavaScript调用 ================== -->
+    {load href="/static/home/css/jquery-ui.min.css" /}
+
+    {load href="/static/home/js/layer.js" /}
+    {load href="/static/home/js/jquery.validation.min.js" /}
+    {load href="/static/home/js/waypoints.js" /}
+    {load href="/static/home/js/perfect-scrollbar.min.js" /}
+    {load href="/static/home/js/jqthumb.js" /}
+    {load href="/static/home/css/layer.css" /}
+    <!-- If you'd like to support IE8 -->
+    {load href="/static/home/js/videojs-ie8.min.js" /}
+    {load href="/static/home/js/bootstrap.js" /}
+
+    {load href="/static/home/css/web_toolbar.css" /}
+    {load href="/static/home/css/web_search.css" /}
+    {load href="/static/home/css/index.css" /}
+    {load href="/static/home/css/shop.css" /}
+    <!-- ================== 结束基础JavaScript调用 ================== -->
+</head>
+<body>
+
+<div class="public-top-layout">
+    <div class="topbar wrapper">
+        <div class="left">
+            <span>您好，欢迎来到公墓商城！</span>
+            <a href="/">[返回云纪念官网]</a>
+        </div>
+        <div class="right">
+            <div class="login" style="position:relative;">
+                {if is_login()}
+                <a href="{:url('/home/member/index',['id'=>$user.member_id])}" onmouseover="className('dropdown-menu')" id="dropdownMenu2" >
+                    {if $user.member_name eq null}{$user.member_mobile}{else/}{$user.member_name}{/if}
+                    <i class="glyphicon glyphicon-menu-down"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" style="left: -56px;">
+                    <li><a href="#">个人中心</a></li>
+                    <li><a href="#">账号设置</a></li>
+                    <li><a href="#">个人中心</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">退出</a></li>
+                </ul>
+                {else/}
+                <a href="http://bz.yjn100.com/member/index.php?act=login&ref_url=http://www.yjn100.com/">您好，请登录</a>
+                <a href="http://bz.yjn100.com/member/index.php?act=login&op=register&ref_url=http://www.yjn100.com/ " class="c-danger">免费注册</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="header-wrap">
+    <div class="public-head-layout wrapper">
+        <h1 class="site-logo"><a href="{:url('home/cemetery/index')}"><img src="__PUBLIC__/static/home/images/shop-logo.png" alt=""></a></h1>
+        <div class="head-search-layout">
+            <div class="head-search-tab">
+                <span onclick="muDi()"><a href="javascript:;" class="selected" data="head-search-bar">墓穴</a></span>
+                <span onclick="lingYun()"><a href="javascript:;" class="lingYun" data="head-search-store-bar">陵园</a></span>
+            </div>
+
+            <div class="head-search-bar" id="head-search-bar">
+                <form action="{:url('/home/cemetery/searchKey')}" method="get" class="search-form" id="top_search_form"
+                      onkeydown="if(event.keyCode==13){return false;}">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input
+                        name="keyword1" id="keyword" class="input-text ui-autocomplete-input" data-hot-value="" value=""
+                        maxlength="60" placeholder=" 请输入您要搜索的墓穴关键字" autocomplete="off" type="text">
+                    <input id="buttonSearch" value="搜 索" class="input-submit" type="submit">
+                </form>
+                <!-- 搜索提示div 开始 -->
+                <div class="search-tip" id="search-tip" style="display: none;">
+                    <div class="search-history">
+                        <div class="title">历史纪录<a href="javascript:void(0);" id="search-his-del">清除</a></div>
+                        <ul id="search-his-list">
+                        </ul>
+                    </div>
+                    <div class="search-hot">
+                        <div class="title">热门搜索...</div>
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 搜索提示div 结束 -->
+            </div>
+
+            <div class="head-search-bar" id="head-search-store-bar" style="display: none;">
+                <form action="{:url('/home/cemetery/searchKey')}" method="get" class="search-form" onkeydown="if(event.keyCode==13){return false;}">
+                    <input name="keyword2" id="keywordStore" class="input-text" data-hot-value="" value="" maxlength="60"
+                           placeholder=" 请输入您要搜索的陵园关键字" autocomplete="off" type="text">
+                    <input id="buttonSearchStore" value="搜 索" class="input-submit" type="submit">
+                </form>
+            </div>
+
+            <div class="keyword">热门关键字：
+                <ul>
+                    {volist name='cate' id='cates' length='6'}
+                    <li><a href="{:url('/home/cemetery/search',['id'=>$cates.id])}" >{$cates.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+
+        </div>
+        <!--<div class="head-app-s">扫一扫</div>-->
+        <div class="head-app">
+            <div class="head-app-ewm">
+                <img src="{:sysconf('android_app_download')}">
+                <div class="head-app-ewm-float">
+                    <h3>安卓APP下载</h3>
+                </div>
+            </div>
+        </div>
+        <div class="head-app">
+            <div class="head-app-ewm">
+                <img src="{:sysconf('ios_app_download')}">
+                <div class="head-app-ewm-float">
+                    <h3>苹果APP下载</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="public-nav-layout">
+    <div class="wrapper">
+        <div class="all-category"></div>
+        <ul class="site-menu">
+            <li><a href="{:url('/home/cemetery')}" class="current">首页</a></li>
+            <li><a href="{:url('/home/cemetery/news')}">商城资讯</a></li>
+            <!--<li><a href="">公墓样式</a></li>-->
+            <li><a href="{:url('/home/cemetery/discount')}">墓地优惠</a></li>
+            <li><a href="" target="_blank">殡葬流程</a></li>
+        </ul>
+        <!--<div class="mobil-mall-ad"><img src="__PUBLIC__/static/home/images/400.png"></div>-->
+    </div>
+</div>
+{load href="/static/home/css/web_toolbar.css" /}
+{load href="/static/home/css/culturelist.css" /}
+
+<script>
+    function lingYun() {
+        $("#head-search-bar").hide();
+        $("#head-search-store-bar").show();
+
+        $(".selected").css({
+            'color':"rgb(33, 33, 33)"
+        })
+        $(".lingYun").css({
+            'color':"#6c271d"
+        })
+//        表单事件
+        var vlaData = $('#keyword').val()
+//        $.post('{:url('/home/cemetery/searchKey')}',{"name":vlaData},function (data) {
+//            console.log(data)
+//        })
+    }
+    function muDi() {
+        $("#head-search-bar").show();
+        $("#head-search-store-bar").hide();
+
+        $(".selected").css({
+            'color':"#6c271d"
+
+        })
+        $(".lingYun").css({
+            'color':"rgb(33, 33, 33)"
+        })
+    }
+
+</script>

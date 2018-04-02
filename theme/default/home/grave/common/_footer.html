@@ -1,0 +1,39 @@
+<div class="contentBox foot_bg">
+    <div class="container">
+        <div class="foot txt-white">
+            <div class="foot_a pb20">
+                <span><img src="__PUBLIC__/static/home/images/shop-gw-phone.png"></span>
+                <p class="dianhua">{$grave.phone}</p>
+                <p>服务时间：周一至周日7:00至18:00</p>
+            </div>
+            <div class="foot_b">
+                <p class="txt-gray">Copyright © 2016 - 2017 www.yjn100.com All Rights Reserved <br>
+                    云纪念 版权所有
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- todo popup -->
+<script language="javascript" type="text/javascript">
+
+    if (typeof M !== "undefined" && typeof M.loadResource === "function") {
+
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/Layer.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/DialogBase.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/Dialog.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/alert.js");
+    }
+</script>
+
+
+<!-- 图片懒加载插件-->
+<script src="__PUBLIC__/static/home/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $("img.lazy").lazyload({effect: "fadeIn"});
+    });
+</script>
+</body>
+</html>

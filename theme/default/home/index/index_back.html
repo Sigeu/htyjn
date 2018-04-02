@@ -1,0 +1,655 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/index.css">
+{/block}
+
+<!-- content -->
+{block name="content"}
+
+<style>
+    .top1 button a, .top1 button a:hover {
+        color: #f4dea3;
+        text-decoration: none;
+        display: block;
+    }
+
+    .topL .col3 a {
+        color: #692319;
+        text-decoration: none;
+    }
+
+</style>
+
+<!--轮播-->
+<div class="container-fluid lunBo">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {foreach :get_banner(1, 5) as $key=>$vo}
+            <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+            {/foreach}
+
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            {foreach :get_banner(1, 5) as $key=>$vo}
+            <div class="item{if $key eq 0} active{/if}">
+                <a href="{$vo.url}">
+                    <img src="{$vo.image}" alt="{$vo.title}">
+                </a>
+            </div>
+            {/foreach}
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <!--<span class="sr-only">Previous</span>-->
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <!--<span class="sr-only">Next</span>-->
+        </a>
+    </div>
+    <div>
+        <div class="LunBoImg"> </div>
+        <!--<img class="LunBoImg" src="__PUBLIC__/static/home/images/bananeBottom.png" alt="">-->
+    </div>
+</div>
+
+<!--家族宗祠-->
+<div class="zongCi">
+    <div class="hez-width top" >
+        <div class="centBk" >
+            <div class="top1 " style="margin: 0 auto; width: 950px;" >
+                <a href="{:url('home/Member/user_hall_add', ['hall_type' => 3])}">
+                    <button style="right: -98px" class="hez-left" onclick='window.location.href="/home/Member/user_hall_add/hall_type/3"'>
+                        <span>
+                            <img src="__PUBLIC__/static/home/images/zongCi1.png" alt="">
+                        </span>
+                        创建宗祠111
+                    </button>
+                </a>
+                <img class="img-responsive hez-left" src="__PUBLIC__/static/home/images/zongCi.png" alt="">
+                <a href="{:url('home/Hall/familyHallList')}" style="line-height: 56px">
+                    <button style="left: -98px" class="hez-left" onclick='window.location.href="/home/Hall/familyHallList"'>
+                        <span>
+                            <img src="__PUBLIC__/static/home/images/zongCi2.png" alt="">
+                        </span>
+                        查看更多
+                    </button>
+                </a>
+            </div>
+
+            <div class="top2" >
+                <div class="ciBatT">
+
+                    {foreach $familyHallList as $key=>$vo}
+                    <div class="ciBat  hez-left">
+                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}">
+                            <div class="text-center ciTimg" id="ciT{$key}"  onmousemove="ciTm(this.id)" onmouseout="ciTy(this.id)">
+                                <img class="" src="{:quick_pic_thumb($vo.hall_img, '@266w_170h')}" alt="">
+                                <div class="center-block siTspan">
+                                    <span class="span1"></span>
+                                </div>
+                            </div>
+                            <div class= "hez-left navbar-left">
+                                <h3>{$vo.hall_name}</h3>
+                                <p>立碑人：{$vo.family_libeiren}</p>
+                                <p>家族祖籍：{$vo.family_ancestral_home|msubstr=0,6,false}</p>
+                            </div>
+                            <div class="hez-right navbar-right">
+                                <div class="leftCi">
+                                    <img class="img-responsive center-block" src="__PUBLIC__/static/home/images/ciT.png" alt="">
+                                    <p>{$vo.family_member}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {/foreach}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--纪念馆-->
+<div class="jiNian">
+    <div class="hez-width">
+        <div class="centBk " >
+            <div class="top1 hez-width">
+                <img class="hez-cneter" style="margin-left: 460px" src="__PUBLIC__/static/home/images/jiNian.png" alt="">
+            </div>
+
+
+            <div class="row top2">
+                <div class="jiNianLeft hez-left">
+                    <div class="tobT">
+                        <div class="navbar-left" id="jiNianTab">
+                            <div class="jinBtn  jinBtnM" onmouseover="jiNain(1)"  >
+                                <p> 个人纪念馆</p>
+                            </div>
+                            <div class="jinBtn" onmouseover="jiNain(2)">
+                                <p> 名人纪念馆</p>
+                            </div>
+                        </div>
+                        <div class="navbar-right jinR">
+                            <a href="{:url('/home/hall/privateHall')}" title="查看更多纪念馆"><p>查看更多>></p></a>
+                        </div>
+                    </div>
+                    <div class="row toblist" id="toblist1" >
+
+                        {foreach $oneHallList as $vo}
+                        <div class=" jiNianL">
+
+                            <a href="{:url('home/hall/detail', ['id' => $vo['id']])}">
+
+                                <div class="navbar-left jinList hez-left" >
+                                    <img class="imgXk" src="{:quick_pic_thumb($vo.hall_img, '@87w_125h')}" alt="">
+                                    <p>{$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}</p>
+                                </div>
+                                <div class="navbar-left jinListA hez-left" >
+                                    <h3>{$vo.hall_name|msubstr=0,6,false}</h3>
+                                    <p><img src="__PUBLIC__/static/home/images/jiNian1.png" alt="">{if $vo.member_nickname eq ''}{$vo.member_name}{else/}{$vo.member_nickname}{/if}</p>
+                                    <p><img src="__PUBLIC__/static/home/images/jiNian2.png" alt="">{$vo.memorial_value}</p>
+                                    <span class="spanD">个</span><span class="spanC">lv{$vo.hall_level}</span>
+                                </div>
+
+                            </a>
+                            
+                        </div>
+                        {/foreach}
+
+                    </div>
+
+                    <!--名人纪念馆-->
+                    <div class="row toblist" id="toblist2" style="display: none">
+
+                        {foreach $famousHallList as $vo}
+                        <div class=" jiNianL">
+                            <a href="{:url('home/hall/detail', ['id' => $vo['id']])}">
+
+                                <div class="navbar-left jinList hez-left" >
+                                    <img class="imgXk" src="{:quick_pic_thumb($vo.hall_img, '@87w_125h')}" alt="">
+                                    <p>{$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}</p>
+                                </div>
+                                <div class="navbar-left jinListA hez-left" >
+                                    <h3>{$vo.hall_name|msubstr=0,6,false}</h3>
+                                    <p><img src="__PUBLIC__/static/home/images/jiNian1.png" alt="">{if $vo.member_nickname eq ''}{$vo.member_name}{else/}{$vo.member_nickname}{/if}</p>
+                                    <p><img src="__PUBLIC__/static/home/images/jiNian2.png" alt="">{$vo.memorial_value}</p>
+                                    <span class="spanB">名</span><span class="spanC">lv{$vo.hall_level}</span>
+                                </div>
+
+                            </a>
+
+
+                        </div>
+                        {/foreach}
+
+                    </div>
+                </div>
+
+                <div class=" top3  hez-right">
+                    <div class="row">
+                        <div class="text-center jinRa">
+                            <a href="{:url('home/member/user_hall_add')}">
+                                <img src="__PUBLIC__/static/home/images/jiNianR.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="tabA">
+                            <div class="Lileft navbar-left">
+                                <p>祭祀排行</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="topS">
+                            {foreach $hallRank as $vo}
+                            <div class="lisT">
+                                <div class=""  style="display: inline-table" >
+                                    {if $vo.hall_order eq 1}
+                                    <img class="ioc1" src="__PUBLIC__/static/home/images/jiNianR1.png" alt="">
+                                    {elseif $vo.hall_order eq 2 /}
+                                    <img class="ioc1" src="__PUBLIC__/static/home/images/jiNianR2.png" alt="">
+                                    {elseif $vo.hall_order eq 3 /}
+                                    <img class="ioc1" src="__PUBLIC__/static/home/images/jiNianR3.png" alt="">
+                                    {else /}
+                                    <h2 class="hez-left">{$vo.hall_order}</h2>
+                                    {/if}
+                                    
+                                    <img class="lisTimg1 " src="{:quick_pic_thumb($vo.hall_img, '@40w_60h')}" alt="">
+
+                                        <p class="" style="float: left;display: inline">
+                                            <a stylele="display: inline" href="{:url('home/hall/detail', ['id'=>$vo['hall_id']])}" title="{$vo.hall_name}">{$vo.hall_name|msubstr=0,3} </a>
+                                        </p>
+                                        <span class="hez-left">纪念馆</span>
+
+
+                                </div>
+
+                                <div class="hez-right lisT2 " >
+                                    <img class="hez-left" src="__PUBLIC__/static/home/images/jiNianR3s.png" style="" alt="">
+                                    <p class="hez-right">{$vo.hall_integral}</p>
+                                </div>
+                            </div>
+                            {/foreach}
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="tabA">
+                            <div class="Lileft hez-left">
+                                <p>追思留言</p>
+                            </div>
+                            <div class="Lirigh hez-right">
+                                <a href="{:url('/home/hall/messageList')}" title="更多追思留言">
+                                    <span>更多 <img src="__PUBLIC__/static/home/images/jiNrS.png" alt=""> </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="topL">
+
+                            {foreach $hallLeaveMessage as $vo}
+                            <div class="list">
+                                <div class="hez-left"><img src="{:quick_pic_thumb($vo.member_avatar, '@60w_60h')}" alt=""></div>
+                                <div class="listR hez-left">
+                                    <h3> <span class="col2">{$vo.member_nickname}</span>  在  <sapn class="col3"><a href="{:url('home/hall/detail', ['id' => $vo['id']])}">{$vo.hall_name}</a></sapn> 纪念馆追思</h3>
+                                    <p>{$vo.create_at|time_stamp}</p>
+                                    <p class="col1">{$vo.content|urldecode|msubstr=0,90}</p>
+                                </div>
+                            </div>
+                            {/foreach}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--公墓商城-->
+<div class="gongMu">
+    <div class="hez-width centBk" >
+        <div class="row top1">
+            <img  class="center-block" src="__PUBLIC__/static/home/images/gongMubi.png" alt="">
+        </div>
+        <div class="row top2">
+            <div class="row li1" >
+                <div class="qY">
+                    <p>区域选择： </p>
+                    <form action="{:url('/home/cemetery/scity')}" method="post">
+                    <select class="qYbtn"  name="ddlProvince"  id="ddlProvince">
+                        <option value="-1">全部</option>
+                        {foreach $area as $areas}
+                        <option  value="{$areas['id']}">{$areas['province']}</option>
+                        {/foreach}
+                    </select>
+
+                    <select class="qYbtn"  name="ddlCity" id="ddlCity">
+                        <option id="city1" value="-1">全部</option>
+                    </select>
+                    <button class="qYbtn">搜索</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="row li2">
+                <p> 价格区间:</p>
+                <span class="spanR"><a href="{:url('home/cemetery/sprice',['p_min'=>0,'p_max'=>0,'p'=>0])}"><u>全部</u></a>:</span>
+                {volist name='price' id='pvo'}
+                <span><a href="{:url('home/cemetery/sprice',['p_min'=>$pvo.price_min,'p_max'=>$pvo.price_max])}">{$pvo.price_min}-{$pvo.price_max}</a></span>
+                {/volist}
+            </div>
+            <div class="row li2" style="border-bottom:none;">
+                <div class="navbar-left">
+                    <p> 墓形分类:</p>
+                    <span class="spanR"><u>全部</u>:</span>
+                    {volist name='cate' id='cates'}
+                    <span><a href="{:url('/home/cemetery/search',['id'=>$cates.id])}">{$cates.name}</a></span>
+                    {/volist}
+                </div>
+                <div class="navbar-right">
+                    <img class="img-responsive" src="__PUBLIC__/static/home/images/cvol.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="row top3">
+            <div class="row Mtab">
+
+                <div style="hez-width">
+
+                    {volist name='cemetery' id='cvo' length='8'}
+                    <div class="listT hez-left"  >
+                        <a href="{:url('/home/Grave/index',['id'=>$cvo.id])}">
+                            <div class="center-block img">
+                               <img class="center-block" src="{$cvo.image_id}">
+                            </div>
+                            <div>
+                                <h4>{$cvo.name}/{$cvo.grave_province}{$cvo.grave_city}</h4>
+                                <div class="navbar-left">
+                                    <p>价格：<span >￥{$cvo.price_min}</span>  起</p>
+                                </div>
+                                <div class="navbar-right">
+                                    <!--<p class="pTur">已售: {$cvo.click_amount}</p>-->
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {/volist}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!--殡葬服务-->
+<div class="binZan">
+    <div class="hez-width centBk" >
+        <div class="row top1">
+            <div class="row">
+                <div class="center-block">
+                    <img  class="center-block" src="__PUBLIC__/static/home/images/binZan.png" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="topM"  >
+                    <img  class="center-block hez-left" style="margin-left: 30px" src="__PUBLIC__/static/home/images/binZanRLi.png" alt="">
+
+                    <div class="topMc " style="display: flex">
+                        <div class="topMcli hez-left" id="bzTab1" onmouseover="binZ(this.id)">
+                            <a target="_blank" href="http://bz.yjn100.com/shop/index.php?act=search&op=index&cate_id=1057">
+                                <img src="__PUBLIC__/static/home/images/tb/shop_fl1.png" alt="">
+                                <p>殡葬用品</p>
+                            </a>
+                        </div>
+
+                        <div class="topMcli hez-left" id="bzTab3" onmouseover="binZ(this.id)">
+                            <a target="_blank" href="http://bz.yjn100.com/shop/index.php?act=search&op=index&cate_id=1059">
+                                <img src="__PUBLIC__/static/home/images/tb/shop_fl3.png" alt="">
+                                <p>殡葬设备</p>
+                            </a>
+                        </div>
+
+                        <div class="topMcli hez-left" id="bzTab4" onmouseover="binZ(this.id)">
+                            <a target="_blank" href="http://bz.yjn100.com/shop/index.php?act=search&op=index&cate_id=1060">
+                                <img src="__PUBLIC__/static/home/images/tb/shop_fl4.png" alt="">
+                                <p>殡葬服务</p>
+                            </a>
+                        </div>
+
+                        <div class="topMcli hez-left" id="bzTab2" onmouseover="binZ(this.id)">
+                            <a target="_blank" href="http://bz.yjn100.com/shop/index.php?act=search&op=index&cate_id=1058">
+                                <img src="__PUBLIC__/static/home/images/tb/shop_fl2.png" alt="">
+                                <p>原料供应</p>
+                            </a>
+                        </div>
+                    </div>
+                    <img class="center-block hez-left"  src="__PUBLIC__/static/home/images/binZanrRi.png" alt="">
+                </div>
+
+            </div>
+        </div>
+        <!--<div class="row top2">
+            <div class="tabli" style="width: 120px">
+                <span style="width: 96px;">丧葬用品:</span>
+            </div>
+            <div class="tabli">
+                <span>丧葬用品</span> <span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span>
+                <span>丧葬用品</span> <span>丧葬用品</span><span>丧葬用品</span><span>丧葬用品</span>
+            </div>
+        </div>-->
+        <div class="row top3">
+            <div class="row Mtab">
+
+                <div style="display: flex;flex-wrap:wrap;margin-left: 30px">
+
+                    {foreach $bzypList as $vo}
+                    <div class="listT hez-left">
+                        <a target="_blank" href="http://bz.yjn100.com/shop/index.php?act=goods&op=index&goods_id={$vo.goods_id}">
+                            <div class="center-block img">
+                                <img class="center-block" src="{$vo.goods_image_url}">
+                            </div>
+                            <div>
+                                <h4>{$vo.goods_name}</h4>
+                                <div class="navbar-left hez-left">
+                                    <p>价格：<span >￥{$vo.goods_price}</span>  起</p>
+                                </div>
+                                <div class="navbar-right hez-right">
+                                    <p class="pTur">已售: {$vo.goods_salenum}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {/foreach}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 资讯 -->
+<div class="ziXun">
+    <div class="centBk hez-width" style="display: flex;justify-content: space-around;">
+        <div class="zXleft hez-left">
+
+            <div class="row topA">
+                <p><img src="__PUBLIC__/static/home/images/zIXunIcom.png" alt=""> 行业资讯</p>
+                <a href="{:url('/home/news')}" title="更多行业资讯">
+                    <span>更多 <img src="__PUBLIC__/static/home/images/jiNrS.png" alt=""></span>
+                </a>
+            </div>
+            <div class="row zXtop">
+                <span id="zxLi1" class="spanT" onmousemove="zxL(this.id)" >传统文化</span>
+                <span id="zxLi2" onmousemove="zxL(this.id)" >殡葬文化</span>
+                <span id="zxLi3" onmousemove="zxL(this.id)" >姓氏文化</span>
+                <span id="zxLi4" onmousemove="zxL(this.id)" >中华美德</span>
+            </div>
+            <div class="row zXtop2 zXtopA">
+                {volist name="ctwhList" id="vo" offset="0" length='1'}
+                <div class="top1" style="width: 550px ; height:120px;margin-bottom: 20px;">
+                    <div style="float: left;width: 180px">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}"  style="display: inline"  title="{$vo.title}">
+                            <img src="{:quick_pic_thumb($vo.image, '@165w_126h')}" style="display: inline" alt="">
+                        </a>
+                    </div>
+                    <div style="float: left">
+                        <a  href="{:url('home/News/detail', ['id' => $vo['id']])}" style="display: inline"  title="{$vo.title}">
+                            <h5 style=" padding: 0 10px ;">{$vo.title|msubstr=0,20}</h5>
+                            <div style="height: 68px;overflow: hidden;display: inline-table;width: 00px">
+                                <p style="width: 330px  ">{$vo.description|msubstr=0,70}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {/volist}
+
+                <div class="top2">
+                    {volist name="ctwhList" id="vo" offset="1" length='5'}
+                    <div class="p1">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}" title="{$vo.title}">
+                            <p><img src="__PUBLIC__/static/home/images/zIXunIcomA.png" alt=""> {$vo.title|msubstr=0,25}</p>
+                        </a>
+                        <span>{$vo.create_at|date='Y-m-d',###}</span>
+                    </div>
+                    {/volist}
+                </div>
+
+            </div>
+
+            <div class="row zXtop2 zXtopB" >
+
+                {volist name="bzwhList" id="vo" offset="0" length='1'}
+                <div class="top1" style="width: 550px ; height:120px;margin-bottom: 20px;">
+                    <div style="float: left;width: 180px">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}"  style="display: inline"  title="{$vo.title}">
+                            <img src="{:quick_pic_thumb($vo.image, '@165w_126h')}" style="display: inline" alt="">
+                        </a>
+                    </div>
+                    <div style="float: left">
+                        <a  href="{:url('home/News/detail', ['id' => $vo['id']])}" style="display: inline"  title="{$vo.title}">
+                            <h5 style=" padding: 0 10px ;">{$vo.title|msubstr=0,20}</h5>
+                            <div style="height: 68px;overflow: hidden;display: inline-table;width: 00px">
+                                <p style="width: 330px  ">{$vo.description|msubstr=0,70}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {/volist}
+
+                <div class="top2">
+                    {volist name="bzwhList" id="vo" offset="1" length='5'}
+                    <div class="p1">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}" title="{$vo.title}">
+                            <p><img src="__PUBLIC__/static/home/images/zIXunIcomA.png" alt=""> {$vo.title|msubstr=0,25}</p>
+                        </a>
+                        <span>{$vo.create_at|date='Y-m-d',###}</span>
+                    </div>
+                    {/volist}
+                </div>
+
+            </div>
+
+            <div class="row zXtop2 zXtopC">
+
+                {volist name="xswhList" id="vo" offset="0" length='1'}
+                <div class="top1" style="width: 550px ; height:120px;margin-bottom: 20px;">
+                    <div style="float: left;width: 180px">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}"  style="display: inline"  title="{$vo.title}">
+                            <img src="{:quick_pic_thumb($vo.image, '@165w_126h')}" style="display: inline" alt="">
+                        </a>
+                    </div>
+                    <div style="float: left">
+                        <a  href="{:url('home/News/detail', ['id' => $vo['id']])}" style="display: inline"  title="{$vo.title}">
+                            <h5 style=" padding: 0 10px ;">{$vo.title|msubstr=0,20}</h5>
+                            <div style="height: 68px;overflow: hidden;display: inline-table;width: 00px">
+                                <p style="width: 330px  ">{$vo.description|msubstr=0,70}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {/volist}
+
+                <div class="top2">
+                    {volist name="xswhList" id="vo" offset="1" length='5'}
+                    <div class="p1">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}" title="{$vo.title}">
+                            <p><img src="__PUBLIC__/static/home/images/zIXunIcomA.png" alt=""> {$vo.title|msubstr=0,25}</p>
+                        </a>
+                        <span>{$vo.create_at|date='Y-m-d',###}</span>
+                    </div>
+                    {/volist}
+                </div>
+
+            </div>
+
+            <div class="row zXtop2 zXtopD">
+
+                {volist name="zhmdList" id="vo" offset="0" length='1'}
+                <div class="top1" style="width: 550px ; height:120px;margin-bottom: 20px;">
+                    <div style="float: left;width: 180px">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}"  style="display: inline"  title="{$vo.title}">
+                            <img src="{:quick_pic_thumb($vo.image, '@165w_126h')}" style="display: inline" alt="">
+                        </a>
+                    </div>
+                    <div style="float: left">
+                        <a  href="{:url('home/News/detail', ['id' => $vo['id']])}" style="display: inline"  title="{$vo.title}">
+                            <h5 style=" padding: 0 10px ;">{$vo.title|msubstr=0,20}</h5>
+                            <div style="height: 68px;overflow: hidden;display: inline-table;width: 00px">
+                                <p style="width: 330px  ">{$vo.description|msubstr=0,70}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {/volist}
+
+                <div class="top2">
+                    {volist name="zhmdList" id="vo" offset="1" length='5'}
+                    <div class="p1">
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}" title="{$vo.title}">
+                            <p><img src="__PUBLIC__/static/home/images/zIXunIcomA.png" alt=""> {$vo.title|msubstr=0,25}</p>
+                        </a>
+                        <span>{$vo.create_at|date='Y-m-d',###}</span>
+                    </div>
+                    {/volist}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="zXright hez-right" style="margin-left: 10px;width: 540px" >
+            <div class="row topA" style=" width: 565px;margin-top: 25px;border-bottom: 1px solid #692319;padding: 0 0;">
+                <p style="float: left" class="gyxz"><img src="__PUBLIC__/static/home/images/zIXunIcom.png" style="display: inline" alt=""> 关于我们</p>
+                <a href="{:url('/home/news')}" class="hez-right" style="display: inline" title="更多行业资讯">
+                    <span class="gyspan">更多 <img src="__PUBLIC__/static/home/images/jiNrS.png" alt=""></span>
+                </a>
+            </div>
+            <div class=" hez-left" style="margin-left: -5px">
+                <img  style="width: 550px; margin-top: 30px;margin-bottom: 20px" src="__PUBLIC__/static/home/images/ziXun1.png" alt="">
+                <div class="listW" style="width: 550px">
+                    {$aboutInfo.content}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+
+{block name="js-foot"}
+<script>
+    $('#ddlProvince').on('click',function () {
+        var shengfen = $(this).val()
+        if (shengfen != ''){
+            var geturl ='/home/cemetery/city.html'
+            $.get(geturl,{'pid':shengfen},function (data) {
+                var chengShi =data.result
+                var x = ""
+                var ddlCity = $('#ddlCity');
+                var cityHtml = "";
+
+                for (x in chengShi) {
+                    cityHtml += "<option value='" + chengShi[x].id + "'>" + chengShi[x].city + "</option>";
+                }
+
+                if (cityHtml == '') {
+                    cityHtml = '<option id="city1" value="-1">全部</option>'
+                }
+                document.getElementById('ddlCity').innerHTML = cityHtml;
+            })
+        }
+
+    })
+
+</script>
+<script src="__PUBLIC__/static/home/js/index.js"></script>
+{/block}

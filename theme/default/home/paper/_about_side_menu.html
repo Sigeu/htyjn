@@ -1,0 +1,14 @@
+<div class="ad_leftNav">
+    <div class="adl_titleName">关于我们</div>
+
+    <ul class="adl_classify_box">
+        {volist name="aboutSideMenu" id="vo" key="k"}
+        <li class="adl_classify">
+            <div class="adlc_one">
+                <a href="{$vo.url}" target="{$vo.target}">{$vo.title}</a>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+
+</div>

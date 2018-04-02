@@ -1,0 +1,87 @@
+<style>
+    .LiangHua {
+        float: left;
+        padding-left: 10px;
+        padding-top: 14px;
+    }
+    .bdsharebuttonbox {
+        float: left;
+    }
+</style>
+
+<div class="single_header">
+    <div class="fn_info">
+        <div class="info_one">
+            <div class="title">
+                <h1>{$info.hall_name}</h1>纪念馆
+            </div>
+            <div class="LiangHua">
+                <img src="__PUBLIC__/static/home/images/dj_0.png">
+
+            </div>
+            <div style="background-image: url('/static/home/images/jfdj.png'); text-align: center; width: 32px;font-size: 12px; color: rgb(255, 255, 255); float: left; margin-top: 18px; padding: 3px;">
+                LV{$info.hall_level}
+            </div>
+        </div>
+        <p class="ft14 line24">
+            <span class="left">馆号：{$info.id}</span><span class="ml20 left">馆址：{$info.hall_url}</span>
+        </p>
+        <div class="clear">
+        </div>
+        <p class="line21 clear mt10">
+
+            {if $info.has_followed eq 0}
+            <a href="javascript:;" class="att_ico left" onclick="Intersted('{$info.id}','2')">
+                <i></i>加关注</a>
+            {else /}
+            <a href="javascript:;" class="att_ico left" onclick="Intersted('{$info.id}','2')">
+                <i></i>已关注</a>
+            {/if}
+
+
+            <a href="javascript:;" style="padding: 2px;" onclick="CopyUrl('{$info.share_url}')"
+               class="copy_ico left ml10"><i></i>复制馆址</a>
+
+        </p>
+
+        <!-- Baidu Share BEGIN -->
+        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+        <!-- Baidu Share END -->
+
+        <p></p>
+    </div>
+    <div class="rt_info">
+        <p>
+            公历：{$info.date}
+            星期{$info.week}
+        </p>
+        <p>
+            农历：
+            {$info.nongli}
+
+        </p>
+        <input id="uikid" value="{$info.id}" type="hidden">
+        <input id="uiuid" value="{$info.hall_member_id}" type="hidden">
+    </div>
+</div>
+<div class="single_nav">
+
+    <a href="{:url('home/hall/detail', ['id' => $info['id']])}">纪念主页</a>
+    |
+    <a href="{:url('story', ['id' => $info['id']])}">生平故事</a>
+    |
+
+    <a href="{:url('photo', ['id' => $info['id']])}">回忆相册</a>
+    |
+
+    <a href="{:url('article', ['id' => $info['id']])}">追忆文选</a>
+    |
+    <a href="{:url('worshipRecord', ['id' => $info['id']])}">祭拜记录</a>
+    |
+    <a href="{:url('message', ['id' => $info['id']])}">追思留言</a>
+    |
+    <a href="{:url('worshipHall', ['id' => $info['id']])}">祭拜大厅</a>
+
+
+</div>

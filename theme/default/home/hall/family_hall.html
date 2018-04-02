@@ -1,0 +1,453 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<!--<script src="__PUBLIC__/static/home/js/jquery.js"></script>-->
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/style.css">
+
+<script src="__PUBLIC__/static/home/js/tabScript.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/web_common.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/family.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/grade.css">
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/jquery.boxy.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/huaien.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/js.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/Navigation.js"></script>-->
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/extend.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/index.css">
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/header.css">-->
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/footer.css">-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/extend.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/JPImgSwich.js"></script>&lt;!&ndash;图片切换&ndash;&gt;-->
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .gd_ban dl dd span :hover, a:hover {
+        text-decoration: underline;
+        color: Black;
+    }
+
+    .weiduduan {
+        width: 970px;
+        margin: 15px auto 0px;
+    }
+
+    #focus {
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #focus ul {
+        height: 380px;
+        position: absolute;
+    }
+
+    #focus ul li {
+        float: left;
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus ul li div {
+        position: absolute;
+        overflow: hidden;
+    }
+
+    #focus .btnBg {
+        position: absolute;
+        width: 970px;
+        height: 20px;
+        left: 0px;
+        bottom: 0px;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn {
+        position: absolute;
+        width: 780px;
+        height: 10px;
+        padding: 5px 10px;
+        right: 0px;
+        bottom: 0px;
+        text-align: right;
+    }
+
+    #focus .btn span {
+        display: inline-block;
+        width: 25px;
+        height: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn span.on {
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .preNext {
+        width: 45px;
+        height: 100px;
+        position: absolute;
+        top: 90px;
+        background: transparent url("__PUBLIC__/static/home/images/sprite.png") no-repeat scroll 0px 0px;
+        cursor: pointer;
+    }
+
+    #focus .pre {
+        left: 0px;
+    }
+
+    #focus .next {
+        right: 0px;
+        background-position: right top;
+    }
+</style>
+<!--图片切换 以前版本-->
+<!-- 图片切换 以前版本-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/family1.js"></script>-->
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .xpdt_box ul li a:hover {
+        color: Black;
+    }
+
+    .i_zp_box ul li .zp_box dl dd {
+        text-align: left;
+    }
+
+    .title_box {
+        border-width: 1px 1px 3px;
+        border-style: solid;
+        border-color: rgb(206, 206, 206) rgb(206, 206, 206) rgb(255, 132, 0) rgb(255, 132, 0);
+        height: 32px;
+        line-height: 32px;
+        clear: both;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .links_box {
+        padding: 10px 25px;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .border {
+        border-left: 1px solid rgb(204, 204, 204);
+        border-bottom: 1px solid rgb(204, 204, 204);
+        border-right: 1px solid rgb(204, 204, 204);
+    }
+
+    .links_box a {
+        display: inline;
+        margin-right: 20px;
+        line-height: 28px;
+        overflow-wrap: break-word;
+        word-break: normal;
+        white-space: nowrap;
+    }
+</style>
+<script type="text/javascript">
+
+//    $(function () {
+//        // FirstLoadXing(); //第一次加载 艾姓
+//        GetBjxId();
+//    });
+//
+//    /*鼠标移入百家姓 显示信息*/
+//    var GetBjxId = function () {
+//        var currentBjx = $(".bjx_box .list li"); //定位到百家姓
+//        $(currentBjx).hover(function () {
+//            var currentIndex = $(currentBjx).index(this);
+//            var bjx = $(".list li a:eq(" + currentIndex + ")").attr("name"); //获取当前id
+//
+//            //获取姓氏信息
+////                $.ajaxLoad({
+////                    url: "/AjaxJiaPu/HistoryAndMingRen.do",
+////                    data: {bjxId: bjx},
+////                    success: function (msg) {
+////                        $("#HistoryAndMingRen").html(msg);
+////                    }
+////                }, "#HistoryAndMingRen");
+//
+//        }, function () {
+//        });
+//    }
+//
+//    //获取姓氏信息
+//    var FirstLoadXing = function () {
+//        $.ajaxLoad({
+//            url: "/AjaxJiaPu/HistoryAndMingRen.do",
+//            success: function (msg) {
+//                $("#HistoryAndMingRen").html(msg);
+//            }
+//        }, "#HistoryAndMingRen");
+//    }
+
+</script>
+<!--<script src="__PUBLIC__/static/home/js/logger.js"></script>-->
+<!--<script src="__PUBLIC__/static/home/js/index.js"></script>-->
+<link href="__PUBLIC__/static/home/css/bdsstyle.css" rel="stylesheet" type="text/css">
+{/block}
+
+{block name="lib-head"}
+
+{/block}
+
+<!-- content -->
+{block name="content"}
+
+<style>
+    .top1 button a, .top1 button a:hover {
+        color: #f4dea3;
+        text-decoration: none;
+        display: block;
+    }
+</style>
+
+<div class="home-focus-layout">
+    <div class="focus">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {foreach :get_banner(6,3) as $key=>$vo}
+                <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+                {/foreach}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {foreach :get_banner(6, 3) as $key=>$vo}
+                <div class="item {if $key eq 0}active{/if}">
+                    <img src="{$vo.image}" alt="{$vo.title}">
+                </div>
+                {/foreach}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="zongCi">
+    <div class="container">
+        <div class="i_border_box mt10" id="GetDiv">
+            <div class="bjx_box">
+                <!--百家姓-->
+                <ul class="list">
+
+                    {foreach $surnamesList as $vo}
+                    <li>
+                        <a target="_blank" title="{$vo.name}" name="{$vo.id}" href="{:url('home/hall/familyHallName', ['id' => $vo['id']])}">{$vo.name}</a>
+                    </li>
+                    {/foreach}
+
+                </ul>
+                <!--历史名人-->
+
+                <div class="bjx_intro">
+                    <div class="profile-row-content">
+                        <select class="select u_w100" name="province">
+                            <option value="">请选择</option>
+                            <option value="2">北京</option>
+                            <option value="3">天津</option>
+                            <option value="4">河北</option>
+                            <option value="5">山西</option>
+                            <option value="6">内蒙古</option>
+                            <option value="7">辽宁</option>
+                            <option value="8">吉林</option>
+                            <option value="9">黑龙江</option>
+                            <option value="10">上海</option>
+                            <option value="11">江苏</option>
+                            <option value="12">浙江</option>
+                            <option value="13">安徽</option>
+                            <option value="14">福建</option>
+                            <option value="15">江西</option>
+                            <option value="16">山东</option>
+                            <option value="17">河南</option>
+                            <option value="18">湖北</option>
+                            <option value="19">湖南</option>
+                            <option value="20">广东</option>
+                            <option value="21">广西</option>
+                            <option value="22">海南</option>
+                            <option value="23">重庆</option>
+                            <option value="24">四川</option>
+                            <option value="25">贵州</option>
+                            <option value="26">云南</option>
+                            <option value="27">西藏</option>
+                            <option value="28">陕西</option>
+                            <option value="29">甘肃</option>
+                            <option value="30">青海</option>
+                            <option value="31">宁夏</option>
+                            <option value="32">新疆</option>
+                            <option value="33">香港</option>
+                            <option value="34">台湾</option>
+                            <option value="15395">澳门</option>
+                        </select>
+                        <select class="select u_w100" name="area">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="family-map">
+                        <img src="__PUBLIC__/static/home/temporary-img/family-bjx-map.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <div class="map-text">
+                            <h3>昆明市已创建</h3>
+                            <h3>64个李氏家族宗祠</h3>
+                        </div>
+                        <div class="map-list">
+                            <ul>
+                                <li>石林县：32个李氏家族宗祠</li>
+                                <li>石林县：32个李氏家族宗祠</li>
+                                <li>石林县：32个李氏家族宗祠</li>
+                                <li>石林县：32个李氏家族宗祠</li>
+                                <li>石林县：32个李氏家族宗祠</li>
+                                <li>石林县：32个李氏家族宗祠</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--.contant加结束div-->
+
+</div>
+
+<div class="zongCi">
+    <div class="hez-width top">
+        <div class="centBk" >
+            <div class="top1 " style="margin: 0 auto; width: 910px;" >
+                <a href="{:url('home/Member/user_hall_add', ['hall_type' => 3])}">
+                    <button style="right: -98px" class="hez-left" onclick='window.location.href="/home/Member/user_hall_add/hall_type/3"'>
+                        <span>
+                            <img src="__PUBLIC__/static/home/images/zongCi1.png" alt="">
+                        </span>
+                        创建宗祠
+                    </button>
+                </a>
+                <img class="img-responsive hez-left" src="__PUBLIC__/static/home/images/zongCi.png" alt="">
+                <a href="{:url('home/Hall/familyHallList')}" style="line-height: 56px">
+                    <button style="left: -98px" class="hez-left" onclick='window.location.href="/home/Hall/familyHallList"'>
+                        <span>
+                            <img src="__PUBLIC__/static/home/images/zongCi2.png" alt="">
+                        </span>
+                        查看更多
+                    </button>
+                </a>
+            </div>
+
+            <div class="top2" >
+                <div class="ciBatT">
+
+                    {foreach $familyHallList as $key=>$vo}
+                    <div class="ciBat  hez-left">
+                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}">
+                            <div class="text-center ciTimg" id="ciT{$key}"  onmousemove="ciTm(this.id)" onmouseout="ciTy(this.id)">
+                                <img class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@266w_170h')}" alt="">
+                                <div class="center-block siTspan">
+                                    <span class="span1"></span>
+                                </div>
+                            </div>
+                            <div class= "hez-left navbar-left">
+                                <h3>{$vo.hall_name}</h3>
+                                <p>立碑人：{$vo.family_libeiren}</p>
+                                <p>家族祖籍：{$vo.family_ancestral_home|msubstr=0,6,false}</p>
+                            </div>
+                            <div class="hez-right navbar-right">
+                                <div class="leftCi">
+                                    <img class="img-responsive center-block" src="__PUBLIC__/static/home/images/ciT.png" alt="">
+                                    <p>{$vo.family_member}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {/foreach}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="serve-block container-fluid zongCi">
+    <div class="wrapper">
+        <div class="zx-title">
+            <i></i>
+            <a href="#"></a>
+        </div>
+        <div class="serve-consult">
+
+            <div class="clearfix"></div>
+
+            {volist name="familyNewsList" key="familyKey" id="familyNews"}
+            <div class="article-tuijian culture" {if $familyKey gt 1}style="margin-left: 20px;"{/if}>
+                <div class="serve-dynamic">
+                    <div class="consult-title">
+                        <h3><i></i>{$familyNews.title}</h3>
+                        <a href="{:url('home/News/column', ['cid'=>$familyNews['category_id']])}">查看更多 &gt;&gt;</a>
+                    </div>
+                    <div class="consule-body">
+                        <div class="media">
+                            {volist name="familyNews['list']" id="vo" offset="0" length='1'}
+                            <div class="media-left">
+                                <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                    <img class="media-object md-tu lazy" data-original="{:quick_pic_thumb($vo.image, '@165w_126h')}" alt="{$vo.title}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{$vo.title|msubstr=0,15}</h4>
+                                <p class="media-text">{$vo.description|msubstr=0,60}</p>
+                            </div>
+                            {/volist}
+                        </div>
+                        <ul class="info-list">
+                            {volist name="familyNews['list']" id="vo" key="key" offset="1" length='5'}
+                            <li {if $key eq 6}class="no-border"{/if}>
+                            <a href="{:url('home/News/detail', ['id'=>$vo['id']])}">
+                                <i></i>{$vo.title|msubstr=0,15}
+                            </a>
+                            <span class="right">{$vo.create_at|date='Y-m-d', ###}</span>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+
+{/block}
+
+
+{block name="js-foot"}
+
+<script src="__PUBLIC__/static/home/js/index.js"></script>
+
+<script>
+    $(function(){
+//        loadTab();
+    });
+</script>
+{/block}

@@ -1,0 +1,71 @@
+{include file='/home/grave/common/_head'}
+    <div class="navBox">
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><a  href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                    <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                    <li><a class="currentnav" href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                    <li><a href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                    <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                    <li><a href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div><!--墓园首页banner-->
+<div class="contentBox">
+    <div class="container">
+        <div class="weizhi_title txt-gray">
+            <a href="" style="color: rgb(153, 153, 153);">首页 </a>&gt;
+            {$grave.name}> <span class="txt-hdark">墓园交通</span>
+        </div>
+    </div>
+    <div class="map">
+        <!--引用百度地图API-->
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DrzcKmUYV6m1YKIUPljRcjCDOfujvHGW"></script>
+
+
+        <div class="container">
+            <input id="placea" value="" type="text"> -
+            <input id="placeb" value="{$grave.address}" type="text">
+            <input value="查询" id="search" type="button">
+        </div>
+        <div class="maps-one" style="width: 1200px; height: 470px; border: 1px solid rgb(204, 204, 204); font-size: 12px; margin: 20px auto; overflow: hidden; position: relative; z-index: 0; background-color: rgb(243, 241, 236); color: rgb(0, 0, 0); text-align: left;"
+             id="l-map">
+
+        </div>
+        <div id="r-result"></div>
+        <script type="text/javascript">
+
+        </script>
+    </div>
+
+</div>
+
+
+<!--foot-->
+{include file='/home/grave/common/_footer'}
+
+
+<script type="text/javascript">
+    // 百度地图API功能
+    $(function(){
+        var map = new BMap.Map("l-map");
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+
+        var transit = new BMap.TransitRoute(map, {
+            renderOptions: {map: map, panel: "r-result"}
+        });
+
+        $('#search').on('click', function(){
+            var start=$('#placea').val();
+            var end=$('#placeb').val();
+            transit.search(start, end);
+        });
+    });
+</script>
+</body>
+</html>

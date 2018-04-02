@@ -1,0 +1,74 @@
+<div class="panel panel-default" style="margin:15px; margin-top:0px;">
+    <div class="row" style="padding:0 0 5px 0;">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="title-ex col-md-4">
+                            <h4>搜索结果</h4>
+                        </div>
+                        <div class="col-md-4" style="float:right;margin-right:10px;display:none;">
+                            <a class="news-more" target="_blank" href="/information/">更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="iHotMuseumInfo" class="row ulmenuli" style="padding-bottom:10px;">
+
+        {foreach $data as $vo}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="mr_photoshow" align="center">
+                <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" target="_blank">
+                    <img alt="{$vo.hall_name}照片" title="{$vo.hall_name}纪念馆" class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@260w_260h')}">
+                </a>
+            </div>
+            <div class="mr_phototext1">
+                <h4 style="padding-left: 5px; float: left; margin-top: 5px;">
+                    <div class="txoverflow" style="max-width: 240px;">
+                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" title="{$vo.hall_name}" target="_blank">
+                            {$vo.hall_name}
+                        </a>
+                    </div>
+                </h4>
+                <!--<small title="人气指数" class="mr_xstb">
+                    152758
+                </small>
+                <small title="修缮值" class="mr_xstb2">
+                    138654
+                </small>-->
+            </div>
+            <div class="mr_phototext">
+                <div style="width: 200px;">
+                    <strong>在世:</strong>
+                    {$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}
+                </div>
+                <!--<div class="mr_jibaibt">
+                    <a href="http://his.tsingming.com/maozedong/#yinxiang" target="_blank">我的印象</a>
+                </div>-->
+                <div class="mr_jibaibt" style="background: rgb(105, 35, 25) none repeat scroll 0% 0%;">
+                    <a href="{:url('home/hall/worshipHall', ['id' => $vo['id']])}" target="_blank">在线祭拜</a>
+                </div>
+            </div>
+            <!--<div class="mr_phototext">
+                <strong>印象:</strong>
+                人民的保护神
+            </div>-->
+            <div class="mr_phototext h69">
+                <strong>简介:</strong>
+                {$vo.hall_describe|msubstr=0,30}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>
+
+<!-- 图片懒加载插件-->
+<!-- 若在ajax中使用懒加载 请将以下代码放到ajax html后面-->
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $("img.lazy").lazyload({effect: "fadeIn"});
+    });
+</script>

@@ -1,0 +1,27 @@
+<div class="user_menu" style="height: 593px;">
+    <div class="navs" id="JS_u_navs">
+
+        {if isset($vo['id'])}
+        <h3>
+            <span class="glyphicon glyphicon-list-alt"></span>
+            编辑纪念馆
+        </h3>
+        <ul>
+            <li><a {if $hallType eq 1} class="active"{/if} href="javascript:;">个人纪念馆</a></li>
+            <li><a {if $hallType eq 3} class="active"{/if} href="javascript:;">家族纪念馆</a></li>
+            <li><a {if $hallType eq 2} class="active"{/if} href="javascript:;">双人纪念馆</a></li>
+        </ul>
+        {else /}
+        <h3>
+            <span class="glyphicon glyphicon-list-alt"></span>
+            创建纪念馆
+        </h3>
+        <ul>
+            <li><a {if $hallType eq 1} class="active"{/if} href="{:url('user_hall_add', ['hall_type' => 1])}">个人纪念馆</a></li>
+            <li><a {if $hallType eq 3} class="active"{/if} href="{:url('user_hall_add', ['hall_type' => 3])}">家族纪念馆</a></li>
+            <li><a {if $hallType eq 2} class="active"{/if} href="{:url('user_hall_add', ['hall_type' => 2])}">双人纪念馆</a></li>
+        </ul>
+        {/if}
+
+    </div>
+</div>

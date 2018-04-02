@@ -1,0 +1,62 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/hall_skins/guan/common/common.css">
+<!-- 祭拜记录排行css -->
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/hall_skins/paihang.css">
+
+{if $info.hall_type eq 1}
+
+<div class="single_container worship_bg">
+
+    <!--- 普通馆个人信息显示 个性馆隐藏 hide_infor--->
+    {include file="home/hall/include/_hall_guan_left"}
+
+    <!-- 祭拜记录盒子 article_box -->
+    {include file="home/hall/include/_hall_worship_record_box"}
+
+</div>
+
+{else /}
+
+<div class="yuan_container worship_bg">
+    <!-- 祭拜记录盒子 article_box -->
+    {include file="home/hall/include/_hall_worship_record_box"}
+</div>
+{/if}
+
+<script>
+    function resetTabs(obj) {
+        $(obj).parent().parent().next("div").find("ul").hide();
+        $(obj).parent().parent().find("li").removeClass("on");
+    }
+    function loadTab() {
+        $(".doc-content > ul").hide();
+        $(".tabs").each(function () {
+            $(this).find("ul:first li").addClass("on");
+        });
+        $(".doc-content").each(function () {
+            $(this).find("ul:first").fadeIn();
+        });
+        $(".tabs li").hover(function (e) {
+            e.preventDefault();
+            if ($(this).attr("class") == "on") {
+                return;
+            } else {
+                resetTabs(this);
+                $(this).addClass("on");
+                $($(this).attr("name")).fadeIn();
+            }
+        });
+    }
+</script>
+
+<script>
+    $(function(){
+        loadTab();
+    });
+</script>
+
+{/block}

@@ -1,0 +1,659 @@
+{extend name='common/main' /}
+
+<!-- content -->
+{block name="content"}
+
+<link href="__PUBLIC__/static/home/css/about.css" rel="stylesheet" type="text/css">
+
+<style>
+    /* Code tidied up by ScrapBook */
+    ul, li, h1, h2, p {
+        padding: 0px;
+        /*margin: 0px;*/
+        list-style: outside none none;
+        font-weight: normal;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    body {
+        background-color: rgb(240, 240, 240);
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .article_detail_box * {
+        font-family: "微软雅黑";
+    }
+
+    .article_detail_box img {
+        border: medium none;
+    }
+
+    .article_detail_box {
+        width: 1200px;
+        overflow: hidden;
+        margin: auto auto 50px;
+    }
+
+    .ad_leftBlock {
+        width: 280px;
+        float: left;
+    }
+
+    .ad_leftNav {
+        background-color: white;
+        margin-bottom: 50px;
+    }
+
+    .adl_titleName {
+        line-height: 50px;
+        background-color: rgb(92, 131, 229);
+        color: rgb(250, 250, 250);
+        font-size: 16px;
+        padding-left: 20px;
+        font-weight: bolder;
+    }
+
+    .adl_hotArticle {
+        padding: 10px 20px 50px;
+    }
+
+    .adlh_one {
+        overflow: hidden;
+        padding: 24px 0px;
+        border-bottom: 1px solid rgb(217, 217, 217);
+        position: relative;
+    }
+
+    .adlho_pic {
+        display: block;
+        width: 92px;
+        height: 72px;
+        float: left;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .adlho_pic img {
+        height: 72px;
+        width: auto;
+    }
+
+    .adlho_right {
+        width: 134px;
+        float: right;
+    }
+
+    .adlhor_text {
+        font-size: 14px;
+        display: block;
+        line-height: 22px;
+        color: rgb(102, 102, 102);
+    }
+
+    .adlhor_bottom {
+        display: block;
+        font-size: 14px;
+        line-height: 22px;
+        color: rgb(128, 128, 128);
+        position: absolute;
+        bottom: 24px;
+    }
+
+    .adlhor_text:hover {
+        text-decoration: underline;
+    }
+
+    .ad_rightBlock {
+        width: 890px;
+        float: right;
+        background-color: white;
+    }
+
+    .adr_banner {
+        width: 100%;
+        height: 420px;
+    }
+
+    .adr_banner img {
+        width: 100%;
+        height: auto;
+    }
+
+    .ad_rightContent {
+        padding: 50px 40px 70px;
+    }
+
+    .adr_title {
+        overflow: hidden;
+    }
+
+    .adrt_name {
+        font-size: 26px;
+        line-height: 50px;
+        color: rgb(26, 26, 26);
+        float: left;
+        margin-right: 20px;
+    }
+
+    .adr_title span {
+        display: block;
+        float: left;
+        width: 56px;
+        line-height: 26px;
+        border-radius: 26px;
+        background-color: rgb(92, 131, 230);
+        color: rgb(250, 250, 250);
+        text-align: center;
+        margin-top: 14px;
+        font-size: 14px;
+    }
+
+    .adr_title img {
+        float: right;
+        margin-left: 10px;
+        margin-top: 9px;
+    }
+
+    .adr_titleInfo {
+        overflow: hidden;
+        margin-top: 10px;
+        margin-bottom: 50px;
+    }
+
+    .adr_titleInfo * {
+        line-height: 30px;
+        font-size: 14px;
+    }
+
+    .adrt_left {
+        float: left;
+        font-size: 14px;
+        color: rgb(76, 76, 76);
+    }
+
+    .adrt_left span {
+        color: rgb(128, 128, 128);
+    }
+
+    .adrt_right {
+        float: right;
+        color: rgb(128, 128, 128);
+    }
+
+    .adrt_right span {
+        display: block;
+        float: right;
+        cursor: pointer;
+    }
+
+    .adrt_right img {
+        margin-bottom: -4px;
+        margin-left: 6px;
+        margin-right: 6px;
+    }
+
+    .adrt_right span:hover {
+        text-decoration: underline;
+    }
+
+    .adr_P {
+        font-size: 14px;
+        color: rgb(76, 76, 76);
+        line-height: 24px;
+        text-indent: 2em;
+        margin-bottom: 10px;
+    }
+
+    .adr_H {
+        font-size: 16px;
+        color: rgb(77, 116, 215);
+        font-weight: bolder;
+        margin-top: 24px;
+        margin-bottom: 10px;
+    }
+
+    .adr_pic {
+        width: 760px;
+        height: 508px;
+        margin: 40px auto;
+    }
+
+    .adr_pic img {
+        width: 100%;
+        height: auto;
+    }
+
+    .adr_remind {
+        font-size: 14px;
+        color: rgb(153, 153, 153);
+        line-height: 22px;
+        margin-top: 10px;
+    }
+
+    .adr_Zan {
+        width: 100px;
+        height: 100px;
+        margin: 100px auto;
+    }
+
+    .adr_Zan img {
+        display: block;
+        height: auto;
+        cursor: pointer;
+    }
+
+    .adr_Zan span {
+        display: block;
+        font-size: 16px;
+        color: rgb(76, 76, 76);
+        line-height: 30px;
+        text-align: center;
+        font-weight: bolder;
+    }
+
+    .adr_clickBtn {
+        overflow: hidden;
+        margin-bottom: 80px;
+    }
+
+    .adr_clickBtn a {
+        display: block;
+        border-radius: 70px;
+        text-align: center;
+        font-size: 16px;
+        color: rgb(138, 137, 136);
+    }
+
+    .adrc_before {
+        width: 378px;
+        float: left;
+        line-height: 58px;
+        border: 1px solid rgb(204, 199, 196);
+    }
+
+    .adrc_before:hover {
+        border: 1px solid rgb(179, 174, 171);
+    }
+
+    .adrc_after {
+        width: 380px;
+        line-height: 60px;
+        float: right;
+        background-color: rgb(241, 239, 238);
+        color: rgb(102, 102, 101);
+    }
+
+    .adrc_after:hover {
+        background-color: rgb(235, 231, 230);
+    }
+
+    .adr_recommend {
+        overflow: hidden;
+        background-color: rgb(245, 245, 245);
+    }
+
+    .adr_recommend span {
+        display: block;
+        margin-left: 20px;
+        float: left;
+        line-height: 60px;
+        font-size: 16px;
+        color: rgb(128, 128, 128);
+    }
+
+    .adr_recommend a {
+        display: block;
+        float: left;
+        font-size: 16px;
+        margin-left: 10px;
+        margin-right: 10px;
+        line-height: 60px;
+        color: rgb(77, 116, 215);
+    }
+
+    .adr_recommend a:hover {
+        text-decoration: underline;
+    }
+
+    .article_list_box * {
+        font-family: "微软雅黑";
+    }
+
+    .article_list_box img {
+        border: medium none;
+    }
+
+    .article_list_box {
+        width: 1200px;
+        overflow: hidden;
+        margin: auto auto 50px;
+    }
+
+    .al_leftNav {
+        width: 280px;
+        float: left;
+    }
+
+    .al_rightContent {
+        width: 100%;
+        padding-top: 10px;
+        float: left;
+        background-color: white;
+        position: relative;
+    }
+
+    .alr_infoBox {
+        padding: 0px 40px;
+    }
+
+    .alr_info {
+        overflow: hidden;
+        padding: 40px 0px;
+        border-bottom: 1px solid rgb(217, 217, 217);
+        position: relative;
+    }
+
+    .alri_pic {
+        display: block;
+        width: 240px;
+        height: 180px;
+        float: left;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .alri_pic img {
+        width: 100%;
+        height: auto;
+    }
+
+    .alri_right {
+        width: 725px;
+        float: right;
+    }
+
+    .alrir_name {
+        display: block;
+        font-size: 24px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        color: rgb(51, 51, 51);
+    }
+
+    .alrir_name:hover {
+        color: rgb(77, 116, 215);
+        text-decoration: none;
+    }
+
+    .alrir_text {
+        display: block;
+        font-size: 16px;
+        color: rgb(102, 102, 102);
+        line-height: 26px;
+    }
+
+    .alrir_text:hover {
+        text-decoration: none;
+    }
+
+    .alrir_bottom {
+        overflow: hidden;
+        width: 540px;
+        position: absolute;
+        bottom: 50px;
+    }
+
+    .alrir_bottom span {
+        display: block;
+        line-height: 24px;
+        color: rgb(153, 153, 153);
+        font-size: 14px;
+    }
+
+    .alrirb_time {
+        float: left;
+    }
+
+    .alrirb_num {
+        float: right;
+    }
+
+    .alr_page_box {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .article .searchRight_paging {
+        width: 810px;
+        padding-left: 40px;
+    }
+
+    .searchRight_paging {
+        margin: 10px 0px 20px;
+    }
+
+    .help_right_out {
+        width: 850px;
+        background-color: #fff;
+        padding: 0 12px;
+    }
+
+    .pagebar .page_now {
+        background: rgb(92, 131, 229) none repeat scroll 0% 0%;
+        border: 1px solid rgb(69, 114, 229);
+    }
+
+    .pagebar a:hover {
+        background: rgb(92, 131, 229) none repeat scroll 0% 0%;
+        border: 1px solid rgb(69, 114, 229);
+    }
+
+    .activity_all a.activity_next:hover {
+        background: rgb(92, 131, 229) none repeat scroll 0% 0%;
+    }
+
+    .activity_all a.activity_prev:hover {
+        background: rgb(92, 131, 229) none repeat scroll 0% 0%;
+    }
+
+    .alr_searchBox {
+        width: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0px;
+        z-index: 999;
+    }
+
+    .alr_search {
+        width: 280px;
+        height: 40px;
+        float: right;
+        overflow: hidden;
+        background-color: rgb(229, 229, 229);
+        margin-right: 40px;
+        border-radius: 60px;
+    }
+
+    .alr_searchText {
+        display: block;
+        float: left;
+        width: 210px;
+        padding: 11px 10px 11px 20px;
+        border: medium none;
+        background-color: rgb(229, 229, 229);
+        color: rgb(153, 153, 153);
+        font-size: 16px;
+    }
+
+    .alr_searchBtn {
+        display: block;
+        float: left;
+        width: 40px;
+        height: 40px;
+        border: medium none;
+        background-color: rgb(229, 229, 229);
+        background-image: url("images/search_white.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+</style>
+
+<style>
+    /* Code tidied up by ScrapBook */
+    .ad_leftNav {
+        background-color: white;
+        margin-bottom: 50px;
+    }
+
+    .adl_titleName {
+        line-height: 50px;
+        background-color: rgb(92, 131, 229);
+        color: rgb(250, 250, 250);
+        font-size: 16px;
+        padding-left: 20px;
+        font-weight: bolder;
+    }
+
+    .adl_classify_box {
+        padding: 10px 20px 50px;
+    }
+
+    .adl_classify {
+    }
+
+    .adlc_one, .adlc_one01 {
+        overflow: hidden;
+        width: 100%;
+        text-indent: 10px;
+        line-height: 44px;
+        border-bottom: 1px solid rgb(217, 217, 217);
+    }
+
+    .adlc_one a, .adlc_one01 a {
+        display: block;
+        float: left;
+        width: 200px;
+        font-size: 16px;
+        color: rgb(76, 76, 76);
+        font-weight: bolder;
+        cursor: pointer;
+    }
+
+    .adlc_one01 a {
+        color: rgb(77, 116, 215);
+    }
+
+    .adlc_one img, .adlc_one01 img {
+        float: right;
+        margin-top: 4px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .adlc_one01 img:hover {
+        background-color: rgb(240, 238, 235);
+    }
+
+    .adlc_one img:hover {
+        background-color: rgb(240, 238, 235);
+    }
+
+    .adlc_one a:hover {
+        color: rgb(77, 116, 215);
+        text-decoration: none;
+    }
+
+    .adlc_news {
+        display: none;
+        margin-bottom: 10px;
+    }
+
+    .adlc_news li {
+        list-style: inside;
+        border-bottom: 1px dotted rgb(217, 217, 217);
+        color: rgb(102, 102, 102);
+    }
+
+    .adlc_news a {
+        line-height: 40px;
+        font-size: 14px;
+        color: rgb(102, 102, 102);
+    }
+
+    .adlc_news .adlcn_click {
+    }
+
+    .adlcn_click a {
+        color: rgb(77, 116, 215);
+    }
+
+    .adlc_news li:hover {
+        color: rgb(77, 116, 215);
+    }
+
+    .adlc_news li:hover a {
+        color: rgb(77, 116, 215);
+        text-decoration: none;
+    }
+
+    .ad_leftNav {
+        width: 100%;
+    }
+
+    ul {
+        list-style: outside none none;
+    }
+
+    li {
+        list-style: outside none none;
+    }
+</style>
+
+<!-- 广告位 -->
+{notempty name=':get_ad(11)'}
+<div class="pagebanner contentbox top30">
+    <a href="{:get_ad(11)['url']}"><img src="{:get_ad(11)['path']}" class="imgborder" width="98%"></a>
+</div>
+{/notempty}
+
+<div class="container">
+    <div class="contentBody">
+        <div class="block_s">
+            <div id="ur_here">
+                <span>当前位置:</span> <a href="{:url('/')}">首页</a> <code>&gt;</code> {$article.title}
+            </div>
+
+            <div class="blank"></div>
+            <div class="help_left">
+                <!-- 关于我们侧边栏菜单 -->
+                {include file="home/paper/_about_side_menu" /}
+            </div>
+
+            <div class="help_right_out">
+                <div class="boxCenterList">
+                    <p align="center">
+                        <span style="line-height:2;font-family:;font-size:24px;"><strong>{$article.title}</strong></span>
+                    </p>
+                    {$article.content}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+
+{/block}
+
+
+{block name="js-foot"}
+
+{/block}

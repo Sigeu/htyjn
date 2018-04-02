@@ -1,0 +1,183 @@
+{include file="/home/member/common/header" /}
+<div class="user-page-content">
+    <div class="clearfix w">
+        <div class="user_menu" style="height: 593px;">
+            <div class="navs" id="JS_u_navs">
+                <h3>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    账户设置</h3>
+                <ul>
+                    <li><a href="{:url('/home/member/user_info')}">个人资料</a></li>
+                    <li><a  class="active" href="{:url('/home/member/user_bind')}">账号绑定</a></li>
+                    <li><a href="{:url('/home/member/user_safe')}">账户安全</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="user_main">
+
+            <style type="text/css">
+                .u_profile .u-profile-row .profile-row-content .select{margin:0;line-height:28px;font-size:14px;appearance:none;-moz-appearance:none;-webkit-appearance:none;background:url(http://image.meilele.com/images/user/arrow.png) 90% 50% no-repeat;font-family: "Microsoft Yahei";}
+                select::-ms-expand {display: none;}
+            </style>
+            <div class="white_box u_profile clearfix">
+                <h3 class="title-h3">账号绑定</h3>
+                <div class="bind">
+
+                    <div class="bind-qq mt20">
+                        <img src="images/user-qq-icon.png" alt="">
+                        <span>Q Q</span>
+                        <h4>已绑定</h4>
+                        <a href="#" class="yet">解除绑定</a>
+                    </div>
+                    <div class="bind-qq mt20">
+                        <img src="images/user-wx-icon.png" alt="">
+                        <span>微信</span>
+                        <h4>已绑定</h4>
+                        <a href="#">解除绑定</a>
+                    </div>
+                    <div class="bind-qq mt20">
+                        <img src="images/user-wb-icon.png" alt="">
+                        <span>微博</span>
+                        <h4>已绑定</h4>
+                        <a href="#">解除绑定</a>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var _onPageReadyList = [];
+                window._onReadyList.push(function () {
+                    var provinceId = '0',
+                        cityId = '0',
+                        areaId = '0',
+                        isInit = false;
+
+
+                    function getCity(pid) {
+                        $.ajax({
+                            url: '/region/?type=2&parent=' + pid,
+                            cache: false,
+                            dataType: "json",
+                            success: function (json) {
+                                var html = '';
+                                html += '<option value="">请选择</option>';
+                                for (var i = 0, k = json.regions.length; i < k; i++) {
+                                    html += '<option value="' + json.regions[i].region_id + '" ' + (cityId == json.regions[i].region_id ? 'selected' : '') + '>' + json.regions[i].region_name + '</option>'
+                                }
+                                $('select[name="city"]').empty().append(html);
+                                if (isInit) {
+                                    $('select[name="area"]').empty().append('<option value="">请选择</option>');
+                                }
+                                isInit = true;
+                            }
+                        })
+                    }
+
+                    function getArea(pid) {
+                        $.ajax({
+                            url: '/region/?type=3&parent=' + pid,
+                            cache: false,
+                            dataType: "json",
+                            success: function (json) {
+                                var html = '';
+                                html += '<option value="">请选择</option>';
+                                for (var i = 0, k = json.regions.length; i < k; i++) {
+                                    html += '<option value="' + json.regions[i].region_id + '" ' + (areaId == json.regions[i].region_id ? 'selected' : '') + '>' + json.regions[i].region_name + '</option>'
+                                }
+                                $('select[name="area"]').empty().append(html)
+                            }
+                        })
+                    }
+
+
+                    $('select[name="province"]').on('change', function () {
+                        getCity(this.value);
+                    });
+
+                    $('select[name="city"]').on('change', function () {
+                        getArea(this.value);
+                    });
+
+                    $('#JS_basic_submit').on('click', function () {
+                        if (this.lock) return;
+                        var that = this;
+                        that.lock = true;
+                        var data = {
+                            alias: $('input[name="alias"]').val(),
+                            province_id: $('select[name="province"]').val(),
+                            city_id: $('select[name="city"]').val(),
+                            area_id: $('select[name="area"]').val(),
+                            address: $('input[name="address"]').val(),
+                            sex: $('input[name="sex"]:checked').val()
+                        }
+                        $.ajax({
+                            url: '/dubbo_api/user/personCenter/savePesonalInfo',
+                            data: data,
+                            type: 'POST',
+                            dataType: false,
+                            success: function (json) {
+                                if (json && json.error == 0) {
+                                    /*$.alert('保存成功')*/
+                                    $.lightBox( '保存成功！',{确定:'close'},'','','',true,'c');
+                                } else {
+                                    /*$.alert(json.msg);*/
+                                    $.lightBox( json.msg,{确定:'close'},'','','',true,'c');
+                                }
+                                that.lock = false;
+                            },
+                            error: function () {
+                                /*$.alert('网络错误，请稍候再试');*/
+                                $.lightBox( '网络错误，请稍候再试',{确定:'close'},'','','',true,'c');
+                                that.lock = false;
+                            }
+
+                        })
+                    })
+
+                });
+            </script>
+
+            <script>
+                var avatar = {
+                    _host: /www\.meilele\.com/.test(location.host) ? 'zx.meilele.com' : 'zxdev.meilele.com',
+                    show: function () {
+                        $.lightBox(avatar.createHtml(), {} , true , 300 , '' , true , 'avatar-layer');
+                    },
+                    createHtml: function () {
+                        var a = [];
+                        a.push('<div class="ava-edit">');
+                        a.push('<div class="header"><span>修改头像</span><a href="javascript:;" onclick="avatar.close();">&times;</a></div>');
+                        a.push('<div class="body"><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="680" height="490" id="FlashID" name="FlashID"  title="">');
+                        a.push('<param name="movie" value="http://img004.mllres.com/themes/paipai/flash/UploadHeadportrait.swf" />');
+                        a.push('<param name="allowfullscreen" value="true" />');
+                        a.push('<param name="allowscriptaccess" value="always" />');
+                        a.push('<param name="flashvars" value="id=FlashID&uploadUrl=http%3A%2F%2Fzx.meilele.com%2Fuser.html%3Fact%3DchangeAvatar" />');
+                        a.push('<embed id="FlashID" name="FlashID" src="http://img004.mllres.com/themes/paipai/flash/UploadHeadportrait.swf"  width="680" height="490" allowscriptaccess="always" allowfullscreen="true" flashvars="id=FlashID&uploadUrl=http%3A%2F%2F'+ this._host +'%2Fuser.html%3Fact%3DchangeAvatar"></embed></object></div>');
+                        a.push("</div>");
+                        return a.join("");
+                    },
+                    close: function () {
+                        $.closeLightBox();
+                    }
+                };
+
+                function cancelAndCloseEditor() {
+                    avatar.close();
+                }
+
+                function editorUploadSuccess(a) {
+                    /* $('.ava-edit').html('<div class="red" style="text-align:center;padding:20px; 0;font-size:16px;font-family:\'微软雅黑\'">头像上传成功！</div>')
+                     setTimeout(function () {
+                     $('.avatar').attr('src',a)
+                     avatar.close();
+                     }, 2000);*/
+                    avatar.close();
+                    $('.avatar').attr('src',a);
+                    /*alert('头像保存成功！');*/
+                    $.lightBox( '头像保存成功！',{确定:'close'},'','','',true,'c');
+                }
+            </script>			</div>
+    </div>
+</div>
+
+{include file="/home/member/common/footer" /}

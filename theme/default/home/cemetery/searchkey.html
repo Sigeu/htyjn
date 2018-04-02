@@ -1,0 +1,141 @@
+{include file='home/cemetery/common/_header'}
+
+<div class="serve-block">
+    <div class="wrapper">
+        <div class="gongmu-title">
+            <i></i>
+        </div>
+        <div class="shop-classed">
+            <div class="cemetery-search">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <h3 class="navbar-brand">陵园搜索</h3>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <form action="{:url('/home/cemetery/scity')}" method="post">
+                        <ul class="nav navbar-nav sliny">
+                            <li class="dropdown active" style="line-height:50px;margin-right:10px;">
+                                <span class="dropdown-toggle">省份:</span>
+                                <select name="ddlProvince"  id="ddlProvince">
+                                    <option value="-1">全部</option>
+                                    {foreach $area as $areas}
+                                    <option  value="{$areas['id']}">{$areas['province']}</option>
+                                    {/foreach}
+                                </select>
+                            </li>
+                            <li class="dropdown" style="line-height:50px">
+                                <span class="dropdown-toggle">城市:</span>
+                                <select name="ddlCity" id="ddlCity">
+                                    <option id="city1" value="-1">全部</option>
+                                </select>
+                            </li>
+                        </ul>
+                            <button type="submit" class="btn btn-success"  style="margin-top: 10px; margin-left: 5px;">搜索</button>
+                        </form>
+                        <div class="navbar-form navbar-left">
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" style="width:480px;" class="form-control" placeholder="请输入其他查询条件" id="searchother" name="searchother">-->
+                            <!--</div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <div class="serve-classed">
+                <h4>价格区间:</h4>
+                <ul>
+                    <li {if $pri_id neq null}class="active"{/if}><a href="{:url('home/cemetery/sprice',['p_min'=>0,'p_max'=>0,'p'=>0])}">全部</a></li>
+                    {volist name='price' id='pvo'}
+                    <li {if $p_ri.p_min eq $pvo.price_min}class="active"{/if}><a href="{:url('home/cemetery/sprice',['p_min'=>$pvo.price_min,'p_max'=>$pvo.price_max])}">{$pvo.price_min}-{$pvo.price_max}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="hr"></div>
+            <div class="serve-classed">
+                <h4>墓型分类:</h4>
+                <ul>
+                    <li {if $cid eq 0 } class="active" {/if}><a href="{:url('/home/cemetery/search',['id'=>0])}">全部</a></li>
+                    {volist name='cate' id='cates'}
+                    <li {if $cid eq $cates.id} class="active" {/if}><a href="{:url('/home/cemetery/search',['id'=>$cates.id])}" >{$cates.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="nch-g-list wrapper">
+            {if isset($skey1)}
+            <ul class="list_pic">
+                {volist name="skey1" id="vo"}
+                <li class="item">
+                    <div class="sell-list">
+                        <div class="sell-block">
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">
+                                <img style="width:263px;height: 175px;" class="imgXk lazy" data-original="{$vo.image_id}" alt="">
+                            </a>
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">{$vo.pname}-{$vo.name}</a>
+                            <span>价格: <i>￥{$vo.price_min}</i>起</span>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+            {elseif isset($skey2)}
+            <ul class="list_pic">
+                {volist name="skey2" id="vo"}
+                <li class="item">
+                    <div class="sell-list">
+                        <div class="sell-block">
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">
+                                <img style="width:263px;height: 175px;" class="imgXk lazy" data-original="{$vo.image_id}" alt="">
+                            </a>
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">{$vo.name}/{$vo.grave_province}{$vo.grave_city}</a>
+                            <span>价格: <i>￥{$vo.price_min}</i>起</span>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+            {else/}
+            <ul class="list_pic">
+                {volist name="pri" id="vo"}
+                <li class="item">
+                    <div class="sell-list">
+                        <div class="sell-block">
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">
+                                <img style="width:263px;height: 175px;" class="imgXk lazy" data-original="{$vo.image_id}" alt="">
+                            </a>
+                            <a href="{:url('/home/grave/index',['id'=>$vo.id])}">{$vo.name}/{$vo.grave_province}{$vo.grave_city}</a>
+                            <span>价格: <i>￥{$vo.price_min}</i>起</span>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+            {/if}
+            <div class="tc m-t-20 m-b-20">
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+{include file='home/cemetery/common/_footer'}
+
+<script>
+    $(function () {
+        var onAjex1 = function () {
+            console.log(121211)
+        }
+    })
+</script>
+
+</body>
+</html>

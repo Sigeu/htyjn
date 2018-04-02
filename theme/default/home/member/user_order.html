@@ -1,0 +1,263 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+
+            <div class="content-list">
+                <div class="c-title">充值记录</div>
+                <div class="order-title-box clearfix">
+                    <ul class="order-nav Left">
+                        <li>
+                            <a href="{:url('/home/Member/user_order')}" {if $payStatus eq 0} class="current"{/if}>全部</a></li>
+                        <li>
+                            <a href="{:url('/home/Member/user_order', ['pay_status' => 1])}" {if $payStatus eq 1} class="current"{/if}>待付款</a>
+                        </li>
+                        <li>
+                            <a href="{:url('/home/Member/user_order', ['pay_status' => 2])}" {if $payStatus eq 2} class="current"{/if}>已完成</a>
+                        </li>
+                    </ul>
+                    <form action="" name="searchForm" id="order_search">
+                        <input type="hidden" name="act" value="order_list">
+                        <input type="hidden" name="composite_status" id="JS_composite_status" value="0">
+                        <div class="order-num-search">
+                            <input id="order_sn" name="pd_sn" placeholder="请输入订单编号查询" class="order-num-input">
+                            <input type="submit" class="order-num-btn yahei" value="查询">
+                        </div>
+                    </form>
+
+                </div>
+
+                <table class="layui-table" id="JS_orderList_table" lay-size="sm">
+                    <colgroup>
+                        <col width="120">
+                        <col width="100">
+                        <col width="120">
+                        <col width="100">
+                        <col width="150">
+                        <col width="100">
+                        <col width="100">
+                        <col width="80">
+                    </colgroup>
+                    <tbody>
+                    <thead>
+                    <tr>
+                        <th>订单编号</th>
+                        <th >订单商品</th>
+                        <th>下单时间</th>
+                        <th>订单金额</th>
+                        <th>充值纪念币总数（含赠送）</th>
+                        <th>支付方式</th>
+                        <th>订单状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+
+                    <tr>
+                        <td class="white-line" colspan="8"></td>
+                    </tr>
+                    {foreach $orders as $vo}
+
+
+                    <tr>
+                        <td class="orange nobt td-cen">{$vo.pd_sn}</td>
+                        <td class="nobt">
+                            <div class="td-cen">
+                                <a href="javascript:;" title="{$vo.pd_goods_name}" target="_blank" class="first">
+                                    <img style="margin: 3px auto;" src="__PUBLIC__/static/home/images/user-rech.png" width="50" height="34" alt="{$vo.pd_goods_name}">
+                                </a>
+                            </div>
+                        </td>
+                        <td class="orange nobt td-cen">{$vo.pd_add_time|format_time}</td>
+
+                        <td class="orange nobt td-cen">¥{$vo.pd_amount}</td>
+                        <td class="orange nobt td-cen">{$vo.pd_coins}</td>
+                        <td class="orange nobt td-cen">{$vo.pd_payment_name}</td>
+                        <td class="nobt td-cen">
+                            {if $vo.pd_payment_state eq 1 and $vo.pd_order_state eq 4}
+                            已完成
+                            {elseif $vo.pd_order_state eq 5 or $vo.pd_add_time lt (time()-3600) /}
+                            已超时
+                            {elseif $vo.pd_payment_state eq 0 and $vo.pd_order_state eq 3 /}
+                            已取消
+                            {elseif $vo.pd_payment_state eq 0 and $vo.pd_order_state eq 0 /}
+                            待付款
+                            {/if}
+                        </td>
+                        <td class="nobt td-cen">
+                            <div class="oper" data-time1="120">
+                                {if $vo.pd_payment_state eq 0 and $vo.pd_order_state eq 0 and $vo.pd_order_state neq 5 and $vo.pd_add_time gt (time()-3600)}
+                                <a target="_blank" href="{:url('home/Member/orderPay', ['order_id' => $vo['pd_id']])}">付款</a>
+                                <a href="javascript:;" class="cancel_order" data-id="{$vo['pd_id']}">取消订单</a>
+                                {/if}
+                            </div>
+
+                        </td>
+                    </tr>
+                    {/foreach}
+
+                    </tbody>
+                </table>
+
+                <div style="text-align: center">
+                    {$orders->render()}
+                </div>
+
+            </div>
+            <script type="text/javascript">
+                window._onReadyList = window._onReadyList || [];
+                //我的订单页面事件
+                _onReadyList.push(function () {
+                    $('#JS_order_filter_a').click(function () {
+                        $('#JS_order_fl_box').addClass('hover');
+                        return false;
+                    });
+                    $('#JS_order_filter_ul').hover(function () {
+                    }, function () {
+                        $('#JS_order_fl_box').removeClass('hover');
+                    });
+                    $('#JS_order_filter_ul a').click(function () {
+                        var curStatus = $('#JS_composite_status').val();
+                        if (curStatus != $(this).data('compstatus')) {
+                            $('#JS_composite_status').val($(this).data('compstatus'));
+                            document.forms.searchForm.submit();
+                        }
+                    });
+
+                    $('.JS_order_trace_a').hover(function () {
+                        $(this).next('.track').find('.trackInfo').show();
+                    }, function () {
+                        $(this).next('.track').find('.trackInfo').hide();
+                    });
+
+                    $('.JS_order_d_more').click(function () {
+                        if ($(this).prev().hasClass('list-h-l')) {
+                            $(this).prev().removeClass('list-h-l');
+                            $(this).find('i').addClass('i-up-arr');
+                        } else {
+                            $(this).prev().addClass('list-h-l');
+                            $(this).find('i').removeClass('i-up-arr');
+                        }
+                    });
+
+                    /*合并付款*/
+                    $(function () {
+                        var table = $('#JS_orderList_table');
+                        var isChecked = false;
+
+                        // 全选
+                        $('#JS_all_select').click(function () {
+                            var _this = $(this),
+                                    checkbox = table.find('input[name=item]');
+                            state = _this.attr('data-state');
+
+                            if (isChecked) {
+                                checkbox.prop('checked', false);
+                                isChecked = false;
+                            } else {
+                                checkbox.prop('checked', true);
+                                isChecked = true;
+                            }
+                        });
+
+                        // 合并付款
+                        $('#JS_merge_pay').click(function () {
+                            var checkbox = table.find('input[name=item]:checked'),
+                                    order_sn = [];
+
+                            checkbox.each(function (i) {
+                                order_sn.push(checkbox.eq(i).data('order_sn'));
+                            });
+
+                            if (order_sn.length <= 0) {
+                                $.alert('请至少勾选一个订单！');
+                                return false;
+                            }
+
+                            sn = order_sn.join(',');
+                            var form = $('<form id="JS_merge_pay_temp_form" action="/pay.html" target="_blank"><input type="hidden" name="sn" value="' + sn + '" /></form>');
+                            form.appendTo('body');
+                            form.submit();
+                            return false;
+                        });
+                    });
+                });
+
+
+                // 申请退款
+                function refundOrder(order_id) {
+                    var cur_time = new Date();
+                    var dd = cur_time.getDay();
+                    var hour = cur_time.getHours();
+                    if (dd != 0 && dd != 6 && hour >= 9 && hour < 18) {
+                        window.mchat.openui(1, {'click': 'join_us-2'});
+                    } else {
+                        /*$.alert("请您在工作日9:00-18:00进行申请，谢谢合作。");*/
+                        $.lightBox('请您在工作日9:00-18:00进行申请，谢谢合作。', {确定: 'close'}, '', '', '', true, 'c prompt-error');
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#JS_order_filter_a').click(function () {
+        $('#JS_order_fl_box').addClass('hover');
+        return false;
+    });
+    $('#JS_order_filter_ul').hover(function () {
+    }, function () {
+        $('#JS_order_fl_box').removeClass('hover');
+    });
+    $('#JS_order_filter_ul a').click(function () {
+        var curStatus = $('#JS_composite_status').val();
+        if (curStatus != $(this).data('compstatus')) {
+            $('#JS_composite_status').val($(this).data('compstatus'));
+            document.forms.searchForm.submit();
+        }
+    });
+
+    $('.JS_order_trace_a').hover(function () {
+        $(this).next('.track').find('.trackInfo').show();
+    }, function () {
+        $(this).next('.track').find('.trackInfo').hide();
+    });
+
+    $('.JS_order_d_more').click(function () {
+        if ($(this).prev().hasClass('list-h-l')) {
+            $(this).prev().removeClass('list-h-l');
+            $(this).find('i').addClass('i-up-arr');
+        } else {
+            $(this).prev().addClass('list-h-l');
+            $(this).find('i').removeClass('i-up-arr');
+        }
+    });
+</script>
+
+<script>
+
+
+    $(".cancel_order").click(function () {
+
+        var id = $(this).attr('data-id');
+//            , paytype = $(this).attr('data-pay-type');
+
+        $.ajax({
+            url: '/home/Member/cancelOrder',
+            type: "POST",
+            data: {order_id: id},
+            success: function (data) {
+                popup_jump(data, 1);
+            }
+        });
+    })
+</script>
+
+{include file="/home/member/common/footer" /}

@@ -1,0 +1,546 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/style.css">
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/ts.basecss.css">
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/mingren.css">
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/index.css">-->
+{/block}
+
+
+{block name="lib-head"}
+<script src="__PUBLIC__/static/home/js/jquery.js"></script>
+{/block}
+
+<!-- content -->
+{block name="content"}
+<style>
+    /* Code tidied up by ScrapBook */
+    .panel-heading h3 {
+        font-size: 18px;
+        height: 39px;
+        line-height: 39px;
+        float: left;
+        padding-right: 15px;
+        margin: 0px;
+    }
+
+    .title2-ex span {
+        float: right;
+        font-size: 12px;
+    }
+
+    .panel-heading span a {
+        color: rgb(153, 153, 153);
+    }
+
+    .title2-ex {
+        border-bottom: 1px solid rgb(32, 129, 93) !important;
+        padding: 0px 15px !important;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .title2-ex h3.panel-title {
+        border-bottom: 2px solid rgb(32, 129, 93);
+    }
+
+    .flinklist li {
+        display: inline;
+        margin-right: 8px;
+        line-height: 32px;
+    }
+
+    .flinklist li a {
+        display: inline-block;
+    }
+
+    .carousel-museum li {
+        border: 0px none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    #divSearchMuseum {
+        width: 568px;
+    }
+</style>
+
+<style>
+    /* andy add */
+    a.activeLetter {
+        background: darkgray;
+    }
+</style>
+
+
+<script type="text/javascript">
+    var isOut = true;
+    // 焦点
+    document.onmousedown = function () {
+        if (isOut) {
+            $("#divSearch").slideUp(500);
+        }
+    }
+
+</script>
+<style>
+    /* Code tidied up by ScrapBook */
+    .btn-gai .dropdown-toggle {
+        padding-left: 1px;
+        padding-right: 1px;
+        border: 0px none;
+        font-size: 12px;
+        background: transparent none repeat scroll 0% 0%;
+    }
+
+    .btn-gai .dropdown-menu a span {
+        color: rgb(255, 79, 0);
+    }
+
+    .btn-gai #btnUser a {
+        color: rgb(255, 79, 0);
+    }
+
+    .btn-gai span.badge {
+        background: rgb(201, 48, 44) none repeat scroll 0% 0%;
+        color: rgb(255, 255, 255);
+        margin-right: 3px;
+        font-weight: normal;
+        padding: 3px;
+        font-size: 10px;
+    }
+
+    .btn-gai .dropdown-menu {
+        margin-top: -1px;
+        display: inline;
+    }
+
+    .btn-gai .dropdown-menu li span {
+        display: inline !important;
+    }
+</style>
+
+<!--banner-->
+<!--banner-->
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+
+        {foreach :get_banner(3, 5) as $key=>$vo}
+        <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+        {/foreach}
+
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+
+        {foreach :get_banner(3, 5) as $key=>$vo}
+        <div class="item{if $key eq 0} active{/if}">
+            <a href="{$vo.url}">
+                <img src="{$vo.image}" alt="{$vo.title}">
+            </a>
+        </div>
+        {/foreach}
+
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!--banner-->
+
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div style="float:left;" class="col-md-3 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="title-ex col-md-4" style="font-size: 18px;">
+                            <span>祭拜记录</span>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-3"
+                             style="float: right; padding-right: 30px;">
+                            <a id="iSMSAlert" class="news-more" type="button">时间</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body list list-index" style="display: block;">
+                    <ul class="list-group" style="margin-bottom: 5px;">
+
+                        {foreach $hallWorship as $vo}
+                        <li class="list-group-item mr_line-height" style="overflow: hidden;">
+                            <span class="li-circle">▪</span>
+                            <span class="spanoverflow" style="width: 150px;" title="{$vo.member_nickname}祭拜了{$vo.hall_name}纪念馆">
+                                                {$vo.member_nickname}祭拜了
+                                    <a href="{:url('home/hall/detail', ['id' => $vo['hall_id']])}" target="_blank">{$vo.hall_name}纪念馆</a>
+                                </span>
+                            <span class="news-date">{$vo.create_at|time_stamp}</span>
+                        </li>
+                        {/foreach}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="float:left;" class="col-md-6 col-sm-12">
+            <div id="divSearchMuseum" class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="title-ex col-md-4" style="font-size: 18px;">
+                            <span style="width: 110px;">搜索纪念馆</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group" style="padding: 20px 20px 10px; width: 100%;">
+                    <div class="row ">
+                        <div class="col-md-12  col-sm-12">
+                            <div class="input-group">
+                                <input id="searchMuseumkey" class="form-control" placeholder="输入需要查找的内容" type="text">
+                                <span id="submit_btn" class="input-group-addon"
+                                      style="background: rgb(105, 35, 25) none repeat scroll 0% 0%; color: rgb(255, 255, 255); cursor: pointer;"
+                                      onclick="searchFamousHall()">搜索
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 10px;">
+                        <div class=""
+                             style=" margin-left: 20px; color: rgb(153, 153, 153);">
+                            <h4>首字母</h4>
+                        </div>
+                        <div class="col-md-11 col-sm-11 col-xs-10 mr_letterlist">
+                            <ul id="idFirstLetter" class="row">
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">A</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">B</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">C</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">D</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">E</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">F</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">G</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">H</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">I</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">J</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">K</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">L</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">M</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">N</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">O</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">P</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">Q</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">R</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">S</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">T</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">U</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">V</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">W</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">X</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">Y</a></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><a href="javascript:;">Z</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="float:left;" class="col-md-3 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="title-ex col-md-4" style="font-size: 18px;">
+                            <span>馆排行</span>
+                        </div>
+                        <div class="col-md-5 col-md-offset-3" style="float: right;">
+                            <a id="iWriteFG" class="news-more" type="button" style="margin-right: 10px;">祭拜值</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="lyDiv" class="panel-body list list-index" style="display: block;">
+                    <ul class="list-group" style="margin-bottom: 5px;">
+
+                        {foreach $hallRank as $vo}
+                        <li class="list-group-item mr_line-height">
+                            <span class="li-circle">▪</span>
+                            <span class="spanoverflow" title="{$vo.hall_name}纪念馆">
+                                <a href="{:url('home/hall/detail', ['id'=>$vo['hall_id']])}" target="_blank">{$vo.hall_name}纪念馆 </a>
+                            </span>
+                            <span class="news-date">{$vo.hall_integral}</span>
+                        </li>
+
+                        {/foreach}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="iSelectMuseum" class="row" style="margin-top: 10px;">
+    </div>
+
+    <!-- 最新，最热 -->
+    <div id="latestMuseum" class="row" style="margin-top: 10px;">
+        <div class="panel panel-default" style="margin: 0px 15px 15px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="title-ex col-md-4">
+                                    <h4>最新</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ulmenuli" style="padding-bottom: 10px;">
+                <div id="latestMuseumSlide" style="width: 100%;">
+                    <div id="carousel-museum-latest" class="carousel carousel-museum slide" data-ride="carousel"
+                         style="width: 100%;">
+                        <div role="listbox">
+
+                            {foreach $latestHallList as $vo}
+
+                            <div class="item active">
+
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="mr_photoshow" align="center">
+                                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" target="_blank">
+                                            <img alt="{$vo.hall_name}照片" title="{$vo.hall_name}纪念馆" class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@260w_260h')}">
+                                        </a>
+                                    </div>
+                                    <div class="mr_phototext1">
+                                        <h4 style="padding-left: 5px; float: left; margin-top: 5px;">
+                                            <div class="txoverflow" style="max-width: 240px;">
+                                                <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" title="{$vo.hall_name}"
+                                                   target="_blank">
+                                                    {$vo.hall_name|msubstr=0,3,false}
+                                                </a>
+                                            </div>
+                                        </h4>
+                                        <!--<small title="人气指数" class="mr_xstb">
+                                            0
+                                        </small>
+                                        <small title="修缮值" class="mr_xstb2">
+                                            0
+                                        </small>-->
+                                    </div>
+                                    <div class="mr_phototext">
+                                        <div style="width: 200px;">
+                                            <strong>在世:</strong>
+                                            {$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}
+                                        </div>
+                                        <!--<div class="mr_jibaibt">
+                                            <a href="#" target="_blank">我的印象</a>
+                                        </div>-->
+                                        <div class="mr_jibaibt"
+                                             style="background: rgb(105, 35, 25) none repeat scroll 0% 0%;">
+                                            <a href="{:url('home/hall/worshipHall', ['id' => $vo['id']])}"
+                                               target="_blank">在线祭拜</a>
+                                        </div>
+                                    </div>
+                                    <div class="mr_phototext h69">
+                                        <strong>简介:</strong>
+                                        {$vo.hall_describe|msubstr=0,30}
+                                    </div>
+                                </div>
+
+                            </div>
+                            {/foreach}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 名人纪念馆列表 按名人类型排列 -->
+    {foreach $famousList as $famousType}
+    {notempty name="famousType['list']"}
+    <div class="row iPoliticianMuseum" style="margin-top: 10px;">
+        <div class="panel panel-default" style="margin: 0px 15px 15px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="title-ex col-md-4">
+                                    <h4>{$famousType.name}纪念馆</h4>
+                                </div>
+                                <div class="col-md-4" style="float: right; margin-right: 10px;">
+                                    <a class="news-more" target="_blank"
+                                       href="{:url('home/hall/hallList', ['is_famous' => 1, 'famous_type' => $famousType['id']])}">更多</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ulmenuli" style="padding-bottom: 10px;">
+
+                {foreach $famousType['list'] as $vo}
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="mr_photoshow" align="center">
+                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" target="_blank">
+                            <img alt="{$vo.hall_name}照片" title="{$vo.hall_name}纪念馆" class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@260w_260h')}">
+                        </a>
+                    </div>
+                    <div class="mr_phototext1">
+                        <h4 style="padding-left: 5px; float: left; margin-top: 5px;">
+                            <div class="txoverflow" style="max-width: 240px;">
+                                <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" title="{$vo.hall_name}" target="_blank">
+                                    {$vo.hall_name}
+                                </a>
+                            </div>
+                        </h4>
+                        <!--<small title="人气指数" class="mr_xstb">
+                            0
+                        </small>
+                        <small title="修缮值" class="mr_xstb2">
+                            0
+                        </small>-->
+                    </div>
+                    <div class="mr_phototext">
+                        <div style="width: 200px;">
+                            <strong>在世:</strong>
+                            {$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}
+                        </div>
+                        <!--<div class="mr_jibaibt">
+                            <a href="http://his.tsingming.com/maozedong/#yinxiang" target="_blank">我的印象</a>
+                        </div>-->
+                        <div class="mr_jibaibt" style="background: rgb(105, 35, 25) none repeat scroll 0% 0%;">
+                            <a href="{:url('home/hall/worshipHall', ['id' => $vo['id']])}" target="_blank">在线祭拜</a>
+                        </div>
+                    </div>
+                    <!--<div class="mr_phototext">
+                        <strong>印象:</strong>
+                        人民的保护神
+                    </div>-->
+                    <div class="mr_phototext h69">
+                        <strong>简介:</strong>
+                        {$vo.hall_describe|msubstr=0,30}
+                    </div>
+                </div>
+                {/foreach}
+
+            </div>
+        </div>
+    </div>
+    {/notempty}
+    {/foreach}
+
+    <!--私人馆-->
+
+    <!--友情链接-->
+    <div class="panel panel-default">
+        <div class="panel-heading title2-ex youlink">
+            <h3 class="panel-title">友情链接</h3>
+            <h3>合作单位</h3>
+        </div>
+        <div class="panel-body srlink" style="padding-right: 0px;">
+            <ul class="flinklist">
+
+                {foreach $fLinks as $vo}
+                <li>
+                    <a href="{$vo.url}" target="_blank" title="{$vo.name}">{$vo.name}</a>
+                </li>
+                {/foreach}
+
+            </ul>
+            <ul class="flinklist" style="display: none;">
+
+                {foreach $hLinks as $vo}
+                <li>
+                    <a href="{$vo.url}" target="_blank" title="{$vo.name}">{$vo.name}</a>
+                </li>
+                {/foreach}
+
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    /* 纪念馆搜索 script */
+    $("#idFirstLetter>li").click(function () {
+
+        $("#searchMuseumkey").val('');
+        $("#latestMuseum").hide(); //最新纪念馆
+        $(".iPoliticianMuseum").hide(); //名人纪念馆
+
+        var index = $("#idFirstLetter>li").index($(this));
+        var letter = $("#idFirstLetter>li>a").eq(index).html();
+        $("#idFirstLetter>li>a").removeClass().eq(index).addClass("activeLetter"); //点击修改当前样式
+
+        $.ajax({
+            url: 'famousHallAjaxSearch',
+            dataType: '',
+            data: { format: 'json', letter: letter },
+            success: function(data) {
+                $("#iSelectMuseum").html(data);
+            }
+        });
+    });
+
+    /* 搜索名人馆 */
+    $("#searchMuseumkey").keydown(function (e) {
+        console.log(e.keyCode)
+        if (e.keyCode == 13) {
+            searchFamousHall();
+        }
+    });
+
+    /* 名人纪念馆搜索方法 */
+    function searchFamousHall() {
+
+        $("#idFirstLetter>li>a").removeClass("activeLetter"); //点击修改当前样式
+        var keywords = $("#searchMuseumkey").val();
+        $.ajax({
+            url: 'famousHallAjaxSearch',
+            dataType: '',
+            data: { format: 'json', keywords: keywords },
+            success: function(data) {
+                $("#iSelectMuseum").html(data);
+            }
+        });
+    }
+
+</script>
+
+{/block}
+
+
+{block name="js-foot"}
+<script>
+    $(function () {
+        huan();
+        function huan() {
+
+            var sli = $(".youlink h3");// 友链
+
+            sli.hover(function () {
+                $(this).addClass("panel-title").siblings().removeClass("panel-title");
+                var lin = sli.index(this);
+                $(".srlink ul").eq(lin).show().siblings().hide();
+            })
+
+        }
+    })
+</script>
+{/block}

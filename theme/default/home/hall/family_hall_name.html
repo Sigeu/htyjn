@@ -1,0 +1,524 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<!--<script src="__PUBLIC__/static/home/js/jquery.js"></script>-->
+
+<script src="__PUBLIC__/static/home/js/tabScript.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/web_common.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/family.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/grade.css">
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/jquery.boxy.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/huaien.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/js.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/Navigation.js"></script>-->
+<!--<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/extend.css">-->
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/index.css">
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/header.css">-->
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/common/footer.css">-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/extend.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/JPImgSwich.js"></script>&lt;!&ndash;图片切换&ndash;&gt;-->
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .gd_ban dl dd span :hover, a:hover {
+        text-decoration: underline;
+        color: Black;
+    }
+
+    .weiduduan {
+        width: 970px;
+        margin: 15px auto 0px;
+    }
+
+    #focus {
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #focus ul {
+        height: 380px;
+        position: absolute;
+    }
+
+    #focus ul li {
+        float: left;
+        width: 970px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus ul li div {
+        position: absolute;
+        overflow: hidden;
+    }
+
+    #focus .btnBg {
+        position: absolute;
+        width: 970px;
+        height: 20px;
+        left: 0px;
+        bottom: 0px;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn {
+        position: absolute;
+        width: 780px;
+        height: 10px;
+        padding: 5px 10px;
+        right: 0px;
+        bottom: 0px;
+        text-align: right;
+    }
+
+    #focus .btn span {
+        display: inline-block;
+        width: 25px;
+        height: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .btn span.on {
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    }
+
+    #focus .preNext {
+        width: 45px;
+        height: 100px;
+        position: absolute;
+        top: 90px;
+        background: transparent url("__PUBLIC__/static/home/images/sprite.png") no-repeat scroll 0px 0px;
+        cursor: pointer;
+    }
+
+    #focus .pre {
+        left: 0px;
+    }
+
+    #focus .next {
+        right: 0px;
+        background-position: right top;
+    }
+</style>
+<!--图片切换 以前版本-->
+<!-- 图片切换 以前版本-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/home/js/family1.js"></script>-->
+<style type="text/css">
+    /* Code tidied up by ScrapBook */
+    .xpdt_box ul li a:hover {
+        color: Black;
+    }
+
+    .i_zp_box ul li .zp_box dl dd {
+        text-align: left;
+    }
+
+    .title_box {
+        border-width: 1px 1px 3px;
+        border-style: solid;
+        border-color: rgb(206, 206, 206) rgb(206, 206, 206) rgb(255, 132, 0) rgb(255, 132, 0);
+        height: 32px;
+        line-height: 32px;
+        clear: both;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .links_box {
+        padding: 10px 25px;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .border {
+        border-left: 1px solid rgb(204, 204, 204);
+        border-bottom: 1px solid rgb(204, 204, 204);
+        border-right: 1px solid rgb(204, 204, 204);
+    }
+
+    .links_box a {
+        display: inline;
+        margin-right: 20px;
+        line-height: 28px;
+        overflow-wrap: break-word;
+        word-break: normal;
+        white-space: nowrap;
+    }
+</style>
+<script type="text/javascript">
+
+//    $(function () {
+//        // FirstLoadXing(); //第一次加载 艾姓
+//        GetBjxId();
+//    });
+//
+//    /*鼠标移入百家姓 显示信息*/
+//    var GetBjxId = function () {
+//        var currentBjx = $(".bjx_box .list li"); //定位到百家姓
+//        $(currentBjx).hover(function () {
+//            var currentIndex = $(currentBjx).index(this);
+//            var bjx = $(".list li a:eq(" + currentIndex + ")").attr("name"); //获取当前id
+//
+//            //获取姓氏信息
+////                $.ajaxLoad({
+////                    url: "/AjaxJiaPu/HistoryAndMingRen.do",
+////                    data: {bjxId: bjx},
+////                    success: function (msg) {
+////                        $("#HistoryAndMingRen").html(msg);
+////                    }
+////                }, "#HistoryAndMingRen");
+//
+//        }, function () {
+//        });
+//    }
+//
+//    //获取姓氏信息
+//    var FirstLoadXing = function () {
+//        $.ajaxLoad({
+//            url: "/AjaxJiaPu/HistoryAndMingRen.do",
+//            success: function (msg) {
+//                $("#HistoryAndMingRen").html(msg);
+//            }
+//        }, "#HistoryAndMingRen");
+//    }
+
+</script>
+<!--<script src="__PUBLIC__/static/home/js/logger.js"></script>-->
+<!--<script src="__PUBLIC__/static/home/js/index.js"></script>-->
+<link href="__PUBLIC__/static/home/css/bdsstyle.css" rel="stylesheet" type="text/css">
+{/block}
+
+
+{block name="lib-head"}
+
+{/block}
+
+<!-- content -->
+{block name="content"}
+<div class="container-fluid zongCi">
+    <div class="container family-name">
+        <!--- main begin --->
+        <!-- 面包屑导航 -->
+        <div class="side_box">
+            <!-- 用户登录  -->
+            <!-- 宗谱查询 -->
+            <!--<div class="lt_box name-search mt10">
+                <div class="zpcx_box">
+                    <form action="/">
+                        <div class="search-input">
+                            <span>省级：</span>
+                            <select class="form-control" name="p">
+                                <option value="0">- 省份 -</option>
+                                <option value="11">北京</option>
+                                <option value="12">天津</option>
+                                <option value="13">河北省</option>
+                                <option value="14">山西省</option>
+                                <option value="15">内蒙古自治区</option>
+                                <option value="21">辽宁省</option>
+                                <option value="22">吉林省</option>
+                                <option value="23">黑龙江省</option>
+                                <option value="31">上海</option>
+                                <option value="32">江苏省</option>
+                                <option value="33">浙江省</option>
+                                <option value="34">安徽省</option>
+                                <option value="35">福建省</option>
+                                <option value="36">江西省</option>
+                                <option value="37">山东省</option>
+                                <option value="41">河南省</option>
+                                <option value="42">湖北省</option>
+                                <option value="43">湖南省</option>
+                                <option value="44">广东省</option>
+                                <option value="45">广西壮族自治区</option>
+                                <option value="46">海南省</option>
+                                <option value="50">重庆</option>
+                                <option value="51">四川省</option>
+                                <option value="52">贵州省</option>
+                                <option value="53">云南省</option>
+                                <option value="54">西藏自治区</option>
+                                <option value="61">陕西省</option>
+                                <option value="62">甘肃省</option>
+                                <option value="63">青海省</option>
+                                <option value="64">宁夏回族自治区</option>
+                                <option value="65">新疆维吾尔自治区</option>
+                                <option value="71">台湾</option>
+                                <option value="81">香港</option>
+                                <option value="91">澳门</option>
+                            </select>
+                            <br>
+                            <span>市级：</span>
+                            <select class="form-control">
+                                <option value="0">- 城市 -</option>
+                            </select>
+                            <br>
+                            <span>编号：</span>
+                            <input type="text" placeholder="族谱名称/藏阁号" class="form-control">
+                            <br>
+                            <span style="visibility: hidden;">查询：</span>
+                            <button class="form-control btn-primary">查询</button>
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+            <!-- 宗谱推荐 -->
+            <div class="lt_box name-tuijian mt10">
+                <div class="wz_list">
+                    <div class="dynamic-p">
+                        {foreach $recNewsList as $key=>$vo}
+                        <a href="{:url('home/News/detail', ['id'=>$vo['id']])}" {if $key eq 12}class="no-border"{/if}><i></i>{$vo.title|msubstr=0,15}</a>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 姓氏历史列表 -->
+        <div class="left_side mt10 bjx_list">
+            <div class="zpyl_box">
+                <div class="tit">
+                    {$info.name}氏起源:
+                </div>
+                {$info.name_history}
+            </div>
+        </div>
+        <!-- 姓氏名人列表 -->
+        <!--<div class="left_side mt10 bjx_list name-mingren">
+            <div class="name_list">
+                <div class="tit">
+                    <h2>
+                        古代名人
+                    </h2>
+                </div>
+                <ul class="bjx_mr">
+
+
+                    <li><a target="_blank" title="古代名人李自成" href="/Info/13885.htm">
+                        <img alt="李自成" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140313/2405e8f5812c45509cec419b3ea8f4741_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李自成" href="/Info/13885.htm">
+                                李自成</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李耳（老子）" href="/Info/13884.htm">
+                        <img alt="李耳（老子）" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140313/e069cd29ef464428bf3b185d8f95254b1_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李耳（老子）" href="/Info/13884.htm">
+                                李耳（</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李斯" href="/Info/13883.htm">
+                        <img alt="李斯" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140313/7bde5b8a3fd246bf98d96c57115b08fd1_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李斯" href="/Info/13883.htm">
+                                李斯</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李固" href="/Info/5044.htm">
+                        <img alt="李固" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27163957cy1q.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李固" href="/Info/5044.htm">
+                                李固</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李悝" href="/Info/5043.htm">
+                        <img alt="李悝" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27164108ft40.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李悝" href="/Info/5043.htm">
+                                李悝</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李广" href="/Info/5042.htm">
+                        <img alt="李广" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27164205mmar.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李广" href="/Info/5042.htm">
+                                李广</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="古代名人李白" href="/Info/5041.htm">
+                        <img alt="李白" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27164320dhq9.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李白" href="/Info/5041.htm">
+                                李白</a></p>
+                    </li>
+                    <li><a target="_blank" title="古代名人李白" href="/Info/5041.htm">
+                        <img alt="李白" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27164320dhq9.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李白" href="/Info/5041.htm">
+                                李白</a></p>
+                    </li>
+
+                </ul>
+                <div class="tit">
+                    <h2>
+                        近代名人</h2>
+                </div>
+                <ul class="bjx_mr">
+
+
+                    <li><a target="_blank" title="近代名人李秉衡" href="/Info/13845.htm">
+                        <img alt="李秉衡" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140307/209d902629ad4aa0b87313d143be3d581_s.png"></a>
+                        <p>
+                            <a target="_blank" title="李秉衡" href="/Info/13845.htm">
+                                李秉衡</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="近代名人李鸿藻" href="/Info/13838.htm">
+                        <img alt="李鸿藻" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140306/fb844aeb77a2453aaea5603f99a86b871_s.png"></a>
+                        <p>
+                            <a target="_blank" title="李鸿藻" href="/Info/13838.htm">
+                                李鸿藻</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="近代名人李尧棠" href="/Info/5056.htm">
+                        <img alt="李尧棠" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/271345223t8f.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李尧棠" href="/Info/5056.htm">
+                                李尧棠</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="近代名人李默然" href="/Info/5055.htm">
+                        <img alt="李默然" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/271347052a6z.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李默然" href="/Info/5055.htm">
+                                李默然</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="近代名人李锐" href="/Info/5054.htm">
+                        <img alt="李锐" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27165006isq4.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李锐" href="/Info/5054.htm">
+                                李锐</a></p>
+                    </li>
+                    <li><a target="_blank" title="近代名人李鸿藻" href="/Info/13838.htm">
+                        <img alt="李鸿藻" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140306/fb844aeb77a2453aaea5603f99a86b871_s.png"></a>
+                        <p>
+                            <a target="_blank" title="李鸿藻" href="/Info/13838.htm">
+                                李鸿藻</a></p>
+                    </li>
+                    <li><a target="_blank" title="近代名人李政道" href="/Info/5053.htm">
+                        <img alt="李政道" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/271651366acb.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李政道" href="/Info/5053.htm">
+                                李政道</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="近代名人李尧棠" href="/Info/5052.htm">
+                        <img alt="李尧棠" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/XingInfoImage/20131009/27165239rzxp.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李尧棠" href="/Info/5052.htm">
+                                李尧棠</a></p>
+                    </li>
+
+                </ul>
+                <div class="tit">
+                    <h2>
+                        现代名人</h2>
+                </div>
+                <ul class="bjx_mr">
+
+
+                    <li><a target="_blank" title="现代名人李大齐" href="/Info/15387.htm">
+                        <img alt="李大齐" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140805/a58e52e866ff4f9887cd9211874699311_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李大齐" href="/Info/15387.htm">
+                                李大齐</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李易峰" href="/Info/15329.htm">
+                        <img alt="李易峰" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140730/376568acb33f411291c92b0a2971c96e1_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李易峰" href="/Info/15329.htm">
+                                李易峰</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李心洁" href="/Info/14737.htm">
+                        <img alt="李心洁" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140527/4a94236558b94b00b998672403af57271_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李心洁" href="/Info/14737.htm">
+                                李心洁</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李维嘉" href="/Info/14576.htm">
+                        <img alt="李维嘉" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140512/cb75965219d34f569386a92a6a6143d91_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李维嘉" href="/Info/14576.htm">
+                                李维嘉</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李若彤" href="/Info/14452.htm">
+                        <img alt="李若彤" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140428/4008dffd1bf0471fbed7ad86087fce2e1_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李若彤" href="/Info/14452.htm">
+                                李若彤</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李小冉" href="/Info/14419.htm">
+                        <img alt="李小冉" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140424/691da45b2d4f4e40b97fa70203dcd8031_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李小冉" href="/Info/14419.htm">
+                                李小冉</a></p>
+                    </li>
+
+                    <li><a target="_blank" title="现代名人李金铭" href="/Info/14324.htm">
+                        <img alt="李金铭" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140416/7ae656d6a405468889bc0ac362210c271_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李金铭" href="/Info/14324.htm">
+                                李金铭</a></p>
+                    </li>
+                    <li><a target="_blank" title="现代名人李易峰" href="/Info/15329.htm">
+                        <img alt="李易峰" style="  max-width:70px; max-height:70px;"
+                             src="http://img98.huaien.com/file/article/20140730/376568acb33f411291c92b0a2971c96e1_s.jpg"></a>
+                        <p>
+                            <a target="_blank" title="李易峰" href="/Info/15329.htm">
+                                李易峰</a></p>
+                    </li>
+
+                </ul>
+            </div>
+        </div>-->
+    </div>
+
+</div>
+
+
+<div class="clearfix"></div>
+
+{/block}
+
+
+{block name="js-foot"}
+
+<!--<script src="__PUBLIC__/static/home/js/index.js"></script>-->
+
+<script>
+    $(function(){
+//        loadTab();
+    });
+</script>
+{/block}

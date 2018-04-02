@@ -1,0 +1,72 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+{if $info.hall_type eq 1}
+<div class="single_container img_bg">
+    <!--- 普通馆个人信息显示 个性馆隐藏 hide_infor--->
+    {include file="home/hall/include/_hall_guan_left"}
+
+    <!-- 回忆相册盒子 photo_box -->
+    {include file="home/hall/include/_hall_photo_box"}
+
+</div>
+
+{else /}
+
+<div class="yuan_container img_bg">
+    <!-- 回忆相册盒子 photo_box -->
+    {include file="home/hall/include/_hall_photo_box"}
+</div>
+{/if}
+
+
+
+<script>
+    $("#add-photo").click(function () {
+        layer.open({
+            title: '添加相册',
+            type: 1,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['420px', '240px'], //宽高
+            content: '<form class="layui-form" action="">'
+            + '<br/><div class="layui-form-item">'
+            + '<label class="layui-form-label">相册名称</label>'
+            +'<div class="layui-input-inline">'
+            + '<input type="text" name="photo_name" required="required" lay-verify="required|name" title="请输入相册名称" placeholder="请输入相册名称" class="layui-input">'
+            + '</div>'
+            + '</div>'
+
+            + '<div class="hr-line-dashed"></div>'
+            + '<div class="layui-form-item text-center">'
+            + '<button class="layui-btn" lay-submit="" lay-filter="add_photo">保存数据</button>'
+            + '</div>'
+            + '</form>'
+        });
+    })
+
+    layui.use(['form'], function() {
+        var form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            name: function(value){
+                if(value.length < 2){
+                    return '相冊至少为2个字符';
+                }
+            }
+        });
+
+        // ajax 提交
+        form.on('submit(add_photo)', function(data){
+
+            $.post('/home/Hall/addHallPhoto?id={$info.id}',data.field,function(res){
+                popup_jump(res, 1);
+            });
+            return false;
+        });
+    });
+</script>
+
+{/block}

@@ -1,0 +1,82 @@
+{include file='/home/grave/common/_head'}
+
+{load href="/static/home/js/jquery.imgbox.pack.js" /}
+<!--<script type="text/javascript" src="js/jquery.imgbox.pack.js"></script>-->
+    <div class="navBox">
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><a  href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                    <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                    <li><a href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                    <li><a class="currentnav" href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                    <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                    <li><a href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div><!--墓园首页banner-->
+
+<div class="contentBox">
+    <div class="container">
+        <div class="weizhi_title txt-gray">
+            <a href="#">首页 &gt;</a><a href="#">{$grave.name}></a><span class="txt-hdark">墓园图片</span>
+        </div>
+
+        <div class="my_pic_a">
+            <div class="tuijian tuijian_a">
+                {volist name="imgs" id='vo'}
+                <a id="example2-1" class="tj txt-gray" target="_blank" href="{$vo.photo_picture_url}">
+                    <div class="tj_pic txt-white">
+                        <img src="{$vo.photo_picture_url}">
+                    </div>
+                </a>
+                {/volist}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--foot-->
+{include file='/home/grave/common/_footer'}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#example1-1").imgbox();
+
+        $("#example1-2").imgbox({
+            'zoomOpacity'	: true,
+            'alignment'		: 'center'
+        });
+
+        $("#example1-3").imgbox({
+            'speedIn'		: 0,
+            'speedOut'		: 0
+        });
+
+        $("#example2-1, #example2-2").imgbox({
+            'speedIn'		: 0,
+            'speedOut'		: 0,
+            'alignment'		: 'center',
+            'overlayShow'	: true,
+            'allowMultiple'	: false
+        });
+    });
+</script>
+
+<!--<script type="text/javascript">-->
+    <!--var destoon_userid = 0;-->
+    <!--var destoon_username = '';-->
+    <!--var destoon_message = 0;-->
+    <!--var destoon_chat = 0;-->
+    <!--var destoon_cart = get_cart();-->
+    <!--var destoon_member = '';-->
+    <!--destoon_member += '<a href="http://www.gmw6688.com/member/login.php">登录</a><a href="http://www.gmw6688.com/member/register.php">注册</a>';-->
+    <!--$('#destoon_member').html(destoon_member);-->
+    <!--$('#destoon_cart').html(destoon_cart > 0 ? '<strong>' + destoon_cart + '</strong>' : 0);-->
+<!--</script>-->
+</body>
+</html>

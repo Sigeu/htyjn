@@ -1,0 +1,44 @@
+<div class="right-bg">
+    <!--<h2 class="private-title">追忆文选</h2>-->
+    <div class="article_box">
+        <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+        <div class="bread_route">
+            {if $info.hall_type eq 1}
+            <!-- 发表追忆文选按钮 upimg_btn -->
+            {if is_login() && is_login() eq $info.hall_member_id}
+            <a class="app_btn" href="{:url('/home/Hall/addHallArticle', ['id' => $info['id']])}">我要发表文选</a>
+            {/if}
+            您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+            &gt;
+            追忆文选
+            {else /}
+            追忆文选
+            {/if}
+        </div>
+        <!--- 追忆文选列表表述--->
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文选标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="article_title" value="{$articleInfo.article_title|default=''}" lay-verify="title" autocomplete="off" placeholder="请输入文选标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">文选内容</label>
+                <div class="layui-input-block">
+                    <!-- 加载编辑器的容器 -->
+                    <textarea id="editor" name="article_content" type="text/plain">{$articleInfo.article_content|default=''}</textarea>
+                    <!--<textarea class="layui-textarea" name="article_content" id="editor" style="display: none"></textarea>-->
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    {if isset($articleInfo.id)} <input type="hidden" name="article_id" value="{$articleInfo.id}">{/if}
+                    <button class="layui-btn" lay-submit="" lay-filter="publish_article">发布文选</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

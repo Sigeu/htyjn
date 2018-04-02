@@ -1,0 +1,141 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <!-- 内容区域 -->
+        <div class="user_main">
+
+            <!-- 纪念馆管理页面 顶部菜单栏 -->
+            {include file="home/member/include/_hall_top" /}
+
+            <!-- 纪念馆表单内容区 -->
+            <div class="content-list block">
+
+                <form id="form" action="__SELF__" method="post">
+
+                    <!-- 逝者基本信息 -->
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">纪念馆名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="hall_name" value='{$vo.hall_name|default=""}' class="form-control" placeholder="请输入纪念馆名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">纪念碑主题</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="family_theme" value='{$vo.family_theme|default=""}' class="form-control" placeholder="请输入纪念碑主题">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 纪念馆相关风格 -->
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">纪念馆风格</label>
+                            <div class="col-sm-6">
+                                <select name='hall_style' class="form-control">
+                                    <option value="">请选择纪念馆风格</option>
+                                    {foreach $hallStyle as $key=>$v}
+                                    <option>{$v.name}</option>
+                                    {foreach $v.hall_style as $sKey=>$hallStyle}
+                                    <option value="{$hallStyle.id}" {eq name='hallStyle.id' value="$vo.hall_style|default=0"}selected="selected"{/eq}>&nbsp;&nbsp;|- {$hallStyle.style_name}</option>
+                                    {/foreach}
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">祭拜大厅风格</label>
+                            <div class="col-sm-6">
+                                <select name='hall_worship_style' class="form-control">
+                                    <option value="">请选择祭拜大厅风格</option>
+                                    {foreach $hallWorshipStyle as $key=>$v}
+                                    <option>{$v.name}</option>
+                                    {foreach $v.hall_worship_style as $hallWorshipStyle}
+                                    <option value="{$hallWorshipStyle.id}" {eq name='hallWorshipStyle.id' value="$vo.hall_worship_style|default=0"}selected = "selected"{/eq}>&nbsp;&nbsp;|- {$hallWorshipStyle.style_name}</option>
+                                    {/foreach}
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">纪念馆音乐</label>
+                            <div class="col-sm-6">
+                                <select name='hall_music' class='form-control'>
+                                    <option value="">请选择音乐</option>
+                                    {foreach $hallMusic as $key=>$v}
+                                    <option value='{$v.id}' {eq name='v.id' value="$vo.hall_music|default=0"}selected = "selected"{/eq}>{$v.music_name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">灵牌位样式</label>
+                            <div class="col-sm-6">
+                                <select name='family_lingpai_style' class='form-control'>
+                                    <option value="">请选择灵牌样式</option>
+                                    {foreach $lingpaiStyle as $key=>$vi}
+                                    <option {eq name='vi.id' value="$vo.family_lingpai_style|default=0"}selected="selected"{/eq}  value='{$vi.id}'>{$vi.style_name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="hr-clean">
+
+                    <!-- 其他信息 -->
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">立碑人</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="family_libeiren" value='{$vo.family_libeiren|default=""}' class="form-control" placeholder="输入立碑人">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">家族祖籍</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="family_ancestral_home" value='{$vo.family_ancestral_home|default=""}' class="form-control" placeholder="输入家族祖籍">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">家族精神</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="family_spirit" value='{$vo.family_spirit|default=""}' class="form-control" placeholder="输入家族精神">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- 表单提交按钮 -->
+                    <div class="form-group">
+                        <div class="col-sm-12 creation-btn">
+                            {if isset($vo['id'])}
+                            <button type="button" data-action="user_hall_edit" data-id="{$vo['id']}" class="_j_edit_hall btn btn-default">更新</button>
+                            {else /}
+                            <button type="button" data-action="user_hall_add" class="_j_edit_hall btn btn-default">创建</button>
+                            {/if}
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{include file="/home/member/common/footer" /}

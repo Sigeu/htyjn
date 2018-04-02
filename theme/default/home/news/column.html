@@ -1,0 +1,103 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link href="__PUBLIC__/static/home/css/style.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/master.css" rel="stylesheet" type="text/css">
+<!--<link href="__PUBLIC__/static/home/css/culture.css" rel="stylesheet" type="text/css">-->
+<link href="__PUBLIC__/static/home/css/culturelist.css" rel="stylesheet" type="text/css">
+
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/share_style0_16.css">-->
+{/block}
+
+{block name="js-head"}
+<script src="__PUBLIC__/static/home/js/share.js"></script>
+{/block}
+
+<!-- content -->
+{block name="content"}
+
+
+<!-- 广告位 -->
+{notempty name=':get_ad(5)'}
+<div class="pagebanner contentbox top30">
+    <img src="{:get_ad(5)['path']}" class="imgborder" width="98%">
+</div>
+{/notempty}
+
+<div id="main">
+    <div class="container">
+        <div class="width220 left">
+            <div class="pagemenu box">
+                <div class="thistitle"><h3>民俗文化</h3></div>
+
+                {foreach $categoryList as $category}
+                <ul class="pmenu">
+                    <ol><a href="{:url('home/News/column', ['cid'=>$category['id']])}">{$category.title}</a></ol>
+                    {foreach $category['sub'] as $sub}
+                    <li><a href="{:url('home/News/column', ['cid'=>$sub['id']])}">{$sub.title}</a></li>
+                    {/foreach}
+                </ul>
+                {/foreach}
+
+                <div class="clear"></div>
+            </div>
+
+            <!-- 广告位 -->
+            {notempty name=':get_ad(6)'}
+            <div class="box top20">
+                <a href="{:get_ad(6)['url']}">
+                    <img class="lazy" data-original="{:get_ad(6)['path']}" alt="{:get_ad(6)['name']}" width="100%">
+                </a>
+            </div>
+            {/notempty}
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="width767 right">
+
+
+            <div class="wenhua box ">
+                <div class="title"><h3>{$categoryInfo.title}</h3></div>
+
+                {notempty name="categoryInfo.sub"}
+                <div class="xjfl">
+                    {foreach $categoryInfo['sub'] as $sub}
+                    <a href="{:url('home/News/column', ['cid' => $sub['id']])}">{$sub.title}</a>
+                    {/foreach}
+                </div>
+                {/notempty}
+
+                <ul class="newslist">
+
+                    {foreach $list as $vo}
+                    <li>
+                        <a href="{:url('home/News/detail', ['id' => $vo['id']])}"><strong>{$vo.title}</strong></a><br>
+                        <p>
+                            <a href="{:url('home/News/detail', ['id' => $vo['id']])}">
+                                <img class="lazy" data-original="{:quick_pic_thumb($vo.image, '@90w_60h')}" width="90" height="60">{$vo.description}</a>
+                        </p>
+                        <span class="right c999">{$vo.create_at|date='Y-m-d',###}</span>
+                    </li>
+                    {/foreach}
+
+                </ul>
+
+                <div class="pagepage clear">
+                    <!-- 分页 -->
+                    {$pageHtml}
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{/block}

@@ -1,0 +1,249 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+            <div class="content-list">
+                <div class="c-title">消费记录</div>
+
+                <table class="layui-table" id="JS_orderList_table" lay-size="sm">
+                    <colgroup>
+                        <col width="120">
+                        <col width="100">
+                        <col width="120">
+                        <col width="100">
+                        <col width="80">
+                        <col width="100">
+                        <col width="80">
+                    </colgroup>
+                    <tbody>
+                    <thead>
+                    <tr>
+                        <th >祭拜编号</th>
+                        <th>纪念馆ID</th>
+                        <th>祭祀商品名称</th>
+                        <th>祭拜时间</th>
+                        <th>有效期</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+
+                    <tr>
+                        <td class="white-line" colspan="7"></td>
+                    </tr>
+                    {foreach $lists as $vo}
+
+
+                    <tr>
+                        <td class="orange nobt td-cen">{$vo.worship_sn}</td>
+                        <td class="orange nobt td-cen">{$vo.hall_id}</td>
+                        <td class="orange nobt td-cen">{$vo.goods_name}</td>
+                        <td class="orange nobt td-cen">{$vo.create_at|format_time}</td>
+                        <td class="orange nobt td-cen">
+                            <?php $duration = sprintf("%.2f", ($vo['duration'] - time()) / 3600); ?>
+                            {if $duration lt 0}
+                            0
+                            {else/}
+                            {$duration}
+                            {/if}
+                            小时
+                        </td>
+                        <td class="orange nobt td-cen">
+                            {if $duration gt 0}
+                            <span style="color:#090">有效</span>
+                            {else/}
+                            <span>已过期</span>
+                            {/if}
+                        </td>
+
+                        <td class="nobt td-cen">
+                            <div class="oper" data-time1="120">
+                                <a href="javascript:;" class="delete_records" data-id="{$vo['worship_id']}">删除记录</a>
+                            </div>
+
+                        </td>
+                    </tr>
+                    {/foreach}
+
+                    </tbody>
+                </table>
+
+                <div style="text-align: center">
+                    {$lists->render()}
+                </div>
+
+
+            </div>
+            <script type="text/javascript">
+                window._onReadyList = window._onReadyList || [];
+                //我的订单页面事件
+                _onReadyList.push(function () {
+                    $('#JS_order_filter_a').click(function () {
+                        $('#JS_order_fl_box').addClass('hover');
+                        return false;
+                    });
+                    $('#JS_order_filter_ul').hover(function () {
+                    }, function () {
+                        $('#JS_order_fl_box').removeClass('hover');
+                    });
+                    $('#JS_order_filter_ul a').click(function () {
+                        var curStatus = $('#JS_composite_status').val();
+                        if (curStatus != $(this).data('compstatus')) {
+                            $('#JS_composite_status').val($(this).data('compstatus'));
+                            document.forms.searchForm.submit();
+                        }
+                    });
+
+                    $('.JS_order_trace_a').hover(function () {
+                        $(this).next('.track').find('.trackInfo').show();
+                    }, function () {
+                        $(this).next('.track').find('.trackInfo').hide();
+                    });
+
+                    $('.JS_order_d_more').click(function () {
+                        if ($(this).prev().hasClass('list-h-l')) {
+                            $(this).prev().removeClass('list-h-l');
+                            $(this).find('i').addClass('i-up-arr');
+                        } else {
+                            $(this).prev().addClass('list-h-l');
+                            $(this).find('i').removeClass('i-up-arr');
+                        }
+                    });
+
+                    /*合并付款*/
+                    $(function () {
+                        var table = $('#JS_orderList_table');
+                        var isChecked = false;
+
+                        // 全选
+                        $('#JS_all_select').click(function () {
+                            var _this = $(this),
+                                    checkbox = table.find('input[name=item]');
+                            state = _this.attr('data-state');
+
+                            if (isChecked) {
+                                checkbox.prop('checked', false);
+                                isChecked = false;
+                            } else {
+                                checkbox.prop('checked', true);
+                                isChecked = true;
+                            }
+                        });
+
+                        // 合并付款
+                        $('#JS_merge_pay').click(function () {
+                            var checkbox = table.find('input[name=item]:checked'),
+                                    order_sn = [];
+
+                            checkbox.each(function (i) {
+                                order_sn.push(checkbox.eq(i).data('order_sn'));
+                            });
+
+                            if (order_sn.length <= 0) {
+                                $.alert('请至少勾选一个订单！');
+                                return false;
+                            }
+
+                            sn = order_sn.join(',');
+                            var form = $('<form id="JS_merge_pay_temp_form" action="/pay.html" target="_blank"><input type="hidden" name="sn" value="' + sn + '" /></form>');
+                            form.appendTo('body');
+                            form.submit();
+                            return false;
+                        });
+                    });
+                });
+
+
+                // 申请退款
+                function refundOrder(order_id) {
+                    var cur_time = new Date();
+                    var dd = cur_time.getDay();
+                    var hour = cur_time.getHours();
+                    if (dd != 0 && dd != 6 && hour >= 9 && hour < 18) {
+                        window.mchat.openui(1, {'click': 'join_us-2'});
+                    } else {
+                        /*$.alert("请您在工作日9:00-18:00进行申请，谢谢合作。");*/
+                        $.lightBox('请您在工作日9:00-18:00进行申请，谢谢合作。', {确定: 'close'}, '', '', '', true, 'c prompt-error');
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#JS_order_filter_a').click(function () {
+        $('#JS_order_fl_box').addClass('hover');
+        return false;
+    });
+    $('#JS_order_filter_ul').hover(function () {
+    }, function () {
+        $('#JS_order_fl_box').removeClass('hover');
+    });
+    $('#JS_order_filter_ul a').click(function () {
+        var curStatus = $('#JS_composite_status').val();
+        if (curStatus != $(this).data('compstatus')) {
+            $('#JS_composite_status').val($(this).data('compstatus'));
+            document.forms.searchForm.submit();
+        }
+    });
+
+    $('.JS_order_trace_a').hover(function () {
+        $(this).next('.track').find('.trackInfo').show();
+    }, function () {
+        $(this).next('.track').find('.trackInfo').hide();
+    });
+
+    $('.JS_order_d_more').click(function () {
+        if ($(this).prev().hasClass('list-h-l')) {
+            $(this).prev().removeClass('list-h-l');
+            $(this).find('i').addClass('i-up-arr');
+        } else {
+            $(this).prev().addClass('list-h-l');
+            $(this).find('i').removeClass('i-up-arr');
+        }
+    });
+</script>
+
+<script>
+
+    // 取消订单
+    $(".cancel_order").click(function () {
+
+        var id = $(this).attr('data-id');
+//            , paytype = $(this).attr('data-pay-type');
+
+        $.ajax({
+            url: '/home/Member/cancelOrder',
+            type: "POST",
+            data: {order_id: id},
+            success: function (data) {
+                popup_jump(data, 1);
+            }
+        });
+    })
+
+    // 删除记录
+    $(".delete_records").click(function () {
+
+        var id = $(this).attr('data-id');
+
+        $.ajax({
+            url: '/home/Member/deleteRecords',
+            type: "POST",
+            data: {id: id},
+            success: function (data) {
+                popup_jump(data, 1);
+            }
+        });
+    })
+</script>
+
+{include file="/home/member/common/footer" /}

@@ -1,0 +1,327 @@
+{include file="/home/member/common/header" /}
+<div class="user-page-content">
+    <div class="clearfix w">
+        <div class="user_menu" style="height: 593px;">
+            <div class="navs" id="JS_u_navs">
+                <h3>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    我的消息</h3>
+                <ul>
+                    <li><a class="active" href="user-news.html">系统消息</a></li>
+                    <li><a href="user-news2.html">私信</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="user_main">
+
+
+            <style type="text/css">
+                .user_main .mine-news{padding:0 30px 20px 30px;min-height:573px;background-color:#fff;overflow:hidden;}
+                .user_main .mine-news h2.title{margin-top:25px;font-size:16px;color:#333;}
+                /* 状态变更按钮 */
+                .user_main .news-btn{margin-top:25px;}
+                .user_main .news-btn button{box-sizing:border-box;margin-right:15px;cursor:pointer;width:90px;height:30px;line-height:28px;text-align:center;font-size:14px;color:#666;background:none;border:solid 1px #d6d6d6;border-radius:3px;}
+                .user_main .news-btn .red{color:#692319;}
+                .user_main .news-btn button:hover{color:#692319;}
+
+                /* 表单样式 */
+                .user_main .mine-news .table-list{margin-top:20px;width:100%;border:solid 1px #ebebeb;}
+                .user_main .mine-news .table-list a{cursor:pointer;}
+                .user_main .mine-news .table-list th{text-align: center;color: #555;font-weight: bold;background: #f2f2f2;padding: 10px 0;}
+                .user_main .mine-news .table-list td{box-sizing:border-box;height:40px;text-align:center;border:solid 1px #ebebeb;border-top:none;}
+                .user_main .mine-news .table-list img{background-color:transparent;vertical-align:baseline;}
+                .user_main .mine-news .table-list .message-title{float:left;padding-left:30px;}
+                .user_main .mine-news .table-list .message-title:hover{color:#ee1f1f;}
+
+                /* 弹窗样式 */
+                /* 删除弹窗和标记已读弹窗 */
+                .set-dialog .in{box-sizing:border-box;width:265px;border:none;padding:25px;border-radius:0;}
+                .set-dialog .in .htmls{padding:0;text-align:center;}
+                .set-dialog .in .htmls span{padding-left:10px;line-height:24px;font-size:14px;}
+                .set-dialog .btns{text-align:center;border:none;padding:0;padding-top:18px;margin:0;}
+                .set-dialog .btns a{display: inline-block;padding: 5px 26px;margin:0 10px 0 0;border:1px solid #ccc;border-radius:2px;color:#666;cursor:pointer;background:none;}
+                .set-dialog .btns a.lightbox_btnsi_1{background:#ed4c4c;border:solid 1px #ed4c4c;color:#fff !important;}
+                .set-dialog img{background-color:transparent;}
+                /* 信息详情弹窗 */
+
+
+                .news-article .in{box-sizing:border-box;width:488px;min-height:268px;border:none;padding:20px;border-radius:0;}
+                .news-article .in .htmls{padding:0;text-align:center;}
+                .news-article .in .htmls span{padding-left:10px;line-height:24px;font-size:13px;}
+                .news-article img{background-color:transparent;}
+                .news-article .in .content{padding:35px 15px 8px;}
+                .news-article .in .title{height:34px;background:none;color:#333;border-bottom:solid 1px #ebebeb;}
+                .news-article .in .title .Left span{display:inline-block;margin-left:0;font-weight:700;line-height:1;font-size:16px;color:#333;}
+                .news-article .in .title .Left i{background:none;}
+                .news-article .in .title .Left{padding:0;}
+                .news-article .in .htmls span{padding-left:0;}
+                .news-article .in .title .Right{margin-top:-6px;font-size:28px;color:#bbb;font-weight:100;line-height:1;font-family:'宋体';}
+                .news-article .message-con{margin-top:35px;text-align:left;font-size: 14px;min-height:100px;max-height:105px;overflow:hidden;}
+                .news-article .in .message-name,.news-article .in .message-time{text-align:right;font-size:13px;}
+            </style>
+            <div class="mine-news">
+                <h2 class="title">我的消息</h2>
+                <div class="news-btn">
+                    <button type="button" class="J-read red yahei">标记已读</button>
+                    <button type="button" class="JS-delete yahei">删除</button>
+                </div>
+                <table class="table-list">
+                    <tbody>
+                    <tr>
+                        <th width="55">
+                            <input type="checkbox" id="JS-checkAll" onclick="selected.checkedAll();" title="全选"></th>
+                        <th width="85">状态</th>
+                        <th width="635">标题</th>
+                        <th>时间</th>
+                    </tr>
+                    <tr class="news-body">
+                        <th width="55">
+                            <input type="checkbox" title="全选"></th>
+                        <th width="85">已读</th>
+                        <th width="635"><a href="#">殡葬商城开业大酬宾，火爆来袭</a></th>
+                        <th>2017-07-06</th>
+                    </tr>
+                    <tr class="news-body">
+                        <th width="55">
+                            <input type="checkbox" title="全选"></th>
+                        <th width="85">已读</th>
+                        <th width="635"><a href="#">殡葬商城开业大酬宾，火爆来袭</a></th>
+                        <th>2017-07-06</th>
+                    </tr>
+                    <tr class="news-body">
+                        <th width="55">
+                            <input type="checkbox" title="全选"></th>
+                        <th width="85">已读</th>
+                        <th width="635"><a href="#">殡葬商城开业大酬宾，火爆来袭</a></th>
+                        <th>2017-07-06</th>
+                    </tr>
+                    <tr class="news-body">
+                        <th width="55">
+                            <input type="checkbox" title="全选"></th>
+                        <th width="85">已读</th>
+                        <th width="635"><a href="#">殡葬商城开业大酬宾，火爆来袭</a></th>
+                        <th>2017-07-06</th>
+                    </tr>
+                    <tr class="news-body">
+                        <th width="55">
+                            <input type="checkbox" title="全选"></th>
+                        <th width="85">已读</th>
+                        <th width="635"><a href="#">殡葬商城开业大酬宾，火爆来袭</a></th>
+                        <th>2017-07-06</th>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" id="J-idArray" value="">
+                <input type="hidden" id="J-typeArray" value="">
+            </div>
+            <script type="text/javascript">
+                window._onReadyList = window._onReadyList || [];
+                _onReadyList.push(function(){
+
+                    selected = {
+                        /**
+                         * [selected description]全选与单选id存储在$('#J-idArray')中
+                         * @author：jinzeze
+                         */
+                        checkedAll:function(){
+                            var idArray = [];
+                            var check_status = document.getElementById("JS-checkAll").checked;
+                            var check_arr = $(".JS-check");
+                            if (check_status) {
+                                for (var i = 0; i < check_arr.length; i++) {
+                                    check_arr[i].checked = true;
+                                }
+                            }else{
+                                for (var i = 0; i < check_arr.length; i++) {
+                                    check_arr[i].checked = false;
+                                }
+                            }
+                            selected.checkedArray();
+                        },
+                        /**
+                         * [checkedArray description]loop 循环遍历数组
+                         * @return {[type]} [description] 返回值 添加 到隐藏域
+                         * author:jinzeze
+                         */
+                        checkedArray:function(){
+                            var idArray = [];
+                            var check_arr = $(".JS-check");
+                            var typeArray = [];
+                            var data_value;
+                            var data_type;
+                            for (var i = 0; i < check_arr.length; i++) {
+                                if (check_arr.eq(i).is(':checked')) {
+                                    data_value = check_arr.eq(i).attr('data-value');
+                                    data_type = check_arr.eq(i).attr('data-type');
+                                    idArray.push(data_value);
+                                    typeArray.push(data_type);
+                                }
+                            }
+                            $('#J-idArray').val(idArray.join(','));
+                            $('#J-typeArray').val(typeArray.join(','));
+                        },
+                        /**
+                         * [checkedType description] 判断勾选的input是否都为已读
+                         * @return {[type]} [description] 返回true or  false
+                         * author:jinzeze
+                         */
+                        checkedType:function(){
+                            var typeArray = $('#J-typeArray').val().split(',');
+                            var booleanType = false;
+                            booleanType = typeArray.every(function(value,index){
+                                return value == 'true';
+                            });
+                            return booleanType;
+                        }
+
+                    };
+
+                    /**
+                     * [dialog_status description] 弹窗提示函数声明
+                     * @param  {[type]} text [description] 显示的文本
+                     * @author：jinzeze
+                     */
+                    function dialog_status(text){
+                        /*var _url = $('.J-imgSrc').attr('src').substring().split('/').slice(2,3);*///JS获取域名方式
+                        var _text = "<div><img src='http://img003.mllres.com/images/user/makesure.png'><span>"+text+"</span></div>";
+                        var _btns = {确定:"sure",取消:"cancel"};
+
+                        $.lightBox(_text,_btns,'','','',true,'set-dialog');
+
+                        $('.lightbox_btnsi_2').on('click', function() {
+                            //取消按钮
+                            $('.lightBox').remove();
+                            $('#JS_mask').remove();
+                        });
+                    }
+
+                    /**
+                     * [description] 标记为已读
+                     * @author:jinzeze
+                     */
+                    $(".J-read").click(function(){
+                        /*注意判断$('.J-imgSrc')是否存在*/
+                        var _idValue = $('#J-idArray').val();
+                        var _typeValue = $('#J-typeArray').val();
+
+                        if ($('.J-imgSrc').length > 0&&_idValue) {
+                            var _val = selected.checkedType();//返回是否都为已读
+                            if (!_val) {
+                                var _text = "是否标记为已读？"
+                                dialog_status(_text);
+
+                                $('.lightbox_btnsi_1').click(function(){
+                                    var _value = $('#J-idArray').val();
+                                    $.ajax({
+                                        url: '/dubbo_api/mll/stationMsg/markHasRead',
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        data: {ids: _value},
+                                    })
+                                        .done(function(data) {
+                                            if (data.error === 0) {
+                                                location.reload();
+                                            }else{
+                                                /*alert("修改失败了，请重新点击提交！");*/
+                                                $.lightBox( '修改失败了，请重新点击提交！',{确定:'close'},'','','',true,'c');
+                                            }
+
+                                        })
+                                        .fail(function() {
+                                            /*alert("修改失败了，请重新点击提交！");*/
+                                            $.lightBox( '修改失败了，请重新点击提交！',{确定:'close'},'','','',true,'c');
+                                        })
+                                })
+                            }
+
+                        }
+                    })
+
+
+                    /**
+                     * [description] 删除消息
+                     * @author:jinzeze
+                     */
+                    $(".JS-delete").click(function(){
+                        /*注意判断$('.J-imgSrc')是否存在*/
+                        if ($('.J-imgSrc').length > 0&&$('#J-idArray').val()) {
+                            var _text = "确认删除？"
+                            dialog_status(_text);
+
+                            $('.lightbox_btnsi_1').click(function(){
+                                var _value = $('#J-idArray').val();
+                                $.ajax({
+                                    url: '/dubbo_api/mll/stationMsg/deleteMsg',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: {ids: _value},
+                                })
+                                    .done(function(data) {
+                                        if (data.error === 0) {
+                                            location.reload();
+                                        }else{
+                                            /*alert("删除失败了，请重新点击提交！");*/
+                                            $.lightBox( '删除失败了，请重新点击提交！',{确定:'close'},'','','',true,'c');
+                                        }
+
+                                    })
+                                    .fail(function() {
+                                        /*alert("删除失败了，请重新点击提交！");*/
+                                        $.lightBox( '删除失败了，请重新点击提交！',{确定:'close'},'','','',true,'c');
+                                    })
+                            })
+                        }
+                    })
+
+                    /**
+                     * [description] 详情信息查看
+                     * @author:jinzeze
+                     */
+                    $('.J-content').click(function(){
+                        var $this = $(this);
+                        var _txtId = $(this).attr('data-value');
+                        var _title = $(this).text();
+                        $.ajax({
+                            url: '/dubbo_api/mll/stationMsg/getMsgContent',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {id: _txtId},
+                        })
+                            .done(function(data) {
+                                if (data.error === 0) {
+                                    var _content = '<div class="dl_head clearfix"><div class="f16 Left dl_name">'+_title+'</div><div class="dl_close Right" id="JS_dl_close"></div></div>'
+                                        +'<div class="message-con">'+data.content+'</div>'
+                                        +'<div class="message-name"><span>发件人：</span><span>'+data.sender+'</span></div>'
+                                        +'<div class="message-time"><span>时间：</span><span>'+data.sendTime+'</span></div>';
+                                    $.lightBox(_content,'',false,100,'',true,'news-article');
+                                    $(document).on("click","#JS_dl_close",function(){
+                                        //刷新页面
+                                        var $imgClassName = $this.parent('td').siblings('td').find('img');
+                                        if ($imgClassName.hasClass('message-noread')) {
+                                            location.reload();
+                                        }else{
+                                            $('#JS_mask').remove();
+                                            $('.lightBox').remove();
+                                        }
+
+                                    })
+
+                                }else{
+                                    /*alert("查看失败了，请重新点击查看！");*/
+                                    $.lightBox( '查看失败了，请重新点击查看！',{确定:'close'},'','','',true,'c');
+                                }
+                            })
+                            .fail(function() {
+                                /*alert("查看失败了，请重新点击查看！");*/
+                                $.lightBox( '查看失败了，请重新点击查看！',{确定:'close'},'','','',true,'c');
+                            })
+                    })
+                });
+
+            </script>
+
+        </div>
+    </div>
+</div>
+{include file="/home/member/common/footer" /}

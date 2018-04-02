@@ -1,0 +1,90 @@
+{include file="/home/member/common/header" /}
+
+<div class="user-page-content">
+    <div class="clearfix w">
+        <!-- 个人中心- 左边菜单栏-->
+        {include file="home/member/include/_user_left" /}
+
+        <div class="user_main">
+
+            <div class="content-one">
+                <div class="c-title">管理纪念馆</div>
+                <div class="c-title-box clearfix">
+                    <ul class="c-title-nav clearfix">
+                        <li><a href="javascript:;" {if $vo.hall_type eq 1} class="current"{/if}>个人纪念馆</a></li>
+                        <li><a href="javascript:;" {if $vo.hall_type eq 3} class="current"{/if}>家族纪念馆</a></li>
+                        <li><a href="javascript:;" {if $vo.hall_type eq 2} class="current"{/if}>双人纪念馆</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-list padd0">
+                <ul class="user-guan-lb">
+                    <li>建馆资料
+                        <div class="right mr-32">
+                            <a href="{:url('/home/Member/user_hall_edit', ['id' => $vo['id'], 'hall_type' => $vo['hall_type']])}" class="layui-btn">编辑</a>
+                        </div>
+                    </li>
+                    <li>{if $vo.hall_type eq 1}生平事迹{else /}馆介绍{/if}
+                        <div class="layui-btn-group right mr-32">
+                            <a href="{:url('/home/Hall/story', ['id' => $vo['id']])}" class="layui-btn">查看</a>
+                        </div>
+                    </li>
+                    <li>追忆文选
+                        <div class="layui-btn-group right mr-32">
+                            <a href="{:url('/home/Hall/addHallArticle', ['id' => $vo['id']])}" target="_blank" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</a>
+                            <a href="{:url('/home/Hall/article', ['id' => $vo['id']])}" target="_blank" class="layui-btn">查看</a>
+                        </div>
+                    </li>
+                    <li>回忆相册
+                        <div class="layui-btn-group right mr-32">
+                            <a href="{:url('/home/Hall/photo', ['id' => $vo['id']])}" target="_blank" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</a>
+                            <a href="{:url('/home/Hall/photo', ['id' => $vo['id']])}" target="_blank" class="layui-btn">查看</a>
+                        </div>
+                    </li>
+                    <li>追思留言
+                        <div class="layui-btn-group right mr-32">
+                            <a href="{:url('/home/Hall/message', ['id' => $vo['id']])}" target="_blank" class="layui-btn">查看</a>
+                        </div>
+                    </li>
+                    <li>删除纪念馆
+                        <div class="right mr-32">
+                            <a id="delete-hall" data-id="{$vo.id}" data-hall-type="{$vo.hall_type}" href="javascript:;" class="layui-btn"><i class="layui-icon">&#xe640;</i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#delete-hall").click(function () {
+        var hallId = $(this).attr('data-id')
+            , hallType = $(this).attr('data-hall-type');
+
+        layer.confirm('您确定要删除纪念馆吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+
+            $.ajax({
+                type: "POST",
+                url: '/home/Member/user_hall_delete',
+                data: {
+                    'id': hallId,
+                    'hall_type': hallType
+                },
+                success: function (data) {
+                    popup_jump(data, 1);
+                }
+            })
+
+        }, function(){
+
+        });
+    });
+
+</script>
+
+{include file="/home/member/common/footer" /}

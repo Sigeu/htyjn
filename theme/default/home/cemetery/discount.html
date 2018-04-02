@@ -1,0 +1,71 @@
+{include file='home/cemetery/common/_header'}
+{load href="/static/home/css/shop-discount.css" /}
+<div class="container m-t-30">
+    <div class="shop-discount-left">
+        <div class="shop-discount-title">
+            <h3>墓地优惠</h3>
+        </div>
+        <ul class="article-list">
+            {volist name='discount' id='vo'}
+            <li>
+                <h3 class="article-title">
+                    <a href="{:url('/home/cemetery/detail',['id'=>$vo.id])}" target="_blank"> {$vo.title} </a>
+                </h3>
+                <div class="article-sub">
+                    <!--<span class="PV" title="浏览数"><i></i>56</span>-->
+                    <!--<span class="author">作者：云纪念官网</span>-->
+                    <!--<span class="source">出处： <a href="javascript:;"> 金头网 </a></span>-->
+                    <span class="date">{$vo.create_time}</span>
+                </div>
+                <div class="article-preface">
+                    {$vo.content|mb_substr=0,200}
+                </div>
+                <div class="article-cover">
+                    <a href="{:url('/home/cemetery/detail',['id'=>$vo.id])}" target="_blank">
+                        <img src="{$vo.image_id}" alt="">
+                    </a>
+                </div>
+            </li>
+            {/volist}
+            <br>
+        </ul>
+        <div class="tc m-t-20 m-b-20">
+            <div class="pagination">
+                <ul>
+                    {$discount->render()}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="shop-discount-right">
+        <div class="shop-discount-title">
+            <h3>热门墓地</h3>
+        </div>
+        <ul class="article-liked-top">
+            {foreach $cliCm as $key=>$va}
+            <li>
+                <div class="touming"></div>
+                <a href="">
+                    <div class="article-top"><em>{$key+1}</em><span><i></i>{$va.click_amount}</span></div>
+                    <div class="article-cover">
+                        <img style="width: 231px;height: 153px;" class="imgXk lazy" data-original="{$va.image_id}" alt="">
+                    </div>
+                    <div class="article-title"><a href="#">2017年最受欢迎墓地第{$key+1}名</a></div>
+                </a>
+            </li>
+            {/foreach}
+            <!--<li>-->
+                <!--<div class="touming"></div>-->
+                <!--<a href="#">-->
+                    <!--<div class="article-top"><em>02</em><span><i></i>51</span></div>-->
+                    <!--<div class="article-cover">-->
+                        <!--<img src="__PUBLIC__/static/home/images/shop-discount-2.jpg" alt="">-->
+                    <!--</div>-->
+                    <!--<div class="article-title"><a href="#">2017年最受欢迎墓地第一名</a></div>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</div>
+
+{include file='home/cemetery/common/_footer'}

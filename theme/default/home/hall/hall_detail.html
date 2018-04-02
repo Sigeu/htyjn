@@ -1,0 +1,81 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+{if $info.hall_type eq 1}
+<div class="single_container index_bg">
+    <div class="hide_putong">
+        <div class="frame">
+            <div class="photo_frame">
+            </div>
+            <img src="{:quick_pic_thumb($info.one_img, '@185w_251h')}" alt="">
+
+        </div>
+        <p class="title">
+            {$info.one_name}
+        </p>
+
+        <p class="date">
+            {$info.one_birthday|unixtime_to_date='Y.m.d', ###}~{$info.one_death|unixtime_to_date='Y.m.d', ###}
+        </p>
+
+        <p class="epitaph">
+            {$info.one_epitaph}
+        </p>
+    </div>
+</div>
+{elseif $info.hall_type eq 2}
+<div class="yuan_container index_bg">
+
+    <!--- 双人园 --->
+    <div class="double_box">
+        <div class="zhe_one">
+            <div class="frame">
+                <div class="photo_frame">
+                </div>
+                <img src="{:quick_pic_thumb($info.two_img1, '@145w_195h')}"></div>
+            <p class="title">
+                {$info.two_name1}</p>
+            <p class="date">
+                {$info.two_birthday1|unixtime_to_date='Y/m/d', ###}~{$info.two_death1|unixtime_to_date='Y/m/d', ###}
+            </p>
+        </div>
+        <div class="zhe_one">
+            <div class="frame">
+                <div class="photo_frame">
+                </div>
+                <img src="{:quick_pic_thumb($info.two_img2, '@145w_195h')}"></div>
+            <p class="title">
+                {$info.two_name2}</p>
+            <p class="date">
+                {$info.two_birthday2|unixtime_to_date='Y/m/d', ###}~{$info.two_death2|unixtime_to_date='Y/m/d', ###}
+            </p>
+        </div>
+    </div>
+
+    <!--- 墓志铭 --->
+    <div class="epitaph">
+
+    </div>
+</div>
+{else /}
+<div class="yuan_container index_bg">
+
+    <!--- 家族园 --->
+    <div class="jiazu_box">
+        <p class="ancestral">
+            {$info.family_ancestral_home}</p>
+        <p class="name">
+            {$info.hall_name}</p>
+        <p class="creater">
+            {$info.family_libeiren}立</p>
+    </div>
+
+    <!--- 墓志铭 --->
+    <div class="epitaph">
+        {$info.family_theme}
+    </div>
+</div>
+{/if}
+{/block}

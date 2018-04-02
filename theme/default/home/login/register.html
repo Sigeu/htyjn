@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,IE=EmulateIE8,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="generator" content="UG93ZXJlZCBCeSBTaG9wTkMubmV0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="author" content="Bizpower-Developers">
+    <title>注册</title>
+    {load href="/static/home/css/bootstrap.css" /}
+    <!-- ================== 开始基础CSS调用 ================== -->
+    {load href="/static/home/css/service-base.css" /}
+    <!--<link href="http://www.xjlinguo.com/public/css/animate.min.css" rel="stylesheet" type="text/css">-->
+    {load href="/static/home/css/web_common.css" /}
+    {load href="/static/home/css/font-awesome.min.css" /}
+    {load href="/static/home/css/perfect-scrollbar.min.css" /}
+    <!--[if IE 7]>
+    <link href="http://www.xjlinguo.com/static/toolkit/font-awesome/css/font-awesome-ie7.min.css" rel="stylesheet">
+    <![endif]-->
+    <!-- ================== 结束基础CSS调用 ================== -->
+    <!-- ================== 开始页面CSS调用 ================== -->
+    {load href="/static/home/css/home_layout.css" /}
+    <!-- ================== 结束页面CSS调用 ================== -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <!-- ================== 开始基础JavaScript调用 ================== -->
+
+    <!--{load href="/static/home/js/jquery.js" /}-->
+
+    {load href="/static/home/js/jquery-1.8.2.js" /}
+    {load href="/static/home/css/jquery-ui.min.css" /}
+    {load href="/static/home/css/layer.css" /}
+    {load href="/static/home/js/jquery.validation.min.js" /}
+
+    {load href="/static/home/js/waypoints.js" /}
+    {load href="/static/home/js/perfect-scrollbar.min.js" /}
+    {load href="/static/home/js/jqthumb.js" /}
+    <!--{load href="/static/home/js/member.top.js" /}-->
+    <!-- If you'd like to support IE8 -->
+    {load href="/static/home/js/videojs-ie8.min.js" /}
+
+    {load href="/static/home/js/bootstrap.js" /}
+
+    {load href="/static/home/css/login.css" /}
+    <!-- todo popup -->
+    <link rel="stylesheet" href="__PUBLIC__/static/plugs/popup/css/other/popup.css">
+
+    <script language="javascript" src="__PUBLIC__/static/plugs/popup/js/M/Module.js" type="text/javascript"></script>
+    <script language="javascript" src="__PUBLIC__/static/plugs/popup/js/M/M.js" type="text/javascript"></script>
+    <!-- ================== 结束基础JavaScript调用 ================== -->
+</head>
+<body>
+
+<div class="login-head">
+    <div class="wrapper relat">
+        <div class="login-logo">
+            <a href="#">
+                <img src="__PUBLIC__/static/home/images/serve-logo.png" alt="">
+            </a>
+        </div>
+        <div class="login-back">
+            <a href="{:url('/home')}">返回首页</a>|
+            <a href="#">帮助中心</a>
+        </div>
+    </div>
+</div>
+
+{load href="/static/home/css/web_toolbar.css" /}
+
+<!--{load href="/static/home/js/toolbar.js" /}-->
+
+
+<div class="login-block">
+    <div class="wrapper relat">
+        <div class="login-box">
+            <div class="login-lt">
+                <div class="left-nav">
+                    <ul class="tabs nav nav-justified">
+                        <li><a href="#" name=".tab1_1" class="active">免费注册</a></li>
+                        <li style="visibility: hidden"><a href="#" name=".tab1_2">微信登录</a></li>
+                    </ul>
+                </div>
+                <div class="right-content mg-top1">
+                    <div class="right-content right-marquee doc-content">
+                        <ul class="tab1_1">
+                            <form class="denglu zhuce" id="register_form" method="post" action="__SELF__">
+                                <div class="form-group">
+                                    <input type="text" name="phone" value="" pattern="^1[3-9][0-9]{9}$" class="form-control" id="exampleInputEmail1" placeholder="手机号">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" value="" class="form-control" id="exampleInputPassword1" placeholder="密码">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="repassword" value="" class="form-control" id="exampleInputPassword2" placeholder="重复密码">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"  name="verify" value="" class="form-control verify" placeholder="验证码">
+                                    <img style="cursor: pointer; vertical-align: top;" onclick="this.src+='?rand='+Math.random();" src="{:url('verify_code')}" title="看不清？单击此处刷新" alt="captcha" />
+                                    <!--<a class="login-verify" href="">换一张</a>-->
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="mobile_code" value="" class="form-control verify" id="exampleInputCode" placeholder="短信验证码">
+                                    <input type="button" id="telData" value="免费获取验证码" onclick="sendemail()" class="login-verify-btn" style="padding: 0" />
+                                    <!--<a id="telData"  class="login-verify-btn" href="#">短信验证码</a>-->
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="protocol" type="checkbox" checked> 我已接收并阅读 <a href="#">《云纪念用户协议》</a>
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-default _j_register">注册</button>
+                            </form>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="login-rt">
+                <img src="__PUBLIC__/static/home/images/login-changdao.png" alt="">
+                <a href="{:url('/home/login/login')}">登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+<div class="serve-foot">
+    <div id="cti">
+        <div class="wrapper">
+            <ul>
+                <li>
+                    <span class="line"></span>
+                    <span class="icon">
+                        <img src="__PUBLIC__/static/home/images/quality-icon.png">
+                    </span>
+                    <span class="name">
+                        品质保障 <p>品质护航 购物无忧</p>
+                    </span>
+                </li>
+                <li>
+                    <span class="line"></span>
+                    <span class="icon">
+                        <img src="__PUBLIC__/static/home/images/after-sale-icon.png">
+                    </span>
+                    <span class="name">
+                        七天无理由退换货 <p>为您提供售后无忧保障</p>
+                    </span>
+                </li>
+                <li>
+                    <span class="line"></span>
+                    <span class="icon">
+                        <img src="__PUBLIC__/static/home/images/feature-icon.png">
+                    </span>
+                    <span class="name">
+                        特色服务体验 <p>为您呈现不一样的服务</p>
+                    </span>
+                </li>
+                <li>
+                    <span class="line"></span>
+                    <span class="icon">
+                        <img src="__PUBLIC__/static/home/images/help-icon.png">
+                    </span>
+                    <span class="name">
+                        帮助中心 <p>您的购物指南</p>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="faq">
+        <div class="wrapper">
+            <ul>
+                <li>
+                    <dl class="s1">
+                        <dt> 购物指南 </dt>
+                        <dd><i></i><a href="#" title="购物流程">免费注册</a></dd>
+                        <dd><i></i><a href="#" title="开通支付宝">开通支付宝</a></dd>
+                        <dd><i></i><a href="#" title="支付宝充值">支付宝充值</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl class="s1">
+                        <dt> 购物保障 </dt>
+                        <dd><i></i><a href="#">发票保障</a></dd>
+                        <dd><i></i><a href="#">售后规则</a></dd>
+                        <dd><i></i><a href="#">缺货赔付</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl class="s1">
+                        <dt> 支付方式 </dt>
+                        <dd><i></i><a href="#">快捷支付</a></dd>
+                        <dd><i></i><a href="#">信用卡</a></dd>
+                        <dd><i></i><a href="#">余额宝</a></dd>
+                        <dd><i></i><a href="#">蚂蚁花呗</a></dd>
+                        <dd><i></i><a href="#">货到付款</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl class="s1">
+                        <dt> 商家服务 </dt>
+                        <dd><i></i><a href="#">商家入驻</a></dd>
+                        <dd><i></i><a href="#">商家中心</a></dd>
+                        <dd><i></i><a href="#">物流服务</a></dd>
+                        <dd><i></i><a href="#">运营服务</a></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl class="s1">
+                        <dt> 手机APP </dt>
+                        <img src="__PUBLIC__/static/home/images/serve-code.jpg" alt="">
+                    </dl>
+                </li>
+                <li>
+                    <dl class="s1">
+                        <dt> 微信公众号 </dt>
+                        <img src="__PUBLIC__/static/home/images/serve-code.jpg" alt="">
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="dibu">
+        <div class="wrapper">
+            <p>Copyright © 2017 www.yunjinian.com All rights reserved.&nbsp;&nbsp;&nbsp;&nbsp;滇ICP备12002951号</p>
+            <img src="__PUBLIC__/static/home/images/wanggongjian.jpg" alt="">
+        </div>
+    </div>
+</div>
+
+
+{load href="/static/home/css/jquery.bxslider.css" /}
+{load href="/static/home/js/jquery.bxslider.js" /}
+{load href="/static/home/js/home_index.js" /}
+{load href="/static/home/js/tabScript.js" /}
+<script>
+    $(function () {
+        //页内导航条位置
+        $('#nav').onePageNav({
+            filter: ':not(.exception)'
+        });
+        //滚动固定分类导航条
+        $(".pinned").pin({
+            containerSelector: ".main-layout"
+        });
+    });
+</script>
+
+<script>
+    $(function(){
+        loadTab();
+
+        var telnum = ''
+        $('#telData').on('click',function () {
+            var telNum = $('#exampleInputEmail1').val()
+            var podaData={
+                "mobile":telNum,
+            }
+            var postUrl = "{:url('/home/login/mobile_code')}"
+            $.post(postUrl,podaData,function (data) {
+//                console.log(data)
+                layer.msg('data.message');
+            })
+        })
+        var podaData={
+            "":""
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    var countdown=60;
+    function sendemail(){
+        var obj = $("#telData");
+        settime(obj);
+
+    }
+    function settime(obj) { //发送验证码倒计时
+        if (countdown == 0) {
+            obj.attr('disabled',false);
+            //obj.removeattr("disabled");
+            obj.val("免费获取验证码");
+            countdown = 60;
+            return;
+        } else {
+            obj.attr('disabled',true);
+            obj.val("重新发送(" + countdown + ")");
+            countdown--;
+        }
+        setTimeout(function() {
+                settime(obj) }
+            ,1000)
+    }
+</script>
+
+<script>
+    M.closure(function (c) {
+        var e = c("dialog/alert");
+        var h = c("dialog/Dialog");
+
+        /* 编辑纪念馆状态信息 */
+        $("._j_register").click(function (w) {
+
+            w.preventDefault();
+
+            var params = $('#register_form').serialize();
+//            console.log(params)
+            $.ajax({
+                type: "POST",
+                url: '/home/Login/register',
+                data: {
+                    'params' : params,
+                    'callback' : '{$callback}'
+                },
+                success: function (data) {
+                    if (data.code) {
+                        e.pop(data.msg, function (isClick) {
+                            var time;
+                            // 设置自动关闭弹出框
+                            if (isClick) {
+                                window.location = data.url;
+                                if (typeof time != "undefined") {
+                                    clearInterval(time);
+                                }
+                            } else {
+                                time = setInterval(function () {
+                                    window.location = data.url;
+                                }, 3000);
+                            }
+                        }, 3, data.url)
+                        return
+                    } else {
+                        // 错误
+                        e.pop(data.msg)
+                        return
+                    }
+                }
+            })
+        });
+
+    });
+</script>
+
+<!-- todo popup -->
+<script language="javascript" type="text/javascript">
+
+    if (typeof M !== "undefined" && typeof M.loadResource === "function") {
+
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/Layer.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/DialogBase.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/Dialog.js");
+        M.loadResource("__PUBLIC__/static/plugs/popup/js/M/module/dialog/alert.js");
+    }
+</script>
+</body>
+</html>

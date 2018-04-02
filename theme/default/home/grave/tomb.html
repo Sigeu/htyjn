@@ -1,0 +1,470 @@
+<script src="__PUBLIC__/static/plugs/laydate/laydate.js"></script>
+{include file='/home/grave/common/_head'}
+    <div class="navBox">
+        <div class="container">
+            <div class="nav">
+                <ul>
+                    <li><a class="currentnav" href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                    <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                    <li><a href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                    <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                    <li><a href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                    <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                    <li><a href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+
+<div class="nch-breadcrumb-layout">
+    <div class="nch-breadcrumb wrapper"><i class="fa fa-home"></i>
+        <span><a href="">首页</a></span><span class="arrow">&gt;</span>
+
+        <span>墓地介绍</span>
+    </div>
+</div>
+
+{load href="/static/home/css/shop-end2.css" /}
+{load href="/static/home/css/private3.css" /}
+
+
+<div class="nch-container wrapper">
+    <div class="muyuan my_detail">
+        <div class="myL left">
+            <div class="my">
+                <div class="tj_pic left">
+                    <img src="http://www.gmw6688.com/file/upload/201603/29/1748259720.png.thumb.png"
+                         style="width:370px;height:250px">
+                </div>
+                <div class="tj_con txt-gray right">
+                    <span class="txt-hdark my_name">{$tombs.name}</span>
+                    <div class="my_list txt-mgray">
+                        <a><span>墓型：</span>{$cate.name}</a>
+                        <a><span>朝向：</span>{$tombs.direction}</a>
+                    </div>
+                    <span>价格：<b class="txt-red" style="margin-left:26px;font-size:18px">￥{$tombs.price_min} - {$tombs.price_max}</b></span>
+                    <a class="btn_yuding" onclick="doyy('')">预约看墓地</a>
+                    <!-- 弹框s -->
+                    <div class="jd">
+                        <div class="jd_mh"></div>
+                        <div class="jd_nr">
+                            <div class="jd_x" onclick="colt()">×</div>
+                            <form name="" method="get" action="">
+                                <p>填写资料</p>
+                                <input type="hidden" value="" id="tomb-id">
+                                <input type="hidden" value="{$grave.create_by}" id="create_by">
+                                <input type="text" value="{$grave.name}" id="comnamea">
+                                <input type="text" value="{$tombs.name}" id="muxue">
+                                <input type="text" value="" id="usernames" placeholder="请输入您的真实姓名">
+                                <input type="text" value="" id="mobiles" placeholder="请输入您的联系电话">
+                                <!--<input type="text" value="" id="address" placeholder="请输入您的联系地址">-->
+                                <input type="text" value="" id="dates" placeholder="选择预约时间">
+                                <!--<input name="captcha" id="captcha" type="text" size="6" class="f_gray" style="margin:10px 0 10px 0;" float="left/" placeholder="请输入验证码">&nbsp;-->
+                                <!--<img style="cursor: pointer; vertical-align: top;" onclick="this.src+='?rand='+Math.random();" src="{:url('verify_code')}" title="看不清？单击此处刷新" alt="captcha" />-->
+                                <input type="button" value="提交" class="jd_tj _j_subyymd">
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 弹框e -->
+                    <script type="text/javascript">
+                        function doyy(b) {
+                            $("#tomb-id").attr('value', b);
+                            $(".jd").show();
+                        }
+
+                        function colt() {
+                            $(".jd").hide();
+                        }
+                        function subyymd() {
+                            var tombId = $("#tomb-id").val();
+                            var username = $("#usernames").val();
+                            var mobile = $("#mobiles").val();
+//                            var address = $("#address").val();
+                            var date = $("#dates").val();
+                            var comname = $("#comnamea").val();
+                            var muxue = $("#muxue").val();
+                            var area = $("#areas option:selected").text();
+                            var areainfo = $("#areainfos option:selected").text();
+//                            var captcha = $("#captcha").val();
+                            var carnum = $("#carnums option:selected").text();
+                            var create_by=$("#create_by").val();
+
+                            if (username == "") {
+                                alert("姓名不能为空");
+                                return false;
+                            }
+                            if (mobile == "") {
+                                alert("联系电话不能为空");
+                                return false;
+                            }
+                            if (area == "请选择地区") {
+                                alert("请选择地区");
+                                return false;
+                            }
+//                            if (address == " ") {
+//                                alert("请选择输入联系地址");
+//                                return false;
+//                            }
+                            if (areainfo == "请选择地址") {
+                                alert("请选择地址");
+                                return false;
+                            }
+                            if (date == "") {
+                                alert("预约日期不能为空");
+                                return false;
+                            }
+                            var type = "yykm";
+                            var url = "{:url('home/grave/orderinfo')}";
+
+                            $.ajax({
+                                url: url,
+                                data: {
+                                    comname: comname,
+                                    username: username,
+                                    mobile: mobile,
+//                                    address: address,
+                                    area: area,
+                                    tombId: tombId,
+//                                    captcha: captcha,
+                                    areainfo: areainfo,
+                                    date: date,
+                                    carnum: carnum,
+                                    muxue: muxue,
+                                    create_by:create_by
+                                },
+                                type: "post",
+                                dataType: "",
+                                success: function (data) {
+                                    if (data.code) {
+                                        e.pop(data.msg, function (isClick) {
+                                            var time;
+                                            // 设置自动关闭弹出框
+                                            if (isClick) {
+                                                window.location = data.url;
+                                                if (typeof time != "undefined") {
+                                                    clearInterval(time);
+                                                }
+                                            } else {
+                                                time = setInterval(function () {
+                                                    window.location = data.url;
+                                                }, 3000);
+                                            }
+                                        }, 3, data.url)
+                                        return
+                                    } else {
+                                        // 错误
+                                        e.pop(data.msg)
+                                        return
+                                    }
+                                }
+                            })
+                        }
+
+                        M.closure(function (c) {
+                            var e = c("dialog/alert");
+                            var h = c("dialog/Dialog");
+
+                            /* 编辑纪念馆状态信息 */
+                            $("._j_subyymd").click(function (w) {
+                                w.preventDefault();
+//                                var hallId = $('._j_edit_hall_state').attr('data-id');
+
+//                                var params = $('#form').serialize();
+                                var tombId = $("#tomb-id").val();
+                                var username = $("#usernames").val();
+                                var mobile = $("#mobiles").val();
+//                                var address = $("#address").val();
+                                var date = $("#dates").val();
+                                var comname = $("#comnamea").val();
+                                var muxue = $("#muxue").val();
+                                var area = $("#areas option:selected").text();
+                                var areainfo = $("#areainfos option:selected").text();
+//                                var captcha = $("#captcha").val();
+                                var carnum = $("#carnums option:selected").text();
+                                var create_by=$("#create_by").val();
+
+                                if (username == "") {
+                                    alert("姓名不能为空");
+                                    return false;
+                                }
+                                if (mobile == "") {
+                                    alert("联系电话不能为空");
+                                    return false;
+                                }
+                                if (area == "请选择地区") {
+                                    alert("请选择地区");
+                                    return false;
+                                }
+//                                if (address == " ") {
+//                                    alert("请选择输入联系地址");
+//                                    return false;
+//                                }
+                                if (areainfo == "请选择地址") {
+                                    alert("请选择地址");
+                                    return false;
+                                }
+                                if (date == "") {
+                                    alert("预约日期不能为空");
+                                    return false;
+                                }
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/home/Grave/orderinfo',
+                                    data: {
+                                        comname: comname,
+                                        username: username,
+                                        mobile: mobile,
+//                                        address: address,
+                                        area: area,
+                                        tombId: tombId,
+//                                        captcha: captcha,
+                                        areainfo: areainfo,
+                                        date: date,
+                                        carnum: carnum,
+                                        muxue: muxue,
+                                        create_by:create_by
+                                    },
+                                    success: function (data) {
+                                        if (data.code) {
+                                            e.pop(data.msg, function (isClick) {
+                                                var time;
+                                                // 设置自动关闭弹出框
+                                                if (isClick) {
+                                                    window.location = data.url;
+                                                    if (typeof time != "undefined") {
+                                                        clearInterval(time);
+                                                    }
+                                                } else {
+                                                    time = setInterval(function () {
+                                                        window.location = data.url;
+                                                    }, 3000);
+                                                }
+                                            }, 3, data.url)
+                                            return
+                                        } else {
+                                            // 错误
+                                            e.pop(data.msg)
+                                            return
+                                        }
+                                    }
+                                })
+                            });
+
+                        });
+                    </script>
+                    <a>
+                        <span style="display:inline-block; margin-right:20px; margin-top:10px;">预定电话：</span>{$grave.phone}
+                    </a>
+                </div>
+            </div>
+
+            <!--ie8不兼容placeholder-->
+            <style>
+                .placeholder{
+                    opacity:0.5;
+                    filter:alpha(opacity=50);
+                }
+            </style>
+            <!--ie8不兼容placeholder-->
+            <script>
+                $(function(){
+                    if( !('placeholder' in document.createElement('input')) ){
+                        $('input[placeholder],textarea[placeholder]').each(function(){
+                            var that = $(this),
+                                    text= that.attr('placeholder');
+                            if(that.val()===""){
+                                that.val(text).addClass('placeholder');
+                            }
+                            that.focus(function(){
+                                if(that.val()===text){
+                                    that.val("").removeClass('placeholder');
+                                }
+                            })
+                                    .blur(function(){
+                                        if(that.val()===""){
+                                            that.val(text).addClass('placeholder');
+                                        }
+                                    })
+                                    .closest('form').submit(function(){
+                                if(that.val() === text){
+                                    that.val('');
+                                }
+                            });
+                        });
+                    }
+                });
+            </script>
+
+            <script>
+                function resetTabs(obj) {
+//                    $(obj).parent().parent().next("div").find("ul").hide();
+                    $(obj).parent().parent().find("li").removeClass("on");
+                }
+                function loadTab() {
+//                    $(".doc-content > ul").hide();
+                    $(".tabs").each(function () {
+                        $(this).find("ul:first li").addClass("on");
+                    });
+                    $(".doc-content").each(function () {
+                        $(this).find("ul:first").fadeIn();
+                    });
+                    $(".tabs li").hover(function (e) {
+                        e.preventDefault();
+                        if ($(this).attr("class") == "on") {
+                            return;
+                        } else {
+                            resetTabs(this);
+                            $(this).addClass("on");
+//                            $($(this).attr("name")).fadeIn();
+                            var name = $(this).attr("name");
+                            name = name.substr(1);
+
+                            /* ajax 获取数据 */
+                            var rowId = $(this).attr('data-id');
+                            $.ajax({
+                                url: '/home/Grave/ajaxGetGraveList',
+                                data: {
+                                    format: 'json',
+                                    'row_id': rowId,
+                                    'tid':{$tombs['id']}
+                                },
+                                dataType: '',
+                                success: function(data) {
+                                    $("#grave-list").html(data);
+                                }
+                            });
+
+                        }
+                    });
+                }
+            </script>
+
+            <div class="shop-div">
+                <!--<div class="shop-div-title">-->
+                <div>
+                    <ul class="news tabs">
+                        {foreach $row_id as $key=>$val}
+                        <li {if $key eq 0}class="on"{/if}  name=".tab3_{$key}" data-id="{$val}"><a href="javascript:;">{$val}</a></li>
+                        {/foreach}
+                        <!--<li name=".tab3_2" class=""><a href="javascript:;">B</a></li>-->
+                        <!--<li name=".tab3_3" class=""><a href="javascript:;">C</a></li>-->
+                        <!--<li name=".tab3_4"><a href="javascript:;">D</a></li>-->
+                        <!--<li name=".tab3_5"><a href="javascript:;">E</a></li>-->
+                    </ul>
+                </div>
+                <div class="shop-list doc-content">
+
+                    <ul id="grave-list" class="tab3_1" style="display: block;">
+                        {include file="home/grave/_grave_list"}
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="modal shop-modal col-md-5 col-md-offset-1 fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title text-center shop-ws f16" id="myModalLabel">详细资料</h4>
+                        </div>
+                        <div class="bs-example" data-example-id="hoverable-table">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>尺寸</th>
+                                    <th>状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <th scope="row">A001</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-default">未售/预约</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">A002</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-primary" disabled="disabled">已售 √</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">A003</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-default">未售/预约</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">A004</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-primary" disabled="disabled">已售 √</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">A005</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-default">未售/预约</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">A006</th>
+                                    <td>30*50cm</td>
+                                    <td class="shop-ws"><button type="button" class="btn btn-primary" disabled="disabled">已售 √</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+            <div class="txt-jieshao">
+                <div class="my_title txt-hdark">
+                    <p>墓穴介绍</p>
+                </div>
+                <div class="my_jieshao txt-hdark">
+                   {$tombs.desc}
+                </div>
+            </div>
+
+        </div>
+        <div class="myR right">
+            <div class="my_title txt-hdark">
+                <span>其他墓穴</span>
+            </div>
+            {volist name="tomb" id="vo"}
+            <div class="other">
+                <div class="sell-list">
+                    <div class="sell-block">
+                        <a href="#">
+                            <img style="width: 263px;height: 175px;" src="{$vo.image_id}" alt="">
+                        </a>
+                        <a href="#">{$vo.name}</a>
+                        <span>价格: <i>￥{$vo.price_min} </i>起</span>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        loadTab();
+    });
+</script>
+
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#dates' //指定元素
+    });
+</script>
+
+{include file='/home/grave/common/_footer'}

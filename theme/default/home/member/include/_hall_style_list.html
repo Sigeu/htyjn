@@ -1,0 +1,26 @@
+<!--纪念馆风格-->
+<div id="style-tab-1" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        {foreach $hall_style as $cKey=>$hallCate}
+        <li {if $cKey eq 0}class="layui-this"{/if}>{$hallCate.name}</li>
+        {/foreach}
+
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $hall_style as $sKey=>$hallCate}
+        <div class="layui-tab-item{if $sKey eq 0} layui-show{/if}">
+            <div class="layui-form style-content">
+                {foreach $hallCate['hall_style'] as $hallStyle}
+                <div class="layui-input-inline style-block">
+                    <img src="{$hallStyle.style_img}" alt="{$hallStyle.style_name}">
+                    <input type="radio" data-id="{$hallStyle.id}" name="demo1" value="{$hallStyle.style_name}"
+                           title="{$hallStyle.style_name}" lay-filter="hall-style"
+                           {eq name='hallStyle.id' value="$vo.hall_style|default=0"}checked="checked"{/eq}>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="hide_infor">
+    <p class="infor_img">
+
+        <img src="{:quick_pic_thumb($info.hall_img, '@106w_139h')}" alt="{$info.hall_name}" width="100">
+
+    </p>
+    <ul class="infor_list">
+        <li>姓 名：<span>{$info.hall_name}</span></li>
+        <li>生 辰：<span>{$info.one_birthday|unixtime_to_date='Y年m月d日', ###}</span></li>
+        <li>忌 辰：<span>{$info.one_death|unixtime_to_date='Y年m月d日', ###}</span></li>
+        <li>纪念馆号：<span>{$info.id}</span></li>
+        <li>建 馆 者：<span>{$info.hall_member_nickname}</span></li>
+        <li>建馆时间：<span>{$info.create_at|date="Y-m-d",###}</span></li>
+        <li>照 片：<span>{$info.img_sum}张</span></li>
+        <li>文 章：<span>{$info.article_sum}篇</span></li>
+        <li>祭拜次数：<span>{$info.worship_sum}次</span></li>
+
+    </ul>
+</div>

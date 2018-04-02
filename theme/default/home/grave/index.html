@@ -1,0 +1,255 @@
+{include file='/home/grave/common/_head'}
+<div class="navBox">
+    <div class="container">
+        <div class="nav">
+            <ul>
+                <li><a class="currentnav" href="{:url('/home/grave/index',['id'=>$grave.id])}">墓园首页</a></li>
+                <li><a href="{:url('/home/grave/introduce',['id'=>$grave.id])}">墓园介绍</a></li>
+                <li><a href="{:url('/home/grave/traffic',['id'=>$grave.id])}">墓园交通</a></li>
+                <li><a href="{:url('/home/grave/onsale',['id'=>$grave.id])}">在售墓穴</a></li>
+                <li><a href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">墓园图片<b></b></a></li>
+                <li><a href="{:url('/home/grave/comment',['id'=>$grave.id])}">点评<b></b></a></li>
+                <li><a href="{:url('/home/grave/news',['id'=>$grave.id])}">动态</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<!--墓园首页banner-->
+<div class="contentBox">
+    <div class="home-focus-layout">
+        <div class="focus">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    {foreach $slider as $key=>$value}
+                    <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+                    {/foreach}
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    {foreach $slider as $key=>$value}
+                    <div class="item {if $key eq 0}active{/if}">
+                        <img src="{$value.image_id}" alt="{$value.title}">
+                    </div>
+                    {/foreach}
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--墓园简介-->
+<div class="contentBox">
+    <div class="container">
+        <div class="index_title myindex_title mt20">
+            <p class="txt-hdark left"> <i></i>墓园简介 <span>Introduction</span></p>
+            <a class="txt-gray left" href="{:url('/home/grave/introduce',['id'=>$grave.id])}">更多 >></a>
+        </div>
+        <div class="jianjie">
+            <div class="jj left">
+                <div class="my_jieshao txt-mgray">
+                   {$grave.desc|mb_substr=0,220}
+                    <a class="txt-green" href="{:url('/home/grave/introduce',['id'=>$grave.id])}">查看更多
+                        &gt;&gt;</a>
+                </div>
+            </div>
+            <div class="jj right">
+                <div class="my_baio txt-mgray">
+                    <div class="my_b">
+                        <span class="my_btitle">经营范围：</span>
+
+                        <span>
+                            {$grave.range}
+                        </span>
+                    </div>
+                    <div class="my_b">
+                        <span class="my_btitle">距离市区：</span><span>{$grave.distance}</span>
+                    </div>
+                    <div class="my_b">
+                        <span class="my_btitle">价格：</span><span><i class="txt-red">￥{$grave.price_min}</i> 起</span></div>
+                    <div class="my_b">
+                        <span class="my_btitle">预约电话:</span><span><i class="txt-red">{$grave.phone}</i> </span>
+                    </div>
+                    <div class="my_b">
+                        <span class="my_btitle">星级评定：</span>
+                        <span>
+                            <b class="my_xx"></b>
+                            <b class="my_xx"></b>
+                            <b class="my_xx"></b>
+                            <b class="my_xx"></b>
+                            <b class="my_xx1"></b>
+                            <i class="my_f">四星</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--墓园图片-->
+<div class="contentBox">
+    <div class="container">
+        <div class="index_title myindex_title">
+            <p class="txt-hdark left"> <i></i>墓园图片 <span>Photos</span></p>
+            <a class="txt-gray left" href="{:url('/home/grave/grave_photo',['id'=>$grave.id])}">更多 >></a>
+        </div>
+        <div class="tuijian_con">
+            <div class="tuijian tuijian_a">
+                {volist name='image' id="img"  length='4'}
+                <a class="tj txt-gray" href="{:url('/home/grave/grave_photo_show',['id'=>$grave.id,'p_id'=>$img.id])}">
+                    <div class="tj_pic txt-white">
+                        <img style="width: 288px;height: 192px;" class="imgXk lazy" data-original="{$img.image_id}">
+                    </div>
+
+                    <div class="tj_con">
+                        <span class="txt-hdark">{$img.photo_name}</span>
+                    </div>
+                </a>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+<!--在售墓穴-->
+<div class="contentBox">
+    <div class="container">
+        <div class="index_title myindex_title">
+            <p class="txt-hdark left"> <i></i>在售墓穴 <span>Sell</span></p>
+            <a class="txt-gray left" href="">更多 >></a>
+        </div>
+        <div class="tuijian_con">
+            <div class="tuijian tuijian_a">
+                {volist name='tomb' id='vo'}
+                <a class="tj txt-gray" href="{:url('/home/grave/tomb',['id'=>$grave.id,'tid'=>$vo.id])}">
+                    <div class="tj_pic txt-white">
+                        <img style="width: 288px;height: 192px;" class="imgXk lazy" data-original="{$vo.image_id}">
+                    </div>
+                    <div class="tj_con">
+                        <span class="txt-hdark">{$vo.name}</span>
+                        <span>价格：<b class="txt-red">￥{$vo.price_min}</b>起</span>
+                    </div>
+                </a>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+<!--殡葬用品-->
+<script type="text/javascript">window.onload = function () {
+    new dmarquee(180, 15, 2000, 'elite');
+};
+/* FIX IE6 */</script>
+<!--点评  动态-->
+<div class="contentBox">
+    <div class="container">
+        <div class="baike">
+            <div class="baike_L left">
+                <div class="index_title myindex_title">
+                    <p class="txt-hdark left"> <i></i>点评 <span>Comment</span></p>
+                    <a class="txt-gray left" href="{:url('/home/grave/comment',['id'=>$grave.id])}">更多 >></a>
+                </div>
+                {volist name="comment" id="vo"}
+                <div class="mb30">
+                    <div class="dp">
+                        <!--<div class="tx left"><img src="__PUBLIC__/static/home/images/default.jpg"></div>-->
+                        <p class="txt-hdark left">{$vo.message}</p>
+                        <span class="txt-gray right">{$vo.create_time}</span>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+            <div class="baike_R right">
+                <div class="index_title myindex_title">
+                    <p class="txt-hdark left"> <i></i>动态 <span>News</span></p>
+                    <a class="txt-gray left" href="{:url('/home/grave/news',['id'=>$grave.id])}">更多 >></a>
+                </div>
+                {volist name='news' id="vo"}
+                <div class="dp news">
+                    <div class="tx left">
+                        <a href="{:url('/home/grave/news_detail',['id'=>$grave.id,'aid'=>$vo.id])}">
+                            <img src="{$vo.image_id}">
+                        </a>
+                    </div>
+                    <p class="txt-hdark left"> <i></i> <a href="{:url('/home/grave/news_detail',['id'=>$grave.id,'aid'=>$vo.id])}">{$vo.title}</a></p>
+                    <span class="txt-gray right">{$vo.create_time}</span>
+                    <p class="txt-txt left">
+                        {$vo.content|strip_tags|mb_substr=0,60}
+                    </p>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+<!--在线咨询  服务-->
+<div class="contentBox">
+    <div class="container">
+        <div class="baike mb30">
+            <div class="baike_R right w100">
+                <div class="index_title myindex_title">
+                    <p class="txt-hdark left"> <i></i>服务<span> Service</span></p>
+                    <a class="txt-gray left" href="#">更多 >></a>
+                </div>
+                <div class="fw mt30 fw_a l">
+                    <ul>
+                        <li class="ShopImg" id="shop-icon-g1">
+                            <a href="">
+                                <span style="float: none;">
+                                    <img id="shop1" src="__PUBLIC__/static/home/images/shop-icon-g1.png">
+                                </span>
+                                <b>定期上香</b>
+                            </a>
+                        </li>
+                        <li id="shop-icon-g2">
+                            <a href="">
+                                <span style="float: none;"><img src="__PUBLIC__/static/home/images/shop-icon-g2.png"></span>
+                                <b>殡仪服务</b>
+                            </a>
+                        </li>
+                        <li id="shop-icon-g3">
+                            <a href="">
+                                <span style="float: none;"><img src="__PUBLIC__/static/home/images/shop-icon-g3.png"></span>
+                                <b>骨灰寄存</b>
+                            </a>
+                        </li>
+                        <li id="shop-icon-g4">
+                            <a href="">
+                                <span style="float: none;"><img src="__PUBLIC__/static/home/images/shop-icon-g4.png"></span>
+                                <b>碑文翻新</b>
+                            </a>
+                        </li>
+                        <li id="shop-icon-g5">
+                            <a href="#">
+                                <span style="float: none;"><img src="__PUBLIC__/static/home/images/shop-icon-g5.png"></span>
+                                <b>代缴管理费</b>
+                            </a>
+                        </li>
+                        <li id="shop-icon-g6">
+                            <a href="">
+                                <span style="float: none;"><img src="__PUBLIC__/static/home/images/shop-icon-g6.png"></span>
+                                <b>代拜祭</b>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{load href="/static/home/js/shop-gw.js" /}
+
+<!--foot-->
+{include file='/home/grave/common/_footer'}
+

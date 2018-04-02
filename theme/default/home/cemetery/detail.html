@@ -1,0 +1,20 @@
+{include file='home/cemetery/common/_header'}
+<div class="clearfix"></div>
+
+<div class="nch-container wrapper">
+    <div class="nch-breadcrumb wrapper">
+        <i class="fa fa-home"></i>
+        <span><a href="http://www.xjlinguo.com/">首页</a></span><span class="arrow">&gt;</span>
+        <span>文章</span>
+    </div>
+    <div class="right" style="width: 100%;">
+        <div class="nch-article-con">
+            <h1>{$arti.title}</h1>
+            <h2>{$arti.create_time}</h2>
+            <div class="default">
+                {$arti.content}
+            </div>
+        </div>
+    </div>
+</div>
+{include file='home/cemetery/common/_footer'}

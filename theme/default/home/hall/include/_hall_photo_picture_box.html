@@ -1,0 +1,159 @@
+<div class="right-bg">
+    <div class="photo_delbox">
+        <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+        <div class="bread_route">
+            {if $info.hall_type eq 1}
+            <!--<a class="app_btn" target="_blank" href="http://about.huaien.com/about/t54.htm">申请制作生命传记</a>-->
+            <!-- 上传回忆照片按钮 upimg_btn -->
+            {if is_login() && is_login() eq $info.hall_member_id}
+            <a class="app_btn" href="javascript:;" id="photoadd">上传回忆照片</a>
+            {/if}
+            您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+            &gt;
+            回忆相册
+            {else /}
+            回忆相册
+            {/if}
+        </div>
+        <!--- 回忆相册播放页 photo_album--->
+
+        <div id="gallery" class="ad-gallery">
+            <div class="ad-nav">
+                <div class="ad-back" style="opacity: 0.6;"></div>
+                <div class="ad-thumbs">
+                    <ul class="ad-thumb-list" style="width: 8819px;">
+                        {volist name="list" id="v"}
+                        <li>
+                            <a href="{:quick_pic_thumb($v.photo_picture_url, '@240w_420h')}" style="overflow: hidden;" class="ad-thumb0 ad-active">
+                                <span style="display: table-cell; vertical-align: middle; height: 60px; width: 60px; text-align: center;">
+                                    <img class="lazy" data-original="{:quick_pic_thumb($v.photo_picture_url, '@64w_64h')}" style="max-height: none; max-width: 60px; margin-top: -10px; opacity: 1;"
+                                         onload="ImgLoad(this)" ><!-- alt="008h&nbsp;&nbsp;上传人: 缅怀生命&nbsp;&nbsp;2012/11/20 0:00:00<br />" -->
+                                </span>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                <div class="ad-forward" style="opacity: 0.6;"></div>
+            </div>
+            <div class="ad-controls">
+            </div>
+            <div class="ad-image-wrapper">
+                <div class="ad-image" style="width: 315.197px; height: 340px; top: 0px; left: 142.402px;">
+                    <!--<img src="__PUBLIC__/static/home/images/008h.jpg" width="315" height="420">-->
+                </div>
+                <p class="ad-image-description">
+                    <span>008h&nbsp;&nbsp;上传人: xxx&nbsp;&nbsp;2012/11/21 0:00:00<br></span>
+                </p>
+                <img class="ad-loader" src="__PUBLIC__/static/home/loader_001.gif" style="display: none;">
+                <div class="ad-next">
+                    <div class="ad-next-image" style="opacity: 0.7;"></div>
+                </div>
+                <div class="ad-prev">
+                    <div class="ad-prev-image" style="opacity: 0.7;"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- 上传图片按钮 upimg_btn
+    <div class="upimgdel_btn">
+        <a href="javascript:;" id="photoadd">我要上传TA的照片</a>
+    </div>-->
+    <!--<div class="upimgdel_btn layui-upload">-->
+        <!--<a href="javascript:;" id="photoadd" data-toggle="modal" data-target="#myModal">我要上传TA的照片</a>-->
+        <!--&lt;!&ndash;<button type="button" class="layui-btn" id="test2">多图片上传</button>&ndash;&gt;-->
+    <!--</div>-->
+
+    <!--<div class="layui-upload">
+        <button type="button" class="layui-btn" id="test2">多图片上传</button>
+        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+            预览图：
+            <div class="layui-upload-list" id="demo2"></div>
+        </blockquote>
+    </div>-->
+</div>
+
+<script>
+
+    layui.use(['form', 'upload'], function() {
+        var form = layui.form
+            ,layer = layui.layer;
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+
+        $("#photoadd").click(function () {
+            var html = '<form class="layui-form" action="">'
+                + '<div class="layui-upload">'
+                + '<div style="text-align: center;margin-top: 10px;"><button type="button" class="layui-btn" id="doUploadPicture">选择图片</button></div>'
+                + '<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">'
+                + '相片预览：'
+                + '<div class="layui-upload-list" id="picture-list"></div>'
+                + '</blockquote>'
+                + '<input type="hidden" name="photo_id" value="{$photoId}" />'
+                + '<div style="text-align: center;margin-bottom: 5px;"><button type="button" class="layui-btn" lay-submit="" lay-filter="add_photo_picture">保存到相册</button></div>'
+                + '</div>'
+                + '</form>';
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['620px', '440px'], //宽高
+                content: html
+            });
+
+            var $ = layui.jquery
+                ,upload = layui.upload;
+
+            var ii = 0;
+
+
+            //多图片上传
+            upload.render({
+                elem: '#doUploadPicture'
+                ,url: '/api/Tools/uploadFile'
+                ,multiple: true
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#picture-list').append('<img width="100" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }
+                ,done: function(res){
+                    ii++;
+                    //上传完毕
+                    $('#picture-list').append('<input type="hidden" name="photo[' + ii + ']" value="' + res.data.short_path + '" />');
+                }
+            });
+
+//            layer.alert('上传相片', {
+//                title: '提示信息'
+//                ,icon: 1
+//                ,skin: 'layer-ext-moon'
+////                ,time: 3000
+//                ,end: function () {
+//                    // 回调函数
+//
+//                }
+//            })
+        });
+
+        //自定义验证规则
+//        form.verify({
+//            title: function(value){
+//                if(value.length < 5){
+//                    return '标题至少得5个字符啊';
+//                }
+//            }
+//        });
+
+        // ajax 提交
+        form.on('submit(add_photo_picture)', function(data){
+            $.post('/home/Hall/addHallPhotoPicture?id={$info.id}',data.field,function(res){
+                popup_jump(res, 1);
+            });
+            return false;
+        });
+    });
+</script>

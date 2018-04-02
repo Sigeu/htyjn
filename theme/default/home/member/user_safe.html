@@ -1,0 +1,45 @@
+{include file="/home/member/common/header" /}
+<div class="user-page-content">
+    <div class="clearfix w">
+        <div class="user_menu" style="height: 593px;">
+            <div class="navs" id="JS_u_navs">
+                <h3>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    账户设置</h3>
+                <ul>
+                    <li><a  href="{:url('/home/member/user_info')}">个人资料</a></li>
+                    <li><a href="{:url('/home/member/user_bind')}">账号绑定</a></li>
+                    <li><a class="active" href="{:url('/home/member/user_safe')}">账户安全</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="user_main">
+
+            <div class="white_box u_profile" style="padding: 26px 30px 0">
+                <h3 class="title-h3">账户安全</h3>
+                <div class="u-profile-validate clearfix mt20 " style="padding-top:5px">
+                    <span class="green-icon grey-email"></span><span class="profile-validate-name">认证邮箱</span><span
+                        class="dotted-line"></span><span class="profile-validate-text">认证后，可用于快速找回登录密码。</span><span
+                        class="validate-btn clearfix"><a class="validate-bind"
+                                                         href="/user/?act=verify_email">立即绑定</a></span>
+                </div>
+                <div class="u-profile-validate clearfix">
+                    <span class="green-icon green-mobile"></span><span class="profile-validate-name">认证手机</span><span
+                        class="dotted-line"></span><span class="profile-validate-text">135****0018</span><span
+                        class="validate-btn clearfix"><a class="validate-modify" href="/user/?act=modify_mobile">修改</a></span>
+                </div>
+                <div class="u-profile-validate clearfix">
+                    <span class="green-icon green-pwd"></span><span class="profile-validate-name">登录密码</span><span
+                        class="dotted-line"></span><span class="profile-validate-text">已设置</span><span
+                        class="validate-btn clearfix"><a class="validate-modify"
+                                                         href="/user/?act=modify_password">修改</a></span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{include file="/home/member/common/footer" /}

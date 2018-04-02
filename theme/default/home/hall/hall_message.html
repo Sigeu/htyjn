@@ -1,0 +1,25 @@
+{extend name='home/hall/include/hall_base' /}
+
+<!-- content -->
+{block name="content"}
+
+{if $info.hall_type eq 1}
+
+<div class="single_container message_bg">
+    <!--- 普通馆个人信息显示 个性馆隐藏 hide_infor--->
+    {include file="home/hall/include/_hall_guan_left"}
+
+    <!-- 追思留言盒子 message_box -->
+    {include file="home/hall/include/_hall_message_box"}
+
+</div>
+
+{else /}
+
+<div class="yuan_container message_bg">
+    <!-- 追思留言盒子 message_box -->
+    {include file="home/hall/include/_hall_message_box"}
+</div>
+{/if}
+
+{/block}

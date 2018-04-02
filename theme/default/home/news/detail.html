@@ -1,0 +1,117 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link href="__PUBLIC__/static/home/css/style.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/master.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/culture.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/static/home/css/culturelist.css" rel="stylesheet" type="text/css">
+
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/share_style0_16.css">-->
+
+<style>
+    .next-previous{
+        padding: 20px 30px;
+    }
+    .next-previous .previous {
+        float: left;
+    }
+    .next-previous .next {
+        float:right;
+    }
+</style>
+{/block}
+
+{block name="js-head"}
+<!--<script src="__PUBLIC__/static/home/js/share.js"></script>-->
+{/block}
+
+<!-- content -->
+{block name="content"}
+
+
+<!-- 广告位 -->
+{notempty name=':get_ad(7)'}
+<div class="pagebanner contentbox top30">
+    <img class="imgborder lazy" data-original="{:get_ad(7)['path']}" width="98%">
+</div>
+{/notempty}
+
+<div id="main">
+    <div class="container">
+
+
+        <div class="width220 left">
+
+
+            <div class="pagemenu box">
+                <div class="thistitle"><h3>民俗文化</h3></div>
+
+                {foreach $categoryList as $category}
+                <ul class="pmenu">
+                    <ol><a href="{:url('home/News/column', ['cid'=>$category['id']])}">{$category.title}</a></ol>
+                    {foreach $category['sub'] as $sub}
+                    <li><a href="{:url('home/News/column', ['cid'=>$sub['id']])}">{$sub.title}</a></li>
+                    {/foreach}
+                </ul>
+                {/foreach}
+
+                <div class="clear"></div>
+            </div>
+
+            <!-- 广告位 -->
+            {notempty name=':get_ad(8)'}
+            <div class="box top20">
+                <a href="{:get_ad(8)['url']}">
+                    <img class="lazy" data-original="{:get_ad(8)['path']}" alt=":get_ad(8)['name']" width="100%">
+                </a>
+            </div>
+            {/notempty}
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="width767 right">
+
+
+            <div class="wenhua conbox ">
+
+                <div class="articleBox">
+                    <div class="articleTitle">
+                        <h1>{$article.title}</h1>
+                        <p>
+                            <a href="/">{$article.author|default='云纪念'}&nbsp;&nbsp;&nbsp; </a>
+                            {$article.create_at|date='Y-m-d',###}
+                            <span>
+                                &nbsp;&nbsp;&nbsp;
+                                访问量
+                            </span>{$article.view}
+                        </p>
+                    </div>
+                    <div class="articleCon">
+                        {$article.content}
+                    </div>
+
+                    <div class="next-previous">
+                        {notempty name="previous"}
+                        <a class="previous" href="{:url('home/News/detail', ['id' => $previous['id']])}">上一篇：{$previous.title}</a>
+                        {/notempty}
+
+                        {notempty name="next"}
+                        <a class="next" href="{:url('home/News/detail', ['id' => $next['id']])}">下一篇：{$next.title}</a>
+                        {/notempty}
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{/block}

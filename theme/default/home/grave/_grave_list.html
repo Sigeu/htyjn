@@ -1,0 +1,8 @@
+{foreach $tlist as $vo}
+<li>
+    <a class="opening" href="#"  onclick="doyy('{$vo.cemetery_sn}')">
+        <p>空缺中</p>
+        <span>{$vo.cemetery_sn|substr=4}</span>
+    </a>
+</li>
+{/foreach}

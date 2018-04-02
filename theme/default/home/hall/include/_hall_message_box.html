@@ -1,0 +1,87 @@
+<div class="message_box">
+    <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+    <div class="bread_route">
+        {if $info.hall_type eq 1}
+        您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+        &gt;
+        追思留言
+        {else /}
+        追思留言
+        {/if}
+    </div>
+    <!--- 追思留言列表--->
+    <!--- 追思留言列表--->
+    <div class="message_list">
+        <div class="message_publish_box" style="">
+            <div class="edit_box clear">
+            <textarea rows="3" id="msgtxt" style="width: 600px; height: 80px;" name="msgtxt"
+                      placeholder="尊重逝者，文明祭祀"></textarea>
+            </div>
+
+
+            <div class="edit_btn">
+                <p>
+                    <label id="msg1">
+                    </label>
+                    <!--<span><input id="IsAnonymous" value="0" type="checkbox">&nbsp;&nbsp;匿名</span>-->
+                    <br/>
+                    <button type="button" id="msgadd" class="ml10">
+                        确 定
+                    </button>
+                </p>
+            </div>
+        </div>
+
+        <ul class="pull_down">
+
+            {foreach $messageList['list'] as $vo}
+            <li>
+                <p class="tit">
+                    <a href="javascript:;" title="点击查看该会员信息" onclick="$.huaien.userBox(1838786)" class="c033">
+                        {$vo.member_nickname}
+                    </a>
+                    <span class="date">
+                    {$vo.create_at|date='Y-m-d H:i:s', ###}
+                </span>
+                </p>
+                <p class="eds">
+                    {$vo.content|urldecode}
+                </p>
+            </li>
+            {/foreach}
+
+        </ul>
+    </div>
+
+    <!--- 翻页--->
+    {$messageList.pageHtml}
+</div>
+
+
+<script>
+    /* 编辑纪念馆状态信息 */
+    $("#msgadd").click(function (w) {
+        w.preventDefault();
+
+        // 检查是否登录
+//            if (!check_login()) {
+//                return;
+//            }
+
+        var messageContent = $('#msgtxt').val();
+
+        if (messageContent == "") {
+            $('#msg1').html('请输入留言内容');
+            return;
+        }
+
+        $.ajax({
+            url: "/home/Hall/ajaxAddMessage",
+            type: "post",
+            data: {content: messageContent, hallId: $('#uikid').val()/*, isAnonymous: $('#IsAnonymous').val()*/},
+            success: function (data) {
+                popup_jump(data, 1);
+            }
+        })
+    });
+</script>

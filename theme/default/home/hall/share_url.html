@@ -1,0 +1,241 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>APP下载</title>
+    <link type="text/css" rel="Stylesheet" href="http://u.app.huaien.com/res/down/css/common.css?_=130983557314859520" />
+    <link type="text/css" rel="Stylesheet" href="http://u.app.huaien.com/res/down/css/download.css?_=130983566015124150" />
+    <script type="text/javascript" src="http://u.app.huaien.com/res/js/jquery-1.3.2.min.js?_=130864102590000000"></script>
+    <script type="text/javascript" src="http://u.app.huaien.com/res/js/download.js?_=130970565190000000"></script>
+
+    <script type="text/javascript" src="http://u.app.huaien.com/res/js/AutoOpen.js?_=130892951300000000"></script>
+    <script type="text/javascript" src="http://u.app.huaien.com/res/js/slide.js?_=131135624720000000"></script>
+
+    <style>
+        .banner-tip{float:left; width:100%; background-color:#fefefd; border-bottom:1px solid #ffe5aa; line-height:2.5em; font-size:.5em;}
+        .banner-tip b{font-weight:normal;}
+        .banner-tip a{color:#6a4722;}
+
+        .reg-xz{float:left; width:100%;}
+        .reg-xz img{width:100%;}
+
+        #slideLeft{float:left; width:100%;  position:relative; z-index:999;}
+        #slideLeft div{float:left; width:100%; overflow:hidden; position:relative;}
+        #slideLeft div ul{float:left; width:100%; position:relative;}
+        #slideLeft div ul li{float:left; width:32%; padding:2px; margin-left:5px;}
+        #slideLeft div ul li img{width:100%; border:1px solid #e1e1e1;padding:1px; background-color:#fff}
+        #slideLeft dl{width:100%;}
+        #slideLeft dl dt{left:0; width:8%; position:absolute; top:40%; z-index:99;}
+        #slideLeft dl dt img{cursor:pointer; width:100%;}
+        #slideLeft dl dd{right:0; width:8%; position:absolute; top:40%; z-index:99;}
+        #slideLeft dl dd img{cursor:pointer; width:100%;}
+        #slideLeft p{ position:absolute; width:120%; text-align:right; right:.5em;  display:none; z-index:10000 }
+        #slideLeft p img{width:8%; cursor:pointer;}
+
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //滑动效果
+            slideFunc("slideLeft", "slideLR", 3, 4000);
+            //debugger;
+            //t 加密参数
+            var returnval = "1132D55F2F6CBDEA52996A112384A0B2";
+            //appid
+            var fappid = "12";
+            //debugger;
+
+            //改变背景图片，和下载按钮图片
+            function SetBgImg(fappid) {
+                //debugger;
+//                var bgimg = $("#bgimg");
+//
+//                if (fappid == "12")  //纪念
+//                {
+//                    bgimg.attr("src", "http://u.app.huaien.com/res/down/images/bj-jn2.jpg");
+//                }
+//                else if (fappid == "15") //菩提心
+//                {
+//                    bgimg.attr("src", "http://u.app.huaien.com/res/down/images/pt-banner.jpg");
+//                }
+//                else {
+//                    //默认纪念  纪念APP（菩提心）
+//                    bgimg.attr("src", "http://u.app.huaien.com/res/down/images/bj-jn2.jpg");
+//                }
+            }
+
+            //获取 下载地址方法
+            function GetAppDownUrl(ostype, t, btnid) {
+                //没有IOS 的，不请求接口
+                if ($("#" + btnid).find("img").attr("attropen") == "false")
+                { return; }
+                $.ajax({
+                    type: "GET",
+                    url: "/AjaxTuiGuang/GetDownUrl.do",
+                    dataType: "json",
+                    data: { t: t, ostype: ostype },
+                    success: function (data) {
+                        //debugger;
+                        if (data.Result) {
+                            //添加下载链接
+                            $("#" + btnid).attr("href", data.Model.DownUrl);
+                            //打开下载
+                            location.href = data.Model.DownUrl;
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            }
+
+            //点击下载按钮
+//            $(".download a").click(function () {
+//                var thisid = $(this).attr("id");
+//                if (isWeiXin()) {
+//                    ShowWX();
+//                }
+//                else {
+//                    GetAppDownUrl($(this).attr("attostype"), returnval, thisid);
+//                }
+//
+//            });
+
+//            SetBgImg(fappid);
+
+//            $("#testapp").click(function () {
+//                //debugger;
+//                appStart.openApp("testopenapp://testopenapp/openwith?data=mydata", "http://tg.huaien.com/res/TestOpenApp.apk");
+//            });
+        });
+
+
+
+        //如果是微信 弹出提示层
+        function ShowWX() {
+            // $(".cover").fadeIn(300);
+            // $(".coverBG").fadeIn(300);
+            debugger;
+            location.href = "/TuiGuang/downwx.htm?t=1132D55F2F6CBDEA52996A112384A0B2";
+        }
+        //判断是否微信
+        function isWeiXin() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<!--弹出覆盖层-->
+<div class="coverBG"></div>
+<div class="cover">
+
+    <div class="body" style="text-align: center;">
+            <span><a href="javascript:;">
+                <img src="http://u.app.huaien.com/res/down/images/close.png" width="5%"></a></span><img src="http://u.app.huaien.com/res/down/images/open.png" width="80%">
+    </div>
+</div>
+<!--弹出覆盖层结束-->
+
+<div class="body">
+    <!--<div class="banner">
+        <img width="100%" src="" id="bgimg">
+    </div>-->
+    <div class="banner">
+        <img width="100%" src="http://u.app.huaien.com/res/down/images/ms2.gif" id="bgimg">
+    </div>
+
+    <input id="happid" type="hidden" value="12" />
+    <div class="reg">
+
+        <div class="download">
+            <a href="http://www.yjn100.com/static/upload/files/20170810/df785171813804f8bef03e815cd9a1f2.apk" attostype="1" id="btndown_android">
+                <img src="http://u.app.huaien.com/res/down/images/download-android.png" width="65%"></a>
+        </div>
+        <div class="download">
+            <a href="https://itunes.apple.com/cn/app/id1296141053?mt=8" attostype="2" id="btndown_ios">
+                <img src="http://u.app.huaien.com/res/down/images/download-ios.png" attropen="true" width="65%">
+            </a>
+        </div>
+
+        <div class="download" id="body1">
+            <img src="{:sysconf('android_app_download')}" width="200" height="200" style="border:2px solid #ddd; padding:5px; background-color:#fff">
+        </div>
+
+
+        <div class="down-info">
+            关注云纪念官方公众号 <b style="color: #F00">云纪念</b>，了解更多<br>
+            服务电话：
+            <a href="tel:{:sysconf('pre_sale_tel')}">
+                <b style="color: #F00">{:sysconf('pre_sale_tel')}</b>
+            </a>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+</body>
+</html>
+<script>
+//    var _hmt = _hmt || [];
+//    (function () {
+//        var hm = document.createElement("script");
+//        hm.src = "//hm.baidu.com/hm.js?157f9928eb97cbd09570a483768a3fd2";
+//        var s = document.getElementsByTagName("script")[0];
+//        s.parentNode.insertBefore(hm, s);
+//    })();
+
+
+    var system = {
+        win: false,
+        mac: false,
+        xll: false
+    };
+    //检测平台
+    var p = navigator.platform;
+    /**var sUserAgent = navigator.userAgent.toLowerCase();
+     alert(sUserAgent);*/
+
+    system.win = p.indexOf("Win") == 0;
+    system.mac = p.indexOf("Mac") == 0;
+    system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+
+    var browser = {
+        versions: function () {
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {//移动终端浏览器版本信息
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+
+            };
+        }(),
+        language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+    if (!(system.win || system.mac || system.xll)) {
+        document.getElementById("body1").style.display= "none";
+        document.getElementById("body2").style.display= "none";
+
+    }
+
+
+</script>

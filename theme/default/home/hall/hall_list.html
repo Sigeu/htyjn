@@ -1,0 +1,404 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/style.css">
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/ts.basecss.css">
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/mingren.css">
+<!--<link rel="stylesheet" href="__PUBLIC__/static/home/css/index.css">-->
+{/block}
+
+
+{block name="lib-head"}
+<script src="__PUBLIC__/static/home/js/jquery.js"></script>
+{/block}
+
+<!-- content -->
+{block name="content"}
+<style>
+    /* Code tidied up by ScrapBook */
+    .panel-heading h3 {
+        font-size: 18px;
+        height: 39px;
+        line-height: 39px;
+        float: left;
+        padding-right: 15px;
+        margin: 0px;
+    }
+
+    .title2-ex span {
+        float: right;
+        font-size: 12px;
+    }
+
+    .panel-heading span a {
+        color: rgb(153, 153, 153);
+    }
+
+    .title2-ex {
+        border-bottom: 1px solid rgb(32, 129, 93) !important;
+        padding: 0px 15px !important;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .title2-ex h3.panel-title {
+        border-bottom: 2px solid rgb(32, 129, 93);
+    }
+
+    .flinklist li {
+        display: inline;
+        margin-right: 8px;
+        line-height: 32px;
+    }
+
+    .flinklist li a {
+        display: inline-block;
+    }
+
+    .carousel-museum li {
+        border: 0px none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+</style>
+
+<style>
+    /* andy add */
+    a.activeLetter {
+        background: darkgray;
+    }
+</style>
+
+
+<script type="text/javascript">
+    var isOut = true;
+    // 焦点
+    document.onmousedown = function () {
+        if (isOut) {
+            $("#divSearch").slideUp(500);
+        }
+    }
+
+</script>
+<style>
+    /* Code tidied up by ScrapBook */
+    .btn-gai .dropdown-toggle {
+        padding-left: 1px;
+        padding-right: 1px;
+        border: 0px none;
+        font-size: 12px;
+        background: transparent none repeat scroll 0% 0%;
+    }
+
+    .btn-gai .dropdown-menu a span {
+        color: rgb(255, 79, 0);
+    }
+
+    .btn-gai #btnUser a {
+        color: rgb(255, 79, 0);
+    }
+
+    .btn-gai span.badge {
+        background: rgb(201, 48, 44) none repeat scroll 0% 0%;
+        color: rgb(255, 255, 255);
+        margin-right: 3px;
+        font-weight: normal;
+        padding: 3px;
+        font-size: 10px;
+    }
+
+    .btn-gai .dropdown-menu {
+        margin-top: -1px;
+        display: inline;
+    }
+
+    .btn-gai .dropdown-menu li span {
+        display: inline !important;
+    }
+</style>
+
+<!--<div class="container" style="margin-top:0px;">
+    <div class="row">
+        <div style="float:left; padding-left:10px;margin-bottom:-18px">
+            <h1 style="color:#000; font-size:30px;font-family:Microsoft YaHei,SIMHEI,sans-serif"></h1>
+            <a href="http://his.tsingming.com/
+
+" type="button" style="margin-left:10px;background: #692319; border:#692319; color:#FFF;" class="btn btn-default btn-xs">
+                搜索结果
+            </a>
+            <a href="" type="button" style="background:#F90; border:#F60; color:#FFF;display: none;" class="btn btn-default btn-xs">本馆首页</a>
+            <h4 style="padding-left:5px; DISPLAY:inline;">
+                <a href="" target="_blank" style="color:#333"></a>
+            </h4>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="container spanFont" style="margin-top:25px;">
+    <div class="row">
+        <!--左边-->
+        <div class="col-md-9">
+            <div class="row news-top">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-ex col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div style="margin-left:20px;cursor:pointer;float:left;" class="title-ex"> <span style="border-bottom:3px #20815d solid;cursor:pointer;width: auto;">{$searchTitle}</span> </div>
+                                        <div class="col-md-2 col-md-offset-8"> </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+
+                                    {foreach $data as $vo}
+                                    <div class="media media-Hover">
+                                        <a class="pull-left disp_a" href="{:url('home/hall/detail', ['id' => $vo['id']])}" title="{$vo.hall_name}纪念馆" target="_blank">
+                                            <img style="height: 100px;width: 100px;" class="media-object lazy" alt="{$vo.hall_name}纪念馆" data-original="{:quick_pic_thumb($vo.hall_img, '@100w_100h')}" title="{$vo.hall_name}纪念馆" onerror="javascript:loadDefaultImg(this);">
+                                        </a>
+                                        <div class="media-body ">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h4 class="media-heading media-heading-Hover">
+                                                        <a style="FLOAT:left;" href="{:url('home/hall/detail', ['id' => $vo['id']])}" title="{$vo.hall_name}纪念馆" target="_blank" class="postHeader">
+                                                            {$vo.hall_name}纪念馆
+                                                        </a>
+                                                        <!--<small class="mr_xstb" style="float:left;margin-left:30px;" title="人气指数">4866</small>-->
+                                                        <!--<small class="mr_xstb2" style="float:left;" title="修缮值">500</small>-->
+                                                    </h4>
+
+                                                </div>
+                                                <div class="col-md-3 share-ex">
+                                            <span class="span-ex">
+
+                                                   在世: {$vo.one_birthday|unixtime_to_date='Y', ###}~{$vo.one_death|unixtime_to_date='Y', ###}
+
+                                            </span>
+                                                </div>
+                                            </div>
+                                            <p class="digest postBody">{$vo.hall_describe|msubstr=0,120}</p>
+
+                                        </div>
+                                    </div>
+
+                                    {/foreach}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="page" style="" align="center">
+
+                <ul class="pagination" id="idPagin">
+                    {$pageHtml}
+                </ul>
+                    <!--<li><a href="javascript:void(0);">«</a></li>
+
+                    <li class="active"><a href="/commemorate/list/Political/1">1</a></li>
+
+                    <li><a href="/commemorate/list/Political/2">2</a></li>
+
+                    <li><a href="/commemorate/list/Political/3">3</a></li>
+
+                    <li><a href="/commemorate/list/Political/4">4</a></li>
+
+                    <li><a href="/commemorate/list/Political/5">5</a></li>
+
+                    <li><a href="/commemorate/list/Political/6">6</a></li>
+
+                    <li><a href="/commemorate/list/Political/7">7</a></li>
+
+                    <li><a href="/commemorate/list/Political/8">8</a></li>
+
+                    <li><a href="/commemorate/list/Political/9">9</a></li>
+
+                    <li><a href="/commemorate/list/Political/10">10</a></li>
+
+
+                    <li><a href="javascript:void(0);">»</a></li>
+                    <li><a href="javascript:void(0);" class="morebootom ">更多</a></li>
+                -->
+                <!--<div id="imorepagelist" class="morepagelist" align="center" style="display:none;">
+                    <ul style="margin:0px; padding:0px;display: inline-block; ">
+                        <li><a href="/commemorate/list/Political/1">1-10</a></li>
+                        <li><a href="/commemorate/list/Political/11">11-20</a></li>
+                        <li><a href="/commemorate/list/Political/21">21-30</a></li>
+                        <li><a href="/commemorate/list/Political/31">31-40</a></li>
+                        <li><a href="/commemorate/list/Political/41">41-50</a></li>
+                        <li><a href="/commemorate/list/Political/51">51-60</a></li>
+                        <li><a href="/commemorate/list/Political/61">61-70</a></li>
+                        <li><a href="/commemorate/list/Political/71">71-80</a></li>
+                        <li><a href="/commemorate/list/Political/81">81-90</a></li>
+                        <li><a href="/commemorate/list/Political/91">91-100</a></li>
+                        <li><a href="/commemorate/list/Political/101">...</a></li>
+
+                    </ul>
+                </div>-->
+            </div>
+        </div>
+
+        <!--左边结束-->
+
+        <!--右边-->
+        <div class="col-md-3">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="title-ex col-md-4"> <span>热门人物</span> </div>
+                                <div class="col-md-4 col-md-offset-4">
+                                    <a href="#" target="_blank" class="news-more">更多</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr-panel-body" style="padding-left: 0px; overflow:auto; padding-top:10px;">
+                            <ul style="PADDING-LEFT:0px;margin-left:0px;">
+
+                                {foreach $hotFamousList as $vo}
+                                <li>
+                                    <div>
+                                        <a href="{:url('home/hall/detail', ['id' => $vo['id']])}" target="_blank" title="{$vo.hall_name}">
+                                            <img width="72" height="72" class="lazy" data-original="{:quick_pic_thumb($vo.hall_img, '@72w_72h')}" alt="{$vo.hall_name}">
+                                        </a>
+                                    </div>
+                                    <div class="txoverflow" style="width:64px;"><a href="{:url('home/hall/detail', ['id' => $vo['id']])}" target="_blank" title="{$vo.hall_name}">{$vo.hall_name}</a><div>
+                                    </div></div>
+                                </li>
+                                {/foreach}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 专题聚焦 -->
+            <!--<div id="divRelatedTopics" class="row" style=" margin-top:10px;display:block;overflow:auto;">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="title-ex col-md-4"> <span>专题聚焦</span> </div>
+                                <div class="col-md-4 col-md-offset-4"> <a href="http://www.tsingming.com/topiclist.html" class="news-more" target="_blank">更多</a> </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding-left: 0px;">
+                            <ol style="margin-left: 15px; line-height:28px;">
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/kangzhanlaobing/" title="抗战纪念园" target="_blank">抗战纪念园</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/cyj2015/" title="重阳节网上祭祖传承孝爱" target="_blank">重阳节网上祭祖传承孝爱</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/dljss2015/" title="纪念邓丽君逝世二十周年" target="_blank">纪念邓丽君逝世二十周年</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/mqjzt2015/" title="感谢母亲之爱铭记先妣之情" target="_blank">感谢母亲之爱铭记先妣之情</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/ldj2015/" title="【五一惊喜】将荣耀献给你心中的劳模" target="_blank">【五一惊喜】将荣耀献给你心中的劳模</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/wmjd2015/" title="中国清明网2015年清明节活动" target="_blank">中国清明网2015年清明节活动</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/zgrss2015/" title="张国荣逝世12周年专题" target="_blank">张国荣逝世12周年专题</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/ly2015/" title="网上祭祖敬神迎新春" target="_blank">网上祭祖敬神迎新春</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/lbj2015/" title="腊八节祭祀先祖传承孝爱" target="_blank">腊八节祭祀先祖传承孝爱</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                                <li>
+                            <span class="txoverflow" style="width:185px;float:left;">
+                                <a href="http://www.tsingming.com/zhuanti/myf2014/" title="梅艳芳逝世11周年纪念" target="_blank">梅艳芳逝世11周年纪念</a>
+                            </span>
+                                    <span style="float: right;"></span>
+                                </li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <!--建馆入口-->
+
+            <!--<div class="row" style="padding:15px 15px 0 15px;">
+                <a href="http://user.tsingming.com/memorial/create" title="创建纪念馆" target="_blank">
+                    <div class="col-md-12 col-sm-12 panel" alt="建馆入口" style="min-height:65px;
+            padding: 0;border: none;" align="center">
+                        <a href="#">
+                            <img style="width: 100%;" src="__PUBLIC__/static/home/images/jiNianR.png" alt="">
+                        </a>
+                    </div>
+                </a>
+            </div>-->
+
+            <!-- 宣传清明专题活动 -->
+            <!--<div class="row" style="margin-top: 15px;">-->
+                <!--<div class="col-md-12">-->
+                    <!--<a href="http://www.tsingming.com/OnlineWorshipProcess.html" target="_blank">-->
+                        <!--<img src="/img/jibailiucheng.jpg" class="img-responsive" alt="怎么进行网上祭奠" title="怎么进行网上祭奠">-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+            <!--右边结束-->
+        </div>
+    </div>
+</div>
+
+
+
+{/block}
+
+
+{block name="js-foot"}
+
+{/block}

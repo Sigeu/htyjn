@@ -1,0 +1,105 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$grave.name}</title>
+    {load href="/static/home/css/bootstrap.css" /}
+    {load href="/static/home/css/shop-guanwang.css" /}
+    {load href="/static/home/js/jquery.js" /}
+    {load href="/static/home/css/flexslider111.css" /}
+    {load href="/static/home/js/main.js" /}
+    {load href="/static/home/js/jquery.flexslider.js" /}
+    <!--{load href="/static/home/js/WdatePicker.js" /}-->
+    {load href="/static/home/css/WdatePicker.css" /}
+    {load href="/static/home/js/bootstrap.js" /}
+    {load href="/static/home/js/jquery.js" /}
+    <!-- ================== 开始基础CSS调用 ================== -->
+    <!--{load href="/static/home/css/service-base.css" /}-->
+    <!--<link href="http://www.xjlinguo.com/public/css/animate.min.css" rel="stylesheet" type="text/css">-->
+    {load href="/static/home/css/web_common.css" /}
+    {load href="/static/home/css/font-awesome.min.css" /}
+    {load href="/static/home/css/perfect-scrollbar.min.css" /}
+    <!--[if IE 7]>
+    <link href="http://www.xjlinguo.com/static/toolkit/font-awesome/css/font-awesome-ie7.min.css" rel="stylesheet">
+    <![endif]-->
+    <!-- ================== 结束基础CSS调用 ================== -->
+    <!-- ================== 开始页面CSS调用 ================== -->
+    {load href="/static/home/css/home_layout.css" /}
+    <!-- ================== 结束页面CSS调用 ================== -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <!-- ================== 开始基础JavaScript调用 ================== -->
+    <!--<script src="jquery.js"></script>-->
+    <!--<script src="js/jquery-ui.min.js"></script>-->
+    {load href="/static/home/css/jquery-ui.min.css" /}
+
+    {load href="/static/home/js/layer.js" /}
+    {load href="/static/home/js/jquery.validation.min.js" /}
+    {load href="/static/home/js/waypoints.js" /}
+    {load href="/static/home/js/perfect-scrollbar.min.js" /}
+    {load href="/static/home/js/jqthumb.js" /}
+    {load href="/static/home/css/layer.css" /}
+    <!-- If you'd like to support IE8 -->
+    {load href="/static/home/js/videojs-ie8.min.js" /}
+    {load href="/static/home/css/web_toolbar.css" /}
+    {load href="/static/home/css/index.css" /}
+    {load href="/static/home/css/shop.css" /}
+    <!-- ================== 结束基础JavaScript调用 ================== -->
+
+    {load href="/static/home/js/jquery-1.8.2.js" /}
+    <!-- todo popup -->
+    <link rel="stylesheet" href="__PUBLIC__/static/plugs/popup/css/other/popup.css">
+
+    <script language="javascript" src="__PUBLIC__/static/plugs/popup/js/M/Module.js" type="text/javascript"></script>
+    <script language="javascript" src="__PUBLIC__/static/plugs/popup/js/M/M.js" type="text/javascript"></script>
+</head>
+<body>
+<!--top-->
+<div class="contentBox">
+    <div class="top_bg">
+        <div class="container">
+            <div class="top txt-mgray">
+                <div class="nav left">
+                    <ul>
+                        <li><a class="first" href="{:url('/home/cemetery')}">公墓商城</a></li>
+                        <!--<li><a href="">墓园大全</a></li>-->
+                        <!--<li><a href="">公墓大全</a></li>-->
+                        <!--<li><a href="">拜祭托管</a></li>-->
+                        <!--  <li><a href="http://www.gmw6688.com/cemetery/">殡仪服务</a></li> -->
+                        <!--<li><a href="">殡葬百科</a></li>-->
+                        <!--<li><a href="">购墓指南</a></li>-->
+                    </ul>
+                </div>
+                <div class="top_fun right" id="destoon_member">
+                    <!--<a href="{:url('/home/login/login')}">登录</a>-->
+                    <!--<a href="{:url('/home/login/login')}">登录</a>-->
+                    <!--<a href="{:url('/home/login/register')}">注册</a>-->
+
+                    {if is_login()}
+                    <a href="{:url('/home/member/index',['id'=>$user.member_id])}">欢迎，{if $user.member_name eq null}{$user.member_mobile}{else/}{$user.member_name}{/if}</a>
+                    {else/}
+                    <a href="http://bz.yjn100.com/member/index.php?act=login&ref_url=http://www.yjn100.com/">您好，请登录</a>
+                    <a href="http://bz.yjn100.com/member/index.php?act=login&op=register&ref_url=http://www.yjn100.com/ " >免费注册</a>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="top_a">
+            <div class="title left">
+                <h1 class="txt-hdark">{$grave.name}</h1>
+                <span class="txt-gray tit_rs">已有<font size="6">0</font>人预订</span>
+            </div>
+            <a class="share left" href="#"><img src="__PUBLIC__/static/home/images/share.png"></a>
+            <div class="phone right phone_a">
+                <div class="ph">
+                    <span><img src="__PUBLIC__/static/home/images/phone_1.png"></span>
+                    <a class="txt-green" style="font-size: 21px;">{$grave.phone}</a>
+                </div>
+                <b class="txt-mgray">服务时间：周一至周日 9:00至18:00</b>
+            </div>
+        </div>
+    </div>

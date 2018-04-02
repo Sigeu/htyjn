@@ -1,0 +1,26 @@
+<!--纪念馆音乐-->
+<div id="style-tab-3" class="layui-tab layui-tab-card" style="width: 870px;margin: 0 auto;display: none;">
+    <ul class="layui-tab-title">
+        {foreach $hall_music as $cKey=>$hallCate}
+        <li {if $cKey eq 0}class="layui-this"{/if}>{$hallCate.name}</li>
+        {/foreach}
+
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $hall_music as $sKey=>$hallCate}
+        <div class="layui-tab-item{if $sKey eq 0} layui-show{/if}">
+            <div class="layui-form style-content">
+                {foreach $hallCate['music_list'] as $music}
+                <div class="layui-input-inline audio-block">
+                    <input type="radio" data-id="{$music.id}" name="demo3" value="{$music.music_name}"
+                           title="{$music.music_name}" lay-filter="hall-music"
+                           {eq name='hallStyle.id' value="$vo.hall_music|default=0"}checked="checked"{/eq}>
+                    <audio src="{$music.music_url}"></audio>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+
+    </div>
+</div>

@@ -1,0 +1,96 @@
+{extend name='common/main' /}
+
+{block name="css-head"}
+<link rel="stylesheet" href="__PUBLIC__/static/home/css/style.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/private2.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/private1.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/private3.css">
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/private4.css">
+
+<link type="text/css" rel="Stylesheet" href="__PUBLIC__/static/home/css/liuyan.css">
+{/block}
+
+
+{block name="lib-head"}
+<script src="__PUBLIC__/static/home/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/home/js/extend.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/home/js/huaien.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/home/js/jnguan.js"></script>
+{/block}
+
+<!-- content -->
+{block name="content"}
+<div class="home-focus-layout">
+    <div class="focus">
+        <!--banner-->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {foreach :get_banner(5,3) as $key=>$vo}
+                <li data-target="#carousel-example-generic" data-slide-to="{$key}" {if $key eq 0}class="active"{/if}></li>
+                {/foreach}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {foreach :get_banner(5, 3) as $key=>$vo}
+                <div class="item {if $key eq 0}active{/if}">
+                    <img src="{$vo.image}" alt="{$vo.title}">
+                </div>
+                {/foreach}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!--banner-->
+    </div>
+</div>
+
+<div class="container">
+    <div class="side">
+        <!-- 广告位 -->
+        {notempty name=':get_ad(9)'}
+        <div class="guangao">
+            <a href="{:get_ad(9)['url']}">
+                <img src="{:get_ad(9)['path']}">
+            </a>
+        </div>
+        {/notempty}
+    </div>
+
+    <div class="guan-tle">
+        <span>追思留言</span>
+    </div>
+    <ul class="liuyan">
+
+        {foreach $messageList['list'] as $vo}
+        <li>
+            <i style="background:url({:quick_pic_thumb($vo.member_avatar, '@40w_40h')}) no-repeat center center / cover;"></i>
+            <p><a href="javascript:;">{$vo.member_nickname}</a> <b>在 <a href="{:url('home/hall/detail', ['id' => $vo['hall_id']])}" title="1" target="_blank"><strong>{$vo.hall_name}</strong>纪念馆</a> 追思</b></p>
+            <div>{$vo.create_at|time_stamp}</div>
+            <span>{$vo.content|urldecode}</span>
+        </li>
+        {/foreach}
+
+        {$pageHtml}
+
+    </ul>
+
+    <div class="clear"></div>
+</div>
+
+{/block}
+
+
+{block name="js-foot"}
+
+{/block}
+

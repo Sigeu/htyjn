@@ -1,0 +1,66 @@
+<div class="right-bg">
+    <!--<h2 class="private-title">回忆相册</h2>-->
+    <div class="photo_box">
+        <!--- 普通馆隐藏 个性馆主体信息显示 photo_theme--->
+        <div class="photo_theme">
+            <!--<ul>
+                <li>
+                    <p class="photo_bg">
+                        <a href="http://img2.huaien.com/jinian/skin/guan/gexing/3/album/index.html" target="_blank">
+                            <img src="http://img2.huaien.com/jinian/skin/guan/gexing/3/images/album.jpg"></a>
+                    </p>
+                    <p class="text">
+                        <a href="http://img2.huaien.com/jinian/skin/guan/gexing/3/album/index.html" target="_blank">生命纪念相册</a>
+                    </p>
+                </li>
+            </ul>
+            <div class="clear">
+            </div>
+            <p class="btn_demo">
+                <a href="http://about.huaien.com/about/t54.htm">申请制作生命纪念相册</a>
+            </p>
+            -->
+        </div>
+        <div class="clear">
+        </div>
+        <!--- 普通馆面包屑导航显示 个性馆隐藏 bread_route--->
+        <div class="bread_route">
+            {if $info.hall_type eq 1}
+            <!--<a class="app_btn" target="_blank" href="http://about.huaien.com/about/t54.htm">申请制作生命相册</a>-->
+            <!-- 添加回忆相册按钮 upimg_btn -->
+            {if is_login() && is_login() eq $info.hall_member_id}
+            <a class="app_btn" id="add-photo" href="javascript:;">添加回忆相册</a>
+            {/if}
+            您当前所在位置 ：<a href="{:url('home/hall/detail', ['id' => $info['id']])}">{$info.hall_name}纪念馆</a>
+            &gt;
+            回忆相册
+            {else /}
+            回忆相册
+            {/if}
+        </div>
+        <!--- 普通馆隐藏 个性馆显示 app_title--->
+        <!--- 回忆相册列表表述 photo_album--->
+        <div class="photo_album">
+            <ul>
+                {volist name='photoList' id='v'}
+                <li>
+                    <div class="photo_bg">
+                        <a href="{:url('home/hall/photoPicture', ['id' => $info['id'], 'photo_id' => $v.id])}" class="photo_href">
+                            <img class="lazy" data-original="{$v.url}" alt="">
+                        </a>
+                    </div>
+                    <p class="tit">
+                        <a href="{:url('home/hall/photoPicture', ['id' => $info['id'], 'photo_id' => $v.id])}" title="">{$v.photo_name}</a>
+                        <span>{$v.num}张</span>
+                    </p>
+                </li>
+                {/volist}
+            </ul>
+            <!--- 翻页--->
+            <p class="page_turn">
+
+            </p>
+
+        </div>
+    </div>
+</div>
