@@ -1,0 +1,164 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<!--<div class="nowrap pull-right" style="margin-top:10px">-->
+    <!--<button data-modal='{:url("$classuri/urnRegister")}' data-title="" class='layui-btn layui-btn-small'><i-->
+            <!--class='fa fa-plus'></i> 寄存登记-->
+    <!--</button>-->
+    <!--<button data-update data-field='delete' data-action='{:url("$classuri/urnLeave")}'-->
+            <!--class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 寄存取走-->
+    <!--</button>-->
+<!--</div>-->
+{/block}
+
+{block name="content"}
+<style>
+    a {color: #333;}
+    a:hover, a:visited, a:focus {text-decoration: none; color: #777;}
+
+    .alert-info ul {
+        height: 10px;
+    }
+    .alert-info ul li {
+        line-height: 15px;
+        height: 15px;
+        margin: 0 15px 0 0;
+        float: left;
+    }
+    .alert-info ul li span {
+        /*background: #999;*/
+        width: 20px;
+        height: 15px;
+        line-height: 15px;
+        float: right;
+        border-radius: 3px;
+        margin: 0 0 0 3px;
+    }
+
+
+    div.seatCharts-cell {
+        color: #182C4E;
+        height: 60px;
+        width: 90px;
+        line-height: 25px;
+        margin: 5px;
+        float: left;
+        text-align: center;
+        outline: none;
+        font-size: 13px;
+    }
+    div.seatCharts-seat {background-color: #999; border: 1px solid gray;color: #fff;cursor: pointer;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+    div.seatCharts-row {height: 35px;}
+    div.seatCharts-seat.available {background-color: #3c763d; }
+    div.seatCharts-seat.unavailable {background-color: #472B34;/*cursor: not-allowed;*/}
+    div.seatCharts-seat.need-renewal {background-color: #ff0;}
+    div.seatCharts-seat.disabled {background-color: #8a6d3b;cursor: not-allowed;}
+
+    div.seatCharts-seat.focused {background-color: #76B474;border: 1px solid #76B474;}
+    div.seatCharts-seat.selected {background-color: #E6CAC4;}
+
+    div.seatCharts-container {background: #fff;width: 840px;padding: 20px;float: left;}
+    div.seatCharts-legend {padding-left: 0px;position: absolute;bottom: 16px;}
+    ul.seatCharts-legendList {padding-left: 0px;}
+    .seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;}
+    span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;}
+    .checkout-button {display: block;width:80px; height:24px; line-height:20px;margin: 10px auto;border:1px solid #999;font-size: 14px; cursor:pointer}
+    #selected-seats {max-height: 150px;overflow-y: auto;overflow-x: none;width: 200px;}
+    #selected-seats li{float:left; width:72px; height:26px; line-height:26px; border:1px solid #d3d3d3; background:#f7f7f7; margin:6px; font-size:14px; font-weight:bold; text-align:center}
+
+    .urn-box {
+        padding: 5px 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        background: #fff;
+        color: #111;
+    }
+
+    .urn-box.active {
+        background: #a94442;
+        color: #fff;
+    }
+    .urn-breadcrumb, .urn-status {
+        margin: 10px 5px;
+    }
+
+</style>
+
+<fieldset class="layui-elem-field" style="width:20%; float:left">
+    <!--<legend>目录</legend>-->
+    <div class="layui-field-box">
+        <div class="widget-content nopadding" style="border-bottom:0px">
+            <div class="zTreeDemoBackground left">
+                <ul id="demo1" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field" style=" width: 78%; float: right;">
+    <!--<legend>所在位置</legend>-->
+    <div class="layui-field-box tree-content">
+
+        {include file="cemetery/_urntree_list"}
+
+    </div>
+</fieldset>
+
+<!--<form onsubmit="return false;" data-auto="" method="POST">-->
+<!--<input type="hidden" value="resort" name="action"/>-->
+
+<!--<div style="display: inline-block; width: 180px; height: 210px; padding: 10px; border: 1px solid #ddd; overflow: auto;">-->
+<!--<ul id="demo1"></ul>-->
+<!--</div>-->
+
+<!--</form>-->
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+<script>
+    //Demo
+    layui.use(['tree', 'layer'], function(){
+        var layer = layui.layer
+            ,$ = layui.jquery;
+
+        layui.tree({
+            elem: '#demo1' //指定元素
+            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+            ,click: function(item){ //点击节点回调
+                // ajax 调用
+                $.ajax({
+                    url: 'business/Cemetery/ajaxGetUrn?cid=' + item.id,
+                    dataType: 'json',
+                    success: function(data){
+                        $('.tree-content').html(data.html);
+                    },
+                    error: function(){
+//	                    alert('获取信息失败');
+                    }
+                });
+
+            }
+
+            ,nodes: {$category}
+        });
+    });
+</script>
+
+{/block}

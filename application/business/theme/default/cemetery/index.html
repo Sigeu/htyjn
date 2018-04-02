@@ -1,0 +1,155 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <!--<button data-modal='{:url("$classuri/add")}' data-title="添加商品" class='layui-btn layui-btn-small'><i
+            class='fa fa-plus'></i> 添加商品
+    </button>-->
+    <button data-open='{:url("business/cemetery/add")}' data-title="添加墓穴" class='layui-btn layui-btn-small'><i
+            class='fa fa-plus'></i> 添加墓穴
+    </button>
+    <button data-update data-field='delete' data-action='{:url("$classuri/del")}'
+            class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除墓穴
+    </button>
+</div>
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="name" value="{$Think.get.name|default=''}" placeholder="公墓名称"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="cemetery_sn" value="{$Think.get.cemetery_sn|default=''}" placeholder="公墓编号"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <select name='cid' class='layui-select'>
+                    <option value="-1">请选择墓区搜索</option>
+                    {foreach $menus as $menu}
+                    {eq name='menu.id' value='$Think.get.cid|default=0'}
+                    <option selected  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                    {else/}
+                    <option  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                    {/eq}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <!--<button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>-->
+                <button type="submit" class="layui-btn layui-btn-primary"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='text-center'>商品名称</th>
+                <!--<th class='text-center'>所属分类</th>-->
+                <th class='text-center'>价格</th>
+
+                <th class='text-center'>产品编号(SN)</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>销售</th>
+
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='text-center'>{$vo.name}</td>
+                <!--<td class='text-center'></td>-->
+                <td class='text-center'>{$vo.price}</td>
+
+                <td class='text-center'>{$vo.cemetery_sn}</td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                    <span>已上架</span>
+                    {elseif $vo.status eq 0}
+                    <span style="color:#090">已下架</span>
+                    {/if}
+                </td>
+                <td class='text-center'>
+                    {if $vo.order_state eq null}
+                    <span>未出售</span>
+                    {elseif $vo.order_state eq 20}
+                    <span style="color:#090">已出售</span>
+                    {elseif $vo.order_state eq 10}
+                    <span style="color:blue">已预定</span>
+                    {/if}
+                </td>
+
+                <td class='text-center nowrap'>
+
+
+                    <div class="layui-btn-group">
+                        {if $vo.status eq 1 and b_auth("$classuri/forbid")}
+                        <button type="button" data-update="{$vo.id}" data-field='status' data-value='0' data-action='{:url("$classuri/forbid")}' class="layui-btn layui-btn-primary layui-btn-small">下架</button>
+                        {elseif b_auth("$classuri/resume")}
+                        <button type="button" data-update="{$vo.id}" data-field='status' data-value='1' data-action='{:url("$classuri/resume")}' class="layui-btn layui-btn-primary layui-btn-small">上架</button>
+                        {/if}
+
+                        {if b_auth("$classuri/edit")}
+                        <button type="button" data-open='{:url("$classuri/edit")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+
+                        {if b_auth("$classuri/del")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/del")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+{/block}

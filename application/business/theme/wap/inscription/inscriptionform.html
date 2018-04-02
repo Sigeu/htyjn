@@ -1,0 +1,119 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="m-zs">
+            <p class="ui_title">请认真填写以下信息</p>
+        </div>
+        <div class="m-bg">
+            <div class="m-wz1">添加碑文</div>
+            <div class="m-reg">
+                <form id="form" method="post">
+                    <dl>
+                        <dt><em>*</em>墓穴位置：</dt>
+                        <dd>
+                            <input type="text" name="cemetery_sn" value='{$vo.cemetery_sn|default=""}' required="required" placeholder="请输入碑文名称" class="layui-input" disabled>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>订单编号：</dt>
+                        <dd>
+                            <input type="text" name="order_sn" value='{$vo.order_sn|default=""}' required="required"  placeholder="请输入碑文名称" class="layui-input" disabled>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>选择销售员：</dt>
+                        <dd>
+                            <input type="text"  name="seller" value="{$seller}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>碑文名称：</dt>
+                        <dd>
+                            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入碑文名称" placeholder="请输入碑文名称" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>支付金额：</dt>
+                        <dd>
+                            <input type="number" name="cost" value='{$vo.cost|default=""}' required="required" title="请输入支付金额" placeholder="请输入支付金额" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>碑文内容：</dt>
+                        <dd>
+                            <textarea id="content" name='content'  class="layui-textarea" >{$vo.content|default=''}</textarea>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>备注：</dt>
+                        <dd>
+                            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark">{$vo.remark|default=""}</textarea>
+                        </dd>
+                    </dl>
+                    {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+                    <dl>
+                        <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd class="bt">
+                            <button type="button" class="u-btn _ajax_submit">提交</button>
+                        </dd>
+                    </dl>
+
+                </form>
+            </div><!--预定信息结束-->
+        </div>
+        <!--客户信息结束-->
+
+    </div>
+</div>
+<!-- /容器1 -->
+{include file="common/__footer"}
+<!-- /底部 -->
+</div>
+<script>
+    layui.use('layedit', function(){
+        var layedit = layui.layedit;
+        layedit.build('content'); //建立编辑器
+    });
+</script>
+
+<script>
+
+    $("._ajax_submit").click(function () {
+        var params = $('#form').serialize();
+        $.ajax({
+            type: "POST",
+            url: '/business/Inscription/editInscription',
+            data: {
+                params: params
+            },
+            success: function (data) {
+
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

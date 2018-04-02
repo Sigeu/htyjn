@@ -1,0 +1,75 @@
+<div id="seat-map" class="seatCharts-container">
+
+    <!-- 面包屑 -->
+    <div class="urn-breadcrumb">
+        <a href="javascript:;">寄存位置</a> &gt;
+        {if $parentCname neq ''}
+        <a href="javascript:;">{$parentCname}</a> &gt;
+        {/if}
+        <a><cite>{$categoryName}</cite></a>
+    </div>
+
+
+
+    <!-- 位置状态 -->
+    <div class="urn-status">
+        <!--<a data-open='{:url("$classuri/urn")}?status=renewal&cid={$categoryId}'><span>续费提醒（7天）：{$needRenewal}</span></a> - -->
+        <span>续费提醒（7天）：{$needRenewal}</span> -
+        <span>占用中：{$unavailable}</span> -
+        <span>空缺中：{$available}</span> -
+        <span>禁止登记：{$disabled}</span>
+    </div>
+
+    {foreach $data as $key=>$sub}
+    <div class="seatCharts-row">
+        <!--<div class="seatCharts-cell seatCharts-space">{$key}</div>-->
+
+        {foreach $sub as $skey=>$vo}
+        <div {if $vo.status eq 1 && $vo.is_sold eq 1}
+             data-open='{:url("$classuri/urnRegister")}?urn_id={$vo.id}&is_sold=1'
+             {elseif $vo.status eq 1 && $vo.is_sold eq 0}
+             data-open='{:url("$classuri/urnRegister")}?urn_id={$vo.id}&is_sold=0'
+             {/if} id="{$key}_{$skey}"
+            class="seatCharts-seat seatCharts-cell {if $vo.is_sold eq 1} unavailable {elseif $vo.status eq 0} disabled {else/} available {/if}">
+
+            {if $vo.is_sold eq 1}
+            <div class="urn-box active">{$vo.dead_name|default='未设置'}</div>
+            {elseif $vo.status eq 0}
+            <div class="urn-box">不可用</div>
+            {else/}
+            <div class="urn-box">空缺中</div>
+            {/if}
+
+            <span>{:msubstr($vo.urn_sn, -4,4,false)}</span>
+        </div>
+        {/foreach}
+
+    </div>
+    {/foreach}
+
+</div>
+
+
+<script>
+    $('.seatCharts-seat').click(function () {
+//        $('.seatCharts-seat').removeClass('focused');
+//        $('#' + this.id ).addClass('focused');
+
+//        var urlArray = window.location.href.split('spm');
+//        var currentUrl = urlArray[0];
+//        var lastUrl = '&spm' + urlArray[1];
+//
+//       var fullUrl = currentUrl + 'url_id=' + urnID + lastUrl;
+//
+//        window.location.href = fullUrl;
+
+
+//        alert(fullUrl);
+//        window.location.href = currentUrl;
+//        addUrlPara('urn_id', urnID);
+//        alert(document.URL)
+    });
+
+
+
+</script>

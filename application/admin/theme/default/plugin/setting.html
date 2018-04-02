@@ -1,0 +1,41 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<form name="article" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    {foreach $plugin.config as $config}
+    <div class="layui-form-item">
+        <label class="layui-form-label">{$config.label}</label>
+        <div class="layui-input-block">
+            {if $config.type eq 'select'}
+            <select name="config[{$config['name']}]" class='layui-select full-width'>
+                {foreach $config.option as $o=>$option}
+                <option {if condition="$config_value[$config['name']] eq $o"}selected{/if} value='{$o}'>{$option}</option>
+                {/foreach}
+            </select>
+            {elseif($config.type eq 'textarea')}
+            <textarea placeholder="请输入{$config['label']}" title="请输入{$config['label']}" class="layui-textarea" name="config[{$config['name']}]">{$config_value[$config['name']]}</textarea>
+            {else /}
+            <input type="{$config['type']}" name="config[{$config['name']}]" value="{$config_value[$config['name']]}" title="请输入{$config['label']}" placeholder="请输入{$config['label']}" class="layui-input">
+            {/if}
+        </div>
+    </div>
+    {/foreach}
+
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button type='button' data-open='{:url("$classuri/")}' class="layui-btn layui-btn-danger">返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+{/block}
+
+{block name='script'}
+
+
+{/block}
+

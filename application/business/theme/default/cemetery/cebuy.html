@@ -1,0 +1,389 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+
+</div>
+{/block}
+
+{block name="content"}
+<form  class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    {if isset($res)}
+    <h2 class="layui-colla-title">预定信息</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓穴位置</label>
+        <div class="layui-input-inline">
+            <div class="layui-input-inline" >
+                <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">购买日期</label>
+        <div class="layui-input-inline">
+            <input name="deal_time" class="layui-input" value="" placeholder="购买日期" id="LAY_demorange_s">
+        </div>
+
+        <label class="layui-form-label">到期日期</label>
+        <div class="layui-input-inline">
+            <input name="end_time" class="layui-input" value="" placeholder="到期日期" id="LAY_demorange_e">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">预定单号</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="order_sn" value="{$res.order_sn|default=''}" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">已付定金</label>
+        <div class="layui-input-inline">
+            <input type="text" name="deposit" value="{$res.deposit|default=''}" autocomplete="off" class="layui-input" >
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">费用合计</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="cost_total" value="{$vo.price|default=''}" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">应付金额</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="order_amount" value="{$vo.price-$res.deposit}" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+
+        <label class="layui-form-label">销售员</label>
+        <div class="layui-input-block" style="width: 190px;">
+            <input type="text" name="seller" value="{$res.seller_name|default=''}" autocomplete="off" class="layui-input" disabled required>
+            <input type="hidden" name="seller" value="{$res.seller|default=''}"  >
+        </div>
+    </div>
+
+   {else/}
+
+    <h2 class="layui-colla-title">墓穴信息</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓穴位置</label>
+        <!-- <div class="layui-input-inline"> -->
+            <!-- <div class="layui-input-inline" > -->
+                <!-- <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled> -->
+                <p style="line-height: 38px;">{$vo.name}-{$vo.cemetery_sn}</p>
+                <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">购买日期</label>
+        <div class="layui-input-inline">
+            <input name="deal_time" class="layui-input" value="" placeholder="购买日期" id="LAY_demorange_s">
+            <input name="end_time" type="hidden" id="LAY_demorange_e">
+        </div>
+
+        <!-- <label class="layui-form-label">到期日期</label>
+        <div class="layui-input-inline">
+            <input name="end_time" class="layui-input" value="" placeholder="到期日期" id="LAY_demorange_e">
+        </div> -->
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">费用合计</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="cost_total" value="{$vo.price|default=''}" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">应付金额</label>
+            <div class="layui-input-inline" >
+                <input type="text" lay-filter="order_amount" name="order_amount" value="" autocomplete="off" title="请输入应付金额" required="required" placeholder="请输入应付金额" class="layui-input" >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择销售员</label>
+        <div class="layui-input-inline" style="width: 190px;">
+            <select name="seller" lay-verify="required" >
+                <option value=""></option>
+                {volist name="staff" id='staffs'}
+                <option value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+{/if}
+
+    <hr>
+    <h2 class="layui-colla-title">选择套餐</h2>
+    <br>
+
+    {if !empty($inscr_pack)}
+    <div class="layui-form-item">
+        <label class="layui-form-label">刻碑套餐</label>
+        <div class="layui-input-block">
+            {volist name="inscr_pack" id="inpack"}
+            <input type="checkbox"  name="packages[]" value="{$inpack.type}-{$inpack.id}-{$inpack.cost}" title="{$inpack.name}-{$inpack.cost}元">
+            {/volist}
+        </div>
+    </div>
+    {/if}
+
+    {if !empty($bury_pack)}
+    <div class="layui-form-item">
+        <label class="layui-form-label">安葬套餐</label>
+        <div class="layui-input-block">
+            {volist name="bury_pack" id="bupack"}
+            <input type="checkbox"  name="packages[]"  value="{$bupack.type}-{$bupack.id}-{$bupack.cost}" title="{$bupack.name}-{$bupack.cost}元">
+            {/volist}
+        </div>
+    </div>
+    {/if}
+
+    {if !empty($stor_pack)}
+    <div class="layui-form-item">
+        <label class="layui-form-label">寄存套餐</label>
+        <div class="layui-input-block">
+            {volist name="stor_pack" id="stpack"}
+            <input type="checkbox"  name="packages[]"  value="{$stpack.type}-{$stpack.id}-{$stpack.cost}" title="{$stpack.name}-{$stpack.cost}元">
+            {/volist}
+        </div>
+    </div>
+    {/if}
+
+    {if !empty($oth_pack)}
+    <div class="layui-form-item">
+        <label class="layui-form-label">其他套餐</label>
+        <div class="layui-input-block">
+            {volist name="oth_pack" id="otpack"}
+            <input type="checkbox"  name="packages[]" value="{$otpack.type}-{$otpack.id}-{$otpack.cost}"  title="{$otpack.name}-{$otpack.cost}元">
+            {/volist}
+        </div>
+    </div>
+    {/if}
+
+
+    <script>
+        $(".tc").click(function () {
+            var tc_id = $(this).attr('data-id');
+//            alert(tc_id)
+            $("#tt-" + tc_id).show(300).siblings(".ttt").hide(300);
+        })
+        
+        $(".layui-form-checkbox").click(function () {
+            alert(33);
+        });
+    </script>
+
+    <hr>
+    <h2 class="layui-colla-title">客户信息1</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="username1" value="{$buyer1.username|default=''}" autocomplete="off" required="required" title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+            <input type="hidden" name="buyer1_id" value="{$buyer1.id|default=''}" >
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">联系地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="address1" value="{$buyer1.address|default=''}" required="required" title="请输入联系地址" placeholder="请输入联系地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline" >
+            <input type="email" name="mail1" value="{$buyer1.mail|default=''}" autocomplete="off"  placeholder="请输入电子邮件" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">工作地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="work_address1" value="{$buyer1.work_address|default=''}" autocomplete="off" placeholder="请输入工作地址" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="id_card1" value="{$buyer1.id_card|default=''}" autocomplete="off" required="required" title="请输入身份证号" placeholder="请输入身份证号" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="phone1" value="{$buyer1.phone|default=''}" autocomplete="off" required="required" title="请输入手机号码" placeholder="请输入手机号码" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者1关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship1_1" value="{$res.ship1_1|default=''}" autocomplete="off" required="required" placeholder="请输入与使用者1的关系" class="layui-input">
+                {if $vo.type eq 1}
+                <input type="hidden" name="ship2_1" value="" autocomplete="off"  class="layui-input">
+                {/if}
+            </div>
+        </div>
+
+        {if $vo.type eq 2}
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者2关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship2_1" value="{$res.ship2_1|default=''}" autocomplete="off" required="required" placeholder="请输入与使用者2的关系" class="layui-input">
+            </div>
+        </div>
+        {/if}
+
+        <div class="layui-inline">
+            <label class="layui-form-label">座机号码</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="plane1" value="{$buyer1.plane|default=''}" autocomplete="off" placeholder="请输入座机号码" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <h2 class="layui-colla-title">客户信息2</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="username2" value="{$buyer2.username|default=''}" autocomplete="off"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+            <input type="hidden" name="buyer2_id" value="{$buyer2.id|default=''}" >
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">联系地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="address2" value="{$buyer2.address|default=''}"  title="请输入联系地址" placeholder="请输入联系地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline" >
+            <input type="email" name="mail2" value="{$buyer2.mail|default=''}" autocomplete="off"  placeholder="请输入电子邮件" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">工作地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="work_address2" value="{$buyer2.work_address|default=''}" autocomplete="off" placeholder="请输入工作地址" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="id_card2" value="{$buyer2.id_card|default=''}" autocomplete="off"  title="请输入身份证号" placeholder="请输入身份证号" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="phone2" value="{$buyer2.phone|default=''}" autocomplete="off"  title="请输入手机号码" placeholder="请输入手机号码" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者1关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship1_2" value="{$res.ship1_2|default=''}" autocomplete="off"  placeholder="请输入与使用者1的关系" class="layui-input">
+                {if $vo.type eq 1}
+                <input type="hidden" name="ship2_2" value="" autocomplete="off"  class="layui-input">
+                {/if}
+            </div>
+        </div>
+
+        {if $vo.type eq 2}
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者2关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship2_2" value="{$res.ship2_2|default=''}" autocomplete="off"  placeholder="请输入与使用者2的关系" class="layui-input">
+            </div>
+        </div>
+        {/if}
+
+        <div class="layui-inline">
+            <label class="layui-form-label">座机号码</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="plane2" value="{$buyer2.plane|default=''}" autocomplete="off" placeholder="请输入座机号码" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden"  name="cemetery_id" value="{$vo.cemetery_id}" autocomplete="off" class="layui-input" >
+        <input type='hidden' value='{$res.order_id}' name='order_id'/>
+        <!--{if isset($res['id'])}<input type='hidden' value='{$res.id}' name='id'/>{/if}-->
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+{/block}
+
+{block name="script"}
+<script>window.form.render();</script>
+
+<script>
+
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            , max: '2099-06-16 23:59:59'
+            ,done: function(value, date){
+                // layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+                // console.log(date.year+20+'-'+date.month+'-'+date.date);
+                $('#LAY_demorange_e').val(date.year+20+'-'+date.month+'-'+date.date);
+            }
+        });
+        // laydate.render({
+        //     elem: '#LAY_demorange_e'
+        //     , max: '2099-06-16 23:59:59'
+        // });
+    });
+</script>
+
+
+
+{/block}

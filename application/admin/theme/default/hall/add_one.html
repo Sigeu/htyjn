@@ -1,0 +1,333 @@
+{extend name='common/content' /}
+
+{block name='content'}
+<form name="article" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-tab">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">逝者名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="one_name" value='{$vo.one_name|default=""}' required="required" title="请输入纪念馆名称" placeholder="请输入纪念馆名称" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纪念馆类型</label>
+                    <div class="layui-input-block">
+                        <label style="padding-top: 6px;font-size: 15px;color: #FF5722;">
+                            {if $isFamous}
+                            名人馆
+                            {else /}
+                            单人馆
+                            {/if}
+                        </label>
+                    </div>
+                </div>
+
+                {if $isFamous}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">名人类型</label>
+                        <div class="layui-input-block">
+                            <select name='famous_type' class='layui-select full-width'>
+                                <option value="">请选择名人类型</option>
+                                {foreach $famousType as $k=>$v}
+                                <option {eq name='$v.id' value="$vo.famous_type|default=0"}selected="selected"{/eq}  value='{$v.id}'>{$v.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                {/if}
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">逝者图片</label>
+                    <div class='layui-input-block'>
+
+                        <!-- todo 默认图片设置 -->
+                        <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.one_img|default='static/admin/theme/default/img/image.png'}"/>
+                        <input type="hidden" name="one_img" onchange="$(this).prev('img').attr('src', this.value)" value="{$vo.one_img|default=''}" class="layui-input">
+                        <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="one_img">上传图片</a>
+                        <p>建议上传图片的尺寸为xx px。</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        {if isset($vo.one_sex)}
+
+                        <input type="radio" name="one_sex" value="1" title="男" {if $vo.one_sex eq 1} checked {/if}>
+                        <input type="radio" name="one_sex" value="2" title="女" {if $vo.one_sex eq 2} checked {/if}>
+                        <input type="radio" name="one_sex" value="3" title="保密" {if $vo.one_sex eq 3} checked {/if}>
+
+                        {else /}
+
+                        <input type="radio" name="one_sex" value="1" title="男">
+                        <input type="radio" name="one_sex" value="2" title="女">
+                        <input type="radio" name="one_sex" value="3" title="保密" checked>
+
+                        {/if}
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">民族</label>
+                    <div class="layui-input-block">
+                        <select name='one_ethnic' class='layui-select full-width'>
+                            <option value="">请选择民族</option>
+                            {foreach $nationList as $k=>$v}
+                            <option {eq name='k' value="$vo.one_ethnic|default=0"}selected="selected"{/eq}  value='{$k}'>{$v}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">灵牌样式</label>
+                    <div class="layui-input-block">
+                        <select name='one_lingpai_style' class='layui-select full-width'>
+                            <option value="">请选择灵牌样式</option>
+                            {foreach $lingpaiStyle as $key=>$vi}
+                            <option {eq name='vi.id' value="$vo.one_lingpai_style|default=0"}selected="selected"{/eq}  value='{$vi.id}'>{$vi.style_name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">时间选择</label>
+                    <div class="layui-input-block">
+                        {if isset($vo.one_birthday)}
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="{$vo.one_birthday|unixtime_to_date='Y-m-d', ###}" placeholder="请选择出生日期" required="required" title="请选择出生日期"  id="LAY_demorange_s" name="one_birthday">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="{$vo.one_death|unixtime_to_date='Y-m-d', ###}" placeholder="请选择逝世日期" required="required" title="请选择逝世日期"  id="LAY_demorange_e" name="one_death">
+                        </div>
+                        {else /}
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="" placeholder="请选择出生日期" required="required" title="请选择出生日期"  id="LAY_demorange_s" name="one_birthday">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="" placeholder="请选择逝世日期" required="required" title="请选择逝世日期"  id="LAY_demorange_e" name="one_death">
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纪念关系</label>
+                    <div class="layui-input-block">
+                        <!--<input type="text" name="one_relation" value='{$vo.one_relation|default=""}' title="请输入纪念关系" placeholder="请输入纪念关系" class="layui-input">-->
+                        <select name='one_relation' class='layui-select full-width'>
+                            <option value="">请选择纪念关系</option>
+                            {foreach $relationShip as $key=>$v}
+                            <option {eq name='v' value="$vo.one_relation|default=''"}selected="selected"{/eq}  value='{$v}'>{$v}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">安息地</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="one_rest_address" value='{$vo.one_rest_address|default=""}' title="请输入安息地" placeholder="请输入安息地" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">墓志铭</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="one_epitaph" value='{$vo.one_epitaph|default=""}' required="required"  title="请输入墓志铭" placeholder="请输入墓志铭" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纪念馆风格</label>
+                    <div class="layui-input-block">
+                        <select name='hall_style' class='layui-select full-width'>
+                            <option value="">请选择纪念馆风格</option>
+                            {foreach $hallStyle as $key=>$v}
+                            <option>{$v.name}</option>
+                                {foreach $v.hall_style as $sKey=>$hallStyle}
+                                    <option value="{$hallStyle.id}" {eq name='hallStyle.id' value="$vo.hall_style|default=0"}selected="selected"{/eq}>&nbsp;&nbsp;|- {$hallStyle.style_name}</option>
+                                {/foreach}
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">祭拜大厅风格</label>
+                    <div class="layui-input-block">
+                        <select name='hall_worship_style' class='layui-select full-width'>
+                            <option value="">请选择祭拜大厅风格</option>
+                            {foreach $hallWorshipStyle as $key=>$v}
+                            <option>{$v.name}</option>
+                            {foreach $v.hall_worship_style as $hallWorshipStyle}
+                            <option value="{$hallWorshipStyle.id}" {eq name='hallWorshipStyle.id' value="$vo.hall_worship_style|default=0"}selected = "selected"{/eq}>&nbsp;&nbsp;|- {$hallWorshipStyle.style_name}</option>
+                            {/foreach}
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">音乐</label>
+                    <div class="layui-input-block">
+                        <select name='hall_music' class='layui-select full-width'>
+                            <option value="">请选择音乐</option>
+                            {foreach $hallMusic as $key=>$v}
+                            <option value='{$v.id}' {eq name='v.id' value="$vo.hall_music|default=0"}selected = "selected"{/eq}>{$v.music_name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">生平事迹</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入生平事迹" title="请输入生平事迹" class="layui-textarea" name="hall_describe">{$vo.hall_describe|default=""}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">需要密码</label>
+                    <div class="layui-input-block is_need_password">
+                        {if isset($vo.is_need_password)}
+                        {if $vo.is_need_password eq 1}
+                        <input type="radio" name="is_need_password" value="1" title="否" checked>
+                        <input type="radio" name="is_need_password" value="2" title="是">
+                        {else/}
+                        <input type="radio" name="is_need_password" value="1" title="否">
+                        <input type="radio" name="is_need_password" value="2" title="是" checked>
+                        {/if}
+                        {else/}
+                        <input type="radio" name="is_need_password" value="1" title="否" checked>
+                        <input type="radio" name="is_need_password" value="2" title="是">
+                        {/if}
+                    </div>
+                </div>
+
+                <div class="layui-form-item password">
+                    <label class="layui-form-label">访问密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" value='' required="required" title="请输入访问密码" placeholder="请输入访问密码" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item password">
+                    <label class="layui-form-label">访问密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="call_password" value='' required="required" lay-verify="password" title="请确认访问密码" placeholder="请确认访问密码" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">可见状态</label>
+                    <div class="layui-input-block">
+                        {if isset($vo.is_visible)}
+                        {if $vo.is_visible eq 1}
+                        <input type="radio" name="is_visible" value="1" title="所有人可见" checked>
+                        <input type="radio" name="is_visible" value="2" title="仅自己可见">
+                        {else/}
+                        <input type="radio" name="is_visible" value="1" title="所有人可见">
+                        <input type="radio" name="is_visible" value="2" title="仅自己可见" checked>
+                        {/if}
+                        {else/}
+                        <input type="radio" name="is_visible" value="1" title="所有人可见" checked>
+                        <input type="radio" name="is_visible" value="2" title="仅自己可见">
+                        {/if}
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纪念馆状态</label>
+                    <div class="layui-input-block">
+                        {if isset($vo.hall_status)}
+                        {if $vo.hall_status eq 1}
+                        <input type="radio" name="hall_status" value="1" title="正常" checked>
+                        <input type="radio" name="hall_status" value="2" title="锁定">
+                        {else/}
+                        <input type="radio" name="hall_status" value="1" title="正常">
+                        <input type="radio" name="hall_status" value="2" title="锁定" checked>
+                        {/if}
+                        {else/}
+                        <input type="radio" name="hall_status" value="1" title="正常" checked>
+                        <input type="radio" name="hall_status" value="2" title="锁定">
+                        {/if}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" lay-submit="" lay-filter="submit">保存数据</button>
+        <button data-open='{:url("$classuri/hallOne")}' class="layui-btn layui-btn-danger" type='reset'>返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use(['form', 'laydate', 'element'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,element = layui.element; //选项卡 依赖element 模块
+
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            },
+            password: function () {
+                if ($("input[name='password']").val() !== $("input[name='call_password']").val()){
+                    return '两次输入密码不一致';
+                }
+            }
+        });
+
+    });
+    if($("input[name='is_need_password']:checked").val() == 1){
+        $(".password").hide();
+    }
+    $(".is_need_password").click(function () {
+        if($("input[name='is_need_password']:checked").val() == 2){
+            $(".password").show();
+        }else{
+            $(".password").hide();
+        }
+    });
+</script>
+
+
+<script>
+
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+        laydate.render({
+            elem: '#LAY_demorange_e'
+            ,min: '100-06-16'
+            ,max: 0
+        });
+    });
+</script>
+{/block}
+

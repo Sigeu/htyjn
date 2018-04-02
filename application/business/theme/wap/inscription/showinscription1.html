@@ -1,0 +1,35 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+
+        <div class="service-ctent">
+            <div class="recom-tit">
+                <p>基本信息</p>
+            </div>
+            <div class="service-list">
+                <ul>
+                    <p class="service-tit">订单号：{$orderInfo.order_sn}</p>
+                    <p class="service-tit">订单状态：{if $orderInfo.status eq 0}
+                        <b>未完成</b>
+                        {elseif $orderInfo.status eq 1}
+                        <b style="color:#090">已完成</b>
+                        {/if}</p>
+
+
+                    <p class="service-tit">费用：{$orderInfo.cost}</p>
+                    <p class="service-tit">买家：{$orderInfo.member_name}</p>
+                    <p class="service-tit">下单时间：{$orderInfo.create_at|format_time}</p>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- /容器1 -->
+{include file="common/__footer"}
+<!-- /底部 -->
+</div>
+</body>
+</html>

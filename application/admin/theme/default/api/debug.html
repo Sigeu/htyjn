@@ -1,0 +1,244 @@
+<style>
+    /* ------------------------------------------------------------------------------------------
+     * pre / code
+     * ------------------------------------------------------------------------------------------ */
+    pre {
+        background-color: #292b36;
+        color: #ffffff;
+        padding: 10px;
+        border-radius: 6px;
+        position: relative;
+        margin: 10px 0 20px 0;
+    }
+
+    pre.prettyprint {
+        width: 100%;
+    }
+
+    code.language-text {
+        word-wrap: break-word;
+    }
+
+    pre.language-json {
+        overflow: auto;
+        /*max-height: 600px;*/
+    }
+
+    pre.language-html {
+        margin: 0 0 20px 0;
+    }
+
+    .type {
+        font-family: "Source Sans Pro", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        display: inline-block;
+        margin: 0 0 5px 0;
+        padding: 4px 5px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        background-color: #3387CC;
+        color: #ffffff;
+    }
+
+    .type__get {
+        background-color: green;
+    }
+
+    .type__put {
+        background-color: #e5c500;
+    }
+
+    .type__post {
+        background-color: #4070ec;
+    }
+
+    .type__delete {
+        background-color: #ed0039;
+    }
+
+    pre.language-api .str {
+        color: #ffffff;
+    }
+
+    pre.language-api .pln,
+    pre.language-api .pun {
+        color: #65B042;
+    }
+
+    pre code {
+        display: block;
+        font-size: 14px;
+        font-family: "Source Code Pro", monospace;
+        font-style: normal;
+        font-weight: 400;
+        word-wrap: normal;
+        white-space: pre;
+    }
+
+    pre code.sample-request-response-json {
+        white-space: pre-wrap;
+        /*max-height: 600px;*/
+        overflow: auto;
+    }
+</style>
+
+<form id="debug-form" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">接口名称</label>
+        <div class="layui-input-block">
+            <input type="text" value='{$data.title|default=""}' disabled class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">接口URL地址</label>
+        <div class="layui-input-block">
+            <input type="text" value='{$data.url|default=""}' class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求类型</label>
+        <div class="layui-input-block">
+            <input style="color:red;" type="text" value='{$data.method|default="POST"}' disabled class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">接口参数</label>
+        <div class="layui-input-block">
+            {if $data.parameter neq null}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class='text-center'>参数名称</th>
+                    <th class='text-center'>参数描述</th>
+                    <th class='text-center'>参数值</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $data['parameter'] as $key=>$vo}
+                <tr>
+                    <td class='text-center'>{$vo.name} （{$vo.type}）</td>
+                    <td class='text-center'>{$vo.info}</td>
+                    <td class='text-center'>
+                        <input type="text" name="{$vo.name}" placeholder="{$vo.name|default=''}" class="layui-input param-value">
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {else/}
+            <input type="text" value='没设置参数' disabled class="layui-input">
+            {/if}
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn send-request" type='submit'>发送</button>
+        <button type='button' data-open='{:url("$classuri/index")}' class="layui-btn layui-btn-danger">返回列表</button>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">调试返回结果</label>
+        <div class="layui-input-block">
+            <pre class="prettyprint language-json prettyprinted" data-type="json" style="">
+                <code id="api-debug-result" class="sample-request-response-json">返回结果</code>
+            </pre>
+        </div>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+
+    //获取指定form中的所有的<input>对象
+    function getElements(formId) {
+        var form = document.getElementById(formId);
+        var elements = new Array();
+        var tagElements = form.getElementsByTagName('input');
+        for (var j = 0; j < tagElements.length; j++){
+            elements.push(tagElements[j]);
+
+        }
+        return elements;
+    }
+
+    //获取单个input中的【name,value】数组
+    function inputSelector(element) {
+        if (element.checked)
+            return [element.name, element.value];
+    }
+
+    function input(element) {
+        switch (element.type.toLowerCase()) {
+            case 'submit':
+            case 'hidden':
+            case 'password':
+            case 'text':
+                return [element.name, element.value];
+            case 'checkbox':
+            case 'radio':
+                return inputSelector(element);
+        }
+        return false;
+    }
+
+    //组合URL
+    function serializeElement(element) {
+        var method = element.tagName.toLowerCase();
+        var parameter = input(element);
+
+        if (parameter) {
+            var key = encodeURIComponent(parameter[0]);
+            if (key.length == 0) return;
+
+            if (parameter[1].constructor != Array)
+                parameter[1] = [parameter[1]];
+
+            var values = parameter[1];
+            var results = [];
+            for (var i=0; i<values.length; i++) {
+                results.push(key + '=' + encodeURIComponent(values[i]));
+            }
+            return results.join('&');
+        }
+    }
+
+    //调用方法
+    function serializeForm(formId) {
+        var elements = getElements(formId);
+        var queryComponents = new Array();
+
+        for (var i = 0; i < elements.length; i++) {
+            var queryComponent = serializeElement(elements[i]);
+            if (queryComponent)
+                queryComponents.push(queryComponent);
+        }
+
+        return queryComponents.join('&');
+    }
+
+
+    $(".send-request").click(function () {
+
+        var param = $(".param-value").val();
+        var formParams = serializeForm("debug-form");
+
+        $.ajax({
+            url: '{$requestUrl}?' + formParams,
+            dataType: 'json',
+            success: function(result) {
+                result = JSON.stringify(result, null, 2);
+                $("#api-debug-result").html(result);
+            }
+        });
+        return false;
+    })
+</script>

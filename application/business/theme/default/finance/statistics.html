@@ -1,0 +1,297 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<style type="text/css">
+	.tab-tool-box {
+		border:1px solid #ccc;
+		border-left: 5px solid #ccc;
+		padding: 7px 5px 5px 5px;
+		width: 100%;
+		margin-bottom: 5px;
+	}
+</style>
+<div class="row" style="padding: 30px;">
+	<blockquote class="layui-elem-quote">数据图表</blockquote>
+
+	<div class="layui-inline">
+		<label class="layui-form-label">选择范围</label>
+		<div class="layui-input-inline" style="width: 170px;">
+			<input type="text" class="layui-input" id="date1">
+		</div>
+    </div>
+    
+    <div class="layui-inline">
+		<label class="layui-form-label">对比日期</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input" id="date2">
+		</div>
+    </div>
+
+    <div class="layui-inline">
+		<label class="layui-form-label"></label>
+		<button class="layui-btn layui-btn-lg" id="showPic">查看图表</button>
+		<!-- <button class="layui-btn layui-btn-lg" id="ForTest">均分时间(测试用上线后请删除)</button> -->
+	</div>
+
+	<blockquote class="layui-elem-quote" style="margin-top: 15px;">数据表格</blockquote>
+	<div class="layui-inline tab-tool-box">
+		<div class="layui-inline">
+			<label class="layui-form-label">开始时间</label>
+			<div class="layui-input-inline" style="width: 170px;">
+				<input type="text" class="layui-input" id="tab_date_s" value="{$startTime|date="Y-m-d",###}">
+			</div>
+	    </div>
+	    
+	    <div class="layui-inline">
+			<label class="layui-form-label">结束时间</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" id="tab_date_e" value="{$endTime|date="Y-m-d",###}">
+			</div>
+	    </div>
+
+	    <div class="layui-inline">
+			<label class="layui-form-label">订单来源</label>
+			<div class="layui-input-inline">
+				<select id="order_source" class="layui-input">
+					<option value="">请选择</option>
+					<option value="0">预定</option>
+					<option value="1">购买</option>
+					<option value="2">碑文</option>
+					<option value="3">安葬</option>
+					<option value="4">退款</option>
+					<option value="5">续费</option>
+				</select>
+			</div>
+	    </div>
+
+	    <div class="layui-inline">
+			<label class="layui-form-label">页码控制</label>
+			<div class="layui-input-inline">
+				<select id="page_size" class="layui-input">
+					<option value="20" <?php if(@$_GET['page_size'] == 20){?>selected<?php }?>>20条/页</option>
+					<option value="50" <?php if(@$_GET['page_size'] == 50){?>selected<?php }?>>50条/页</option>
+					<option value="100" <?php if(@$_GET['page_size'] == 100){?>selected<?php }?>>100条/页</option>
+					<option value="200" <?php if(@$_GET['page_size'] == 200){?>selected<?php }?>>200条/页</option>
+					<option value="300" <?php if(@$_GET['page_size'] == 300){?>selected<?php }?>>300条/页</option>
+					<option value="400" <?php if(@$_GET['page_size'] == 400){?>selected<?php }?>>400条/页</option>
+					<option value="500" <?php if(@$_GET['page_size'] == 500){?>selected<?php }?>>500条/页</option>
+				</select>
+			</div>
+	    </div>
+
+	    <div class="layui-inline">
+			<label class="layui-form-label">销售员</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" id="seller">
+			</div>
+	    </div>
+
+	    <div class="layui-inline">
+			<label class="layui-form-label"></label>
+			<button class="layui-btn layui-btn-lg" id="search">查询</button>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label"></label>
+			<button class="layui-btn layui-btn-lg" onclick="out_put_excel('cusTable');return false;">导出本页</button>
+		</div>
+	</div>
+	<blockquote class="layui-elem-quote layui-quote-nm">
+		<table class="table table-hover" id="cusTable" border="1">
+			<thead>
+				<tr>
+					<th colspan="7" style="text-align: center;">
+						<h3 style="font-size: 16px;">{$startTime|date="Y年m月d日",###} ~ {$endTime|date="Y年m月d日",###} 之间的销售额统计<h3>
+					</th>
+				</tr>
+				<tr>
+					<th style="text-align: center;">订单号</th>
+					<th style="text-align: center;">墓位编号</th>
+					<th style="text-align: center;">成交时间</th>
+					<th style="text-align: center;">销售员</th>
+					<th style="text-align: center;">订单来源</th>
+					<th style="text-align: center;">客户姓名</th>
+					<th style="text-align: center;">订单金额</th>
+				</tr>
+			</thead>
+			<tbody>
+				{volist name="$List" id="v" key="k"}
+				<tr>
+					<td style="text-align: center;">{$v.order_sn}</td>
+					<td style="text-align: center;">{$v.cemetery_sn}</td>
+					<td style="text-align: center;">{$v.add_time|date="Y年m月d日 H:i:s",###}</td>
+					<td style="text-align: center;">{$SellerName[$k-1]|default=" "}</td>
+					<td style="text-align: center;">
+						{if $v.order_source eq 0}
+							预定
+						{/if}
+						{if $v.order_source eq 1}
+							购买
+						{/if}
+						{if $v.order_source eq 2}
+							碑文
+						{/if}
+						{if $v.order_source eq 3}
+							安葬
+						{/if}
+						{if $v.order_source eq 4}
+							退款
+						{/if}
+						{if $v.order_source eq 5}
+							续费
+						{/if}
+					</td>
+					<td style="text-align: center;">{$v.buyer_name}</td>
+					<td style="text-align: center;">{$v.order_amount}</td>
+				</tr>
+				{/volist}
+				<tr>
+					<th colspan="6" style="text-align: right;">总计:</th>
+					<th>￥ {$SUM|default='0.00'}</th>
+				</tr>
+			</tbody>
+		</table>
+		{$page}
+	</blockquote>
+</div>
+<script type="text/javascript">
+var val1 = '';
+var val2 = '';
+layui.use(['laydate'], function() {
+	var laydate = layui.laydate;
+	var d_year = 0,d_month=0,d_day=0;
+	laydate.render({
+		elem: '#date1',
+		range: true,
+		done: function(value,date,endDate){
+		    val1 = date.year + '-' + date.month + '-' + date.date + '/' + endDate.year + '-' + endDate.month + '-' + endDate.date;
+		}
+	});
+	laydate.render({
+		elem: '#date2',
+		done: function(value){
+			val2 = value;
+		}
+	});
+	laydate.render({
+		elem: '#tab_date_s',
+	});
+	laydate.render({
+		elem: '#tab_date_e',
+	});
+});
+
+
+$('#showPic').on('click',function(){
+	if(val1 == '' || val2 == ''){
+		layer.msg("请选择对比时间");
+	}else{
+		layer.open({
+			type:2,
+			title:"销售额对比统计",
+			area:['1000px','500px'],
+			content:("/business/finance/content_1?val1=" + val1 + "&val2=" + val2)
+		})
+	}
+});
+
+$("#search").on('click',function(){
+	var start_time = $('#tab_date_s').val();
+	var end_time = $('#tab_date_e').val();
+	var order_source = $('#order_source').val();
+	var seller = $('#seller').val();
+	var page_size = $('#page_size').val();
+	var url = "#/business/finance/statistics?start_time=" + start_time + '&end_time=' + end_time;
+	url += '&order_source=' + order_source;
+	url += '&seller=' + seller;
+	url += '&page_size=' + page_size;
+	window.location.href = url; 
+});
+</script>
+
+<script type="text/javascript">
+		var idTmr;
+		//判断浏览器 
+        function  getExplorer() {  
+            var explorer = window.navigator.userAgent ;  
+            //ie  
+            if (explorer.indexOf("MSIE") >= 0) {  
+                return 'ie';  
+            }  
+            //firefox  
+            else if (explorer.indexOf("Firefox") >= 0) {  
+                return 'Firefox';  
+            }  
+            //Chrome  
+            else if(explorer.indexOf("Chrome") >= 0){  
+                return 'Chrome';  
+            }  
+            //Opera  
+            else if(explorer.indexOf("Opera") >= 0){  
+                return 'Opera';  
+            }  
+            //Safari  
+            else if(explorer.indexOf("Safari") >= 0){  
+                return 'Safari';  
+            }  
+        }
+        //导出Excel
+        function out_put_excel(tableid) {  
+            if(getExplorer()=='ie'){  
+                var curTbl = document.getElementById(tableid);  
+                var oXL = new ActiveXObject("Excel.Application");  
+                var oWB = oXL.Workbooks.Add();  
+                var xlsheet = oWB.Worksheets(1);  
+                var sel = document.body.createTextRange();  
+                sel.moveToElementText(curTbl);
+                sel.select();  
+                sel.execCommand("Copy");  
+                xlsheet.Paste();  
+                oXL.Visible = true;  
+  
+                try{ 
+                	var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");  
+                }catch(e){  
+                    print("Nested catch caught " + e);  
+                }finally{  
+                    oWB.SaveAs(fname);  
+                    oWB.Close(savechanges = false);  
+                    oXL.Quit();  
+                    oXL = null;  
+                    idTmr = window.setInterval("Cleanup();", 1);  
+                }
+            }else{  
+                tableToExcel(tableid)  
+            }  
+        }  
+        function Cleanup() {  
+            window.clearInterval(idTmr);  
+            CollectGarbage();  
+        }  
+        var tableToExcel = (function() {  
+            var uri = 'data:application/vnd.ms-excel;base64,',  
+                    template = '<html><head><meta charset="UTF-8"></head><body><table border="1">{table}</table></body></html>',  
+                    base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) },  
+                    format = function(s, c) {  
+                        return s.replace(/{(\w+)}/g,  
+                                function(m, p) { return c[p]; }) }  
+            return function(table, name) {  
+                if (!table.nodeType) table = document.getElementById(table)  
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}  
+                window.location.href = uri + base64(format(template, ctx))  
+            }  
+        })()
+</script>
+
+<script type="text/javascript">
+// $('#ForTest').on('click',function(){
+// 	if(val1 == ''){
+// 		layer.msg("请选择所离散的时间段");
+// 	}else{
+// 		$.post('/business/finance/AverageFinanceAddTime',{val:val1},function(res){
+// 			layer.msg(res.msg);
+// 		})
+// 	}
+// });
+</script>
+{/block}

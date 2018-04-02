@@ -1,0 +1,71 @@
+{extend name='common/content' /}
+
+{block name="button"}
+{/block}
+
+
+{block name="content"}
+
+<style>
+    .hall-skin {
+        width: 730px;
+    }
+    .hall-skin ul li {
+        float:left;
+        width: 162px;
+        margin: 5px;
+        border: 5px solid #d2d2d2;
+        border-radius: 5px;
+    }
+    .hall-skin ul li:hover {
+        cursor: pointer;
+    }
+    .hall-skin ul li img {
+        width: 162px;
+    }
+    .hall-skin ul li.hall-skin-selected {
+        border: 5px solid #337ab7;
+    }
+</style>
+
+<div class="hall-skin">
+
+    <div class="layui-form layui-box">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>单人馆主题（guan）</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <ul>
+                {foreach $skinList['guan'] as $key=>$vo}
+                <li>
+                    <input class="hall-skin-input" data-id="{$vo.skin_dir}" value='{$vo.skin_dir}' type='hidden' />
+                    <img class="hall-skin-img" data-id="{$vo.skin_dir}" data-src="{$vo.pc_thumb_img}" src="{$vo.pc_thumb_img}" title="皮肤目录：{$vo.skin_dir}" alt="皮肤目录：{$vo.skin_dir}">
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>多人馆主题（yuan）</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <ul>
+                {foreach $skinList['yuan'] as $key=>$vo}
+                <li class="">
+                    <input class="hall-skin-input" data-id="{$vo.skin_dir}" value='{$vo.skin_dir}' type='hidden' />
+                    <img class="hall-skin-img" data-id="{$vo.skin_dir}" data-src="{$vo.pc_thumb_img}" src="{$vo.pc_thumb_img}" title="皮肤目录：{$vo.skin_dir}" alt="皮肤目录：{$vo.skin_dir}">
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item text-center">
+        <div class="layui-input-block">
+            <button data-add-hall-skin="add-hall-skin" type="button" class="layui-btn">确认添加</button>
+        </div>
+    </div>
+</div>
+
+{/block}

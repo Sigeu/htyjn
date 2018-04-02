@@ -1,0 +1,76 @@
+<style>
+    .order-info, .order-info span {
+        font-size: 12px;
+        margin: auto 20px;
+    }
+
+</style>
+{/* 订单信息 */}
+<div class="ibox-title">
+    <h5>订单信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>订单号: {$orderInfo.order_sn}</span>
+        <span>
+            订单状态:
+            {if $orderInfo.order_state eq 0}
+            <b>已取消</b>
+            {elseif $orderInfo.order_state eq 10}
+            <b style="color:#090">待付款</b>
+            {/if}
+        </span>
+        <span>商品总价格: {$orderInfo.goods_amount} 积分</span>
+        <span>订单总价格: {$orderInfo.order_amount} 积分</span>
+    </div>
+
+</blockquote>
+
+{/* 买家信息 */}
+<div class="ibox-title">
+    <h5>买家信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>买家: {$orderInfo.buyer_name}</span>
+        <span>下单时间: {$orderInfo.create_at|format_time}</span>
+    </div>
+
+</blockquote>
+
+{/* 商品信息 */}
+<div class="ibox-title">
+    <h5>商品信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class='text-center'>商品名称</th>
+                <th class='text-center'>商品图片</th>
+                <th class='text-center'>单价</th>
+                <th class='text-center'>实际支付额</th>
+                <th class='text-center'>购买数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $orderGoods as $key=>$vo}
+            <tr>
+                <td class='text-center'>{$vo.goods_name}</td>
+                <td class='text-center'>
+                    <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.goods_image|default='static/admin/theme/default/img/image.png'}"/>
+                </td>
+                <td class='text-center'>{$vo.goods_price}</td>
+                <td class='text-center'>{$vo.goods_pay_price}</td>
+                <td class='text-center'>{$vo.goods_num}</td>
+
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</blockquote>
+
+
+

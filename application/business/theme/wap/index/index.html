@@ -1,0 +1,37 @@
+{include file="common/header"}
+<div class="header">
+    <h1> 员工中心</h1>
+    <!--<a href="/index.php/Wap/Index/index.html" class="return"><i></i></a>-->
+</div>
+<article class="main-container">
+    <div class="member-header">
+        <button class="button"  ></button>
+        <p>{:session('b_user.name')}</p>
+    </div>
+    <style>
+        .list ul li, .list ol li{ line-height:48px; font-size:18px;}
+        .tb-nav ul li{ padding-bottom:2%;}
+        .tb-nav .block{border-bottom:#999 1px dashed;}
+    </style>
+    <div class="list">
+        <ul class="line">
+            <li onClick="location.href='{:url('staff/edit')}?id={:session(\'b_user.id\')}'"><i class="icon-head"></i>个人信息<span class="icon-arrowright"></span></li>
+            <li onClick="location.href='{:url('staff/pass')}?id={:session(\'b_user.id\')}'"><i class="icon-pwd"></i>修改密码<span class="icon-arrowright"></span></li>
+        </ul>
+        <ul class="line">
+            <li onClick="location.href='{:url('cemetery/index')}'"><i class="icon-allorders"></i>公墓系统<span class="icon-arrowright"></span></li>
+            <li onClick="location.href='{:url('order/index')}'"><i class="icon-cartadd"></i>墓穴订单<span class="icon-arrowright"></span></li>
+        </ul>
+
+        <ul class="line">
+            <li onClick="location.href='{:url('inscription/inscription')}'"><i class="icon-cartadd"></i>碑文订单<span class="icon-arrowright"></span></li>
+            <li onClick="location.href='{:url('bury/index')}'"><i class="icon-cartadd"></i>安葬订单<span class="icon-arrowright"></span></li>
+        </ul>
+        <!--<ul class="line">-->
+            <!--<li onClick="location.href='{:U('myMessage')}'"><i class="icon-allorders"></i>通知消息<span class="icon-arrowright"></span></li>-->
+        <!--</ul>-->
+        <ul class="line">
+            <li onClick="location.href='{:url('business/login/out')}'"><i class="icon-out"></i>退出系统</li>
+        </ul>
+    </div>
+</article>

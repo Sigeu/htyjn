@@ -1,0 +1,95 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    {if $Think.get.hall_id > 0}
+        <button data-modal='{:url("$classuri/AddPhoto")}?hall_id={$Think.get.hall_id}' data-title="添加类型" class='layui-btn layui-btn-small'><i
+                class='fa fa-plus'></i> 添加相册
+        </button>
+    {/if}
+    <button data-update data-field='delete' data-action='{:url("$classuri/delPhoto")}'
+            class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除相册
+    </button>
+</div>
+{/block}
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="photo_name" value="{$Think.get.photo_name|default=''}" placeholder="相册名称"
+                       class="input-sm form-control">
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='text-center'>相册名称</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='text-center'>{$vo.photo_name}</td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                        <span style="color:#090">正常</span>
+                    {else}
+                        <span style="color:#d80909">禁用</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <a class="edit-hall-son" href="JavaScript:void(0)" data-modal='{:url("$classuri/EditPhoto", ["id" => $vo["id"]])}'>编辑</a>
+                    <span class="text-explode">|</span>
+                    <a class="edit-hall-son" href="JavaScript:void(0)" data-modal='{:url("$classuri/Picture", ["id" => $vo["id"]])}'>相册</a>
+                    <span class="text-explode">|</span>
+                    <a data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delPhoto")}' href="javascript:void(0)">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+{/block}

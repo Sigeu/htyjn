@@ -1,0 +1,225 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="m-zs">
+            <p class="ui_title">请认真填写以下信息</p>
+        </div>
+        <div class="m-bg">
+            <div class="m-wz1">墓穴信息</div>
+            <div class="m-reg">
+                <form id="form" method="post">
+                    <dl>
+                        <dt><em>*</em>墓穴位置：</dt>
+                        <dd>
+                            <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                            <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                            <input type="hidden"  name="cemetery_id" value="{$vo.id}" autocomplete="off" class="layui-input" >
+                            <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>购买日期：</dt>
+                        <dd>
+                            <input name="deal_time" class="layui-input" value="" placeholder="购买日期" id="deal_time">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>到期日期：</dt>
+                        <dd>
+                            <input name="end_time" class="layui-input" value="" placeholder="到期日期" id="end_time">
+                        </dd>
+                    </dl>
+
+                    {if isset($res)}
+                    <dl>
+                        <dt><em>*</em>预定单号：</dt>
+                        <dd>
+                            <input type="text" name="order_sn" value="{$res.order_sn|default=''}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt><em>*</em>已付定金：</dt>
+                        <dd>
+                            <input type="text" name="deposit" value="{$res.deposit|default=''}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+                    {/if}
+
+                    <dl>
+                        <dt><em>*</em>费用合计：</dt>
+                        <dd>
+                            <input type="text" name="cost_total" value="{$vo.price|default=''}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt><em>*</em>应付金额：</dt>
+                        <dd>
+                            <input type="text" name="order_amount" value="" autocomplete="off" title="请输入应付金额" required="required" placeholder="请输入应付金额" class="layui-input" >
+                        </dd>
+                    </dl>
+                    {if isset($res)}
+                    <dl>
+                        <dt><em>*</em>选择销售员：</dt>
+                        <dd>
+                            <input type="text" name="seller" value="{$res.seller|default=''}" autocomplete="off" class="layui-input" disabled>
+                        </dd>
+                    </dl>
+                    {else/}
+                    <dl>
+                        <dt><em>*</em>选择销售员：</dt>
+                        <dd>
+                            <select  name="seller" lay-verify="required" style="height:26px; line-height:26px; margin-top:5px; width:200px;">
+                                <option value="">请选择</option>
+                                {volist name="staff" id='staffs'}
+                                <option value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                                {/volist}
+                            </select>
+                        </dd>
+                    </dl>
+                    {/if}
+            </div><!--预定信息结束-->
+        </div>
+        <div class="m-bg">
+            <div class="m-wz1">客户信息</div>
+            <div class="m-reg">
+                    <dl>
+                        <dt><em>*</em>姓名：</dt>
+                        <dd>
+                            <input type="text" name="username" value="{$buyer.username|default=''}" title="请输入客户姓名" autocomplete="off" required="required" placeholder="请输入客户姓名" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>联系地址：</dt>
+                        <dd>
+                            <input type="text" name="address" value="{$buyer.address|default=''}" required="required" title="请输入联系地址" autocomplete="off" placeholder="请输入联系地址" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>电子邮件：</dt>
+                        <dd>
+                            <input type="email" name="mail" value="{$buyer.mail|default=''}" autocomplete="off" placeholder="请输入电子邮箱" class="layui-input">
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt>座机号码：</dt>
+                        <dd>
+                            <input type="text" name="plane" value="{$buyer.plane|default=''}" autocomplete="off" placeholder="请输入座机号码" class="layui-input">
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt>工作地址：</dt>
+                        <dd>
+                            <input type="text" name="work_address" value="{$buyer.work_address|default=''}" autocomplete="off" placeholder="请输入工作地址" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>身份证号：</dt>
+                        <dd>
+                            <input type="text" name="id_card" value="{$buyer.id_card|default=''}" pattern="(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx]$)" autocomplete="off" title="请输入正确的身份证号" placeholder="请输入身份证号码" required="required" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>手机号码：</dt>
+                        <dd>
+                            <input type="text" name="phone" value="{$buyer.phone|default=''}" pattern="^1[3-9][0-9]{9}$" title="请输入正确的手机号" required="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>与使用者1关系：</dt>
+                        <dd>
+                            <input type="text" name="ship1" value="{$res.ship1|default=''}" autocomplete="off" required="required" title="请输入与使用者的关系" placeholder="请输入与使用者的关系" class="layui-input">
+                            {if $vo.type eq 1}
+                            <input type="hidden" name="ship2" value="" autocomplete="off"  class="layui-input">
+                            {/if}
+                        </dd>
+                    </dl>
+
+                {if $vo.type eq 2}
+                    <dl>
+                        <dt><em>*</em>与使用者2关系：</dt>
+                        <dd>
+                            <input type="text" name="ship2" value="{$res.ship2|default=''}" autocomplete="off" required="required" title="请输入与使用者的关系" placeholder="请输入与使用者的关系" class="layui-input">
+                        </dd>
+                    </dl>
+                {/if}
+
+                <input type='hidden' value='{$res.order_id}' name='order_id'/>
+                    <dl>
+                        <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd class="bt">
+                            <button type="button" class="u-btn _ajax_submit">提交</button>
+                        </dd>
+                    </dl>
+
+                </form>
+            </div>
+        </div><!--客户信息结束-->
+
+    </div>
+</div>
+<!-- /容器1 -->
+<!-- /底部 -->
+</div>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#deal_time'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end_time'
+            ,showBottom: false//指定元素
+        });
+    });
+</script>
+
+<script>
+
+    $("._ajax_submit").click(function () {
+        var params = $('#form').serialize();
+        $.ajax({
+            type: "POST",
+            url: '/business/cemetery/cebuy',
+            data: {
+                params: params
+            },
+            success: function (data) {
+
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

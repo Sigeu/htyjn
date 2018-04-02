@@ -1,0 +1,236 @@
+<style type="text/css">
+    .demo{width:700px; margin:40px auto 0 auto; min-height:450px;}
+    @media screen and (max-width: 360px) {.demo {width:340px}}
+
+    .front{width: 300px;margin: 5px 32px 45px 32px;background-color: #f0f0f0;	color: #666;text-align: center;padding: 3px;border-radius: 5px;}
+    .booking-details {float: right;position: relative;width:200px;height: 450px; }
+    .booking-details h3 {margin: 5px 5px 0 0;font-size: 16px;}
+    .booking-details p{line-height:26px; font-size:16px; color:#999}
+    .booking-details p span{color:#666}
+    div.seatCharts-cell {
+        color: #182C4E;
+        height: 60px;
+        width: 140px;
+        line-height: 25px;
+        margin:5px;
+        float: left;
+        text-align: center;
+        outline: none;
+        font-size: 13px;
+    }
+    div.seatCharts-seat {background-color: #999; border: 1px solid gray;color: #fff;cursor: pointer;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+    div.seatCharts-row {height: 35px;}
+    div.seatCharts-seat.available {background-color: #999; }
+    div.seatCharts-seat.focused {background-color: #76B474;border: none;}
+    div.seatCharts-seat.selected {background-color: #E6CAC4;}
+    div.seatCharts-seat.unavailable {background-color: #472B34;}
+    div.seatCharts-container {background: #fff;width: 840px;padding: 20px;float: left;}
+    div.seatCharts-legend {padding-left: 0px;position: absolute;bottom: 16px;}
+    ul.seatCharts-legendList {padding-left: 0px;}
+    .seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;}
+    span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;}
+    .checkout-button {display: block;width:80px; height:24px; line-height:20px;margin: 10px auto;border:1px solid #999;font-size: 14px; cursor:pointer}
+    #selected-seats {max-height: 150px;overflow-y: auto;overflow-x: none;width: 200px;}
+    #selected-seats li{float:left; width:72px; height:26px; line-height:26px; border:1px solid #d3d3d3; background:#f7f7f7; margin:6px; font-size:14px; font-weight:bold; text-align:center}
+
+    .urn-box {
+        height: 30px;
+        /*padding: 5px 0;*/
+        padding-bottom: 5px;
+         -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+        border-radius: 3px;
+        background: #fff;
+        color: #111;
+    }
+
+    .urn-box.active {
+        background: #a94442;
+        color: #fff;
+    }
+    .urn-box.destina {
+        background: green;
+        color: #fff;
+    }
+
+    .jFlex{
+        display: flex;
+        justify-content: space-between;
+    }
+    .urn-box.this_state_7 {
+        background: #826653;
+        color: #fff;
+    }
+    .urn-box.this_state_6 {
+        background: #f90;
+        color: #fff;
+    }
+    .urn-box.this_state_5 {
+        background: #BF6A67;
+        color: #fff;
+    }
+    .urn-box.this_state_4 {
+        background: #da765b;
+        color: #fff;
+    }
+    .urn-box.this_state_3 {
+        background: #008573;
+        color: #fff;
+    }
+    .urn-box.this_state_2 {
+        background: #6f599c;
+        color: #fff;
+    }
+    .urn-box.this_state_1 {
+        background: #09f;
+        color: #fff;
+    }
+    .urn-box.this_state_0 {
+        background: #f00;
+        color: #fff;
+    }
+    .this_state_5 {
+        background: #BF6A67;
+        color: #fff;
+    }
+    .this_state_0 {
+        background: #f00;
+        color: #fff;
+    }
+</style>
+
+
+<div id="seat-map" class="seatCharts-container" style="width: 100%">
+
+    <div style="display: flex;justify-content: space-between;width: 100%;margin: 10px 0;">
+        <!-- 面包屑 -->
+        <div class="urn-breadcrumb">
+            <a href="javascript:;">墓穴位置</a> &gt;
+            {if $parentCname neq ''}
+            <a href="javascript:;">{$parentCname}</a> &gt;
+            {/if}
+            <a><cite>{$categoryName}</cite></a>
+        </div>
+
+        <!-- 位置状态 -->
+        <div class="urn-status">
+
+            <!-- <span>续费提醒（7天）：{$needRenewal}</span> - -->
+            <span>总共：{$total}</span> -
+            <span>占用：{$unavailable}</span> -
+            <span>空缺：{$available}</span> -
+            <span>预定：{$destine}</span> -
+            <span>禁止登记：{$disabled}</span>
+        </div>
+
+    </div>
+
+
+    {foreach $data as $key=>$vo}
+
+    <div {if $vo.status eq 1} data-open='{:url("$classuri/ceinfo")}?id={$vo.id}' {/if} data-title="墓穴信息" id="{$key}_{$key+1}" class="seatCharts-seat  seatCharts-cell {if $vo.order_state eq 20} unavailable {elseif $vo.status eq 0} disabled {else/} available {/if}">
+
+        {if $vo.this_state eq 5}
+            {if $vo.type eq 2}
+                {if $vo.dead_name.end_time lt (date('Y-m-d', time() + 7 * 24 * 3600))}
+                    <div class="urn-box" style="overflow: hidden;padding: 0">
+                        <div class="this_state_0" style="float: left;width: 50%;line-height: 30px;">
+                            {$vo['dead_name']['deader_name_1']|default='已安葬'}
+                        </div>
+                        {if $vo.type eq 2}
+                            {if condition="$vo['dead_name']['deader_name_2'] != ''"}
+                            <div class="this_state_0" style="float: right;width: 50%;line-height: 30px;">
+                                {$vo['dead_name']['deader_name_2']|default='已安葬2'}
+                            </div>
+                            {else}
+                                空缺中
+                            {/if}
+                        {/if}
+                        <br>
+                    </div>
+                {else}
+                    <div class="urn-box" style="overflow: hidden;padding: 0">
+                        <div class="this_state_5" style="float: left;width: 50%;line-height: 30px;">
+                            {$vo['dead_name']['deader_name_1']|default='已安葬'}
+                        </div>
+                        {if $vo.type eq 2}
+                            {if condition="$vo['dead_name']['deader_name_2'] != ''"}
+                            <div class="this_state_5" style="float: right;width: 50%;line-height: 30px;">
+                                {$vo['dead_name']['deader_name_2']|default='已安葬2'}
+                            </div>
+                            {else}
+                                空缺中
+                            {/if}
+                        {/if}
+                        <br>
+                    </div>
+                {/if}
+            {else}
+                {if $vo.dead_name.end_time lt (date('Y-m-d', time() + 7 * 24 * 3600))}
+                    <div class="urn-box this_state_0">
+                        {$vo['dead_name']['deader_name_1']|default='已安葬'}
+                        <br>
+                    </div>
+                {else}
+                    <div class="urn-box this_state_5">
+                        {$vo['dead_name']['deader_name_1']|default='已安葬'}
+                        <br>
+                    </div>
+                {/if}
+            {/if}    
+        {elseif $vo.this_state eq 4}
+            <div class="urn-box this_state_4">已购买未安葬</div>
+        {elseif $vo.this_state eq 3}
+        <div class="urn-box this_state_3">已购买未付款</div>
+        {elseif $vo.this_state eq 2}
+        <div class="urn-box this_state_2">已预定已付款</div>
+        {elseif $vo.this_state eq 1}
+        <div class="urn-box this_state_1">已预定未付款</div>
+        {elseif condition="$vo.this_state >= 60"}
+        <div class="urn-box this_state_6">等待财务退款</div>
+        {elseif $vo.this_state eq 7}
+        <div class="urn-box this_state_7">已退款</div>
+        {else/}
+        <div class="urn-box">空缺中</div>
+        {/if}
+
+        <div >
+            <span ><?php echo substr($vo['cemetery_sn'], (stripos($vo['cemetery_sn'], "-")+1)); ?></span>
+            <!--<span>{$vo['cemetery_sn']}</span>-->
+            <!--<span >{:msubstr($vo.cemetery_sn, -4,4,false)}</span>-->
+        </div>
+
+    </div>
+
+
+        <!--<div id="{$key}_{$key+1}" class="seatCharts-seat seatCharts-cell available">
+            &lt;!&ndash;<div class="urn-box active">逝者名称</div>&ndash;&gt;
+            <div class="urn-box active">
+                逝者名称
+
+            </div>
+
+            &lt;!&ndash;<div class="urn-box ">空缺中</div>&ndash;&gt;
+            &lt;!&ndash;<span>{$vo.cemetery_sn}</span>&ndash;&gt;
+            <span>{:msubstr($vo.cemetery_sn, -4,4,false)}</span>
+        </div>-->
+
+
+    {/foreach}
+
+    <input type="hidden" name="urn_id" class="urn-id" />
+
+</div>
+
+<script>
+    $('.seatCharts-seat').click(function () {
+        // this.addClass('selected');
+        this.className += ' selected';
+        var urnID = $('#' + this.id + '> .urn-box input').val();
+        $('.urn-id').val(urnID);
+
+    })
+</script>
+
+
+

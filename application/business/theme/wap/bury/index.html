@@ -1,0 +1,126 @@
+{include file="common/header"}
+<div class="header">
+    <h1> 安葬订单</h1>
+    <a href="{:url('index/index')}" class="return"><i></i></a>
+</div>
+<div class="profit clearfloat" id="main">
+    <style>
+        .a,.b,.e,.j,.l{
+            color: #999;
+            font-size:10px;
+            text-align: center;
+            height: 2rem;
+            line-height: 2rem;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            overflow:hidden;
+
+            top: 100px;
+        }
+        .c,.d,.f,.g,.k{
+            color: #709C81;
+            font-size: 10px;
+            text-align: center;
+            height: 2rem;
+            line-height: 2rem;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            top: 100px;
+            background-color:#B9E0C8;
+        }
+        ul { margin:0px; padding:0px;
+            float: none;
+            background-color: #0000FF;
+            clear: left;
+        }
+        .c{
+            width: 28%;
+            float: left;
+        }
+        .d{width: 20%;}
+        .g{width: 30%;}
+
+
+        .k{width: 20%; border-right:none}
+
+        .a{
+            width: 28%;
+            float: left;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        }
+        .b{width: 20%;}
+
+        .e{width: 30%;}
+
+        .l{width: 20%; border-right:none;}
+        .l span{ background:#cf0000; color:#fff; padding:0.4rem 0.8rem; border-radius:5px; font-family: Arial, Helvetica, sans-serif; font-size:14px;}
+        .l span a{ color:#fff}
+        li{float: left;}
+        .h {
+            width: 101%;
+            margin: 0px;
+            padding:0 0.01rem;
+            border-top:#999 1px solid
+        }
+        .order{width: 100%; font-size:0.40rem; font-family:microsoft yahei,arial}
+        .order li{border-radius: 5px; background: #fff; overflow: hidden; /*margin-bottom: 10px; */}
+        .order li h2{ border-bottom: 1px solid #999; line-height: 45px; font-weight: normal; overflow: hidden; padding:0.25rem; background-color:#E8E8E8}
+        .order li h2 i{height: 1rem; width: 2px; background: #208D49; float: left; display: block;}
+        .order li h2 span{ float: left; margin-left: 10px; font-size: 16px; line-height:1rem; }
+        .order li h2 em a{ float: right; border: 1px solid #BBB6B6; line-height: 35px; border-radius: 5px; padding: 0 15px; margin-right: 5px;  display: inline-block; font-size:0.25rem; font-style:normal; color:#8C8B8B}
+        .order li h2 em .current{ background: #FB790A; color: #fff;}
+        .order li h2 b{ color: #ff2c4c; float: right; margin-right: 5px;  font-weight: normal; font-size: 16px;}
+        .order li p{ line-height: 1.3rem; font-weight: normal; overflow: hidden;}
+        .order li p img{ float: left; margin-top: 8px; width: 23px;}
+        .order li p span{ float: left; border-bottom: 1px solid #ddd; margin-left: 15px; width: 85%; line-height: 1.3rem;}
+        .order li h3{ font-weight: normal; padding: 10px; overflow: hidden; margin:5px;}
+        .order li h3 span{color: #ff2c4c;  float: left; line-height: 35px;  font-size: 16px;}
+        .profit .top p{ font-size:1rem;}
+    </style>
+    <div class="page-content">
+        <div class="content-block-title">
+            <div class="top clearfloat box-s">
+                <!--<p class="fl">销售<span>100个</span>订单</p>-->
+            </div>
+        </div>
+        <div class="h">
+            <ul>
+                <li class="c">订单编号</li>
+                <li class="d">墓位编号</li>
+                <li class="g">状态</li>
+                <li class="k">操作</li>
+            </ul>
+            {foreach $list as $key=>$vo}
+            <ul>
+                <li class="a">{$vo.order_sn}</li>
+                <li class="b">{$vo.cemetery_sn}</li>
+                <li class="e">
+                    {if $vo.status eq 1}
+                    <span style="color:#090">已完成</span>
+                    {else/}
+                    <span>待支付</span>
+                    {/if}
+                </li>
+                <li class="l"><span><a href="{:url("$classuri/showBury")}?id={$vo.id}">查看</a></span></li>
+            </ul>
+            {/foreach}
+        </div>
+    </div>
+    <!--<div class="reportcard" style="position:absolute;bottom:0px; width:95%; margin:0; padding-bottom:0.25rem"> 下一页 </div>-->
+
+</div>
+<!--<script type="text/javascript" src="/public/wap/js/framework7.min.js"></script>
+
+    <script>var myApp = new Framework7();</script> -->
+</div>
+</body>
+</html>

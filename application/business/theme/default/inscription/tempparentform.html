@@ -1,0 +1,233 @@
+{block name="content"}
+
+<div style="padding: 30px;">
+    <blockquote class="layui-elem-quote">
+        添加模板分类
+    </blockquote>
+    <blockquote class="layui-elem-quote layui-quote-nm">
+        <div class="row" style="overflow: hidden;padding-right:15px; ">
+            <button class="btn btn-outline btn-success" type="button" id="addTopNode" style="float: right;">
+                <i class="fa fa-plus"></i>添加顶级分类
+            </button>
+        </div>
+        <hr>
+        <ul id="tree"></ul>
+    </blockquote>
+</div>
+
+
+<!-- 节点操作询问层 -->
+<div class="ibox-content" id="ask_box" style="display: none">
+    <div class="form-horizontal m-t">
+        <div class="form-group" style="text-align: center">
+            
+            <button class="btn btn-outline btn-success" type="button" id="addsubNode">
+                <i class="fa fa-plus"></i>
+                添加子分类
+            </button>
+            
+            <button class="btn btn-outline btn-primary" type="button" id="editNode">
+                <i class="fa fa-edit"></i>
+                编辑分类
+            </button>
+            
+            <button class="btn btn-outline btn-danger" type="button" id="delNode">
+                <i class="fa fa-trash-o"></i>
+                删除分类
+            </button>
+            
+        </div>
+    </div>
+</div>
+<!-- 节点操作询问层 -->
+
+<!-- 顶级分类表单 -->
+<div style="display: none;" id="top_form_box">
+    <form style="padding: 5px;" id="topForm">
+        <div class="form-group">
+            <label class="col-sm-3 control-label" style="line-height: 34px;text-align: right;">分类名称：</label>
+            <div class="input-group col-sm-7">
+                <input type="text" name="name" class="form-control" placeholder="填写分类名称">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="position: relative;left: 100px;">提交</button>
+    </form>
+</div>
+<!-- 顶级分类表单 -->
+
+
+<!-- 添加分类 -->
+<div class="ibox-content" id="node_box" style="display: none">
+    <form class="form-horizontal m-t" method="post" action="{:url('inscription/addClass')}" id="addForm">
+        <input type="hidden" class="form-control" value="0" name="cid" id="cid">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">分类名称：</label>
+            <div class="input-group col-sm-7">
+                <input type="text" class="form-control" name="name" required="" aria-required="true">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所属分类：</label>
+            <div class="input-group col-sm-7">
+                <input id="show_cid" type="text" class="form-control" value="顶级分类" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-8">
+                <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 添加分类 -->
+
+<!-- 编辑分类 -->
+<div class="ibox-content" id="edit_box" style="display: none">
+    <form class="form-horizontal m-t" method="post" action="{:url('inscription/editClass')}" id="editForm">
+        <input type="hidden" class="form-control" name="id" id="this_id_e">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">分类名称：</label>
+            <div class="input-group col-sm-7">
+                <input type="text" id="name" class="form-control" name="name" required="" aria-required="true">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-8">
+                <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 编辑分类 -->
+
+<script type="text/javascript">
+$(function(){
+    //获取树
+    getTree();
+
+    // 添加顶级分类弹窗
+    $("#addTopNode").on('click',function(){
+        layui.use('layer', function(){
+            box = layer.open({
+                type: 1,
+                title: '添加顶级分类',
+                anim: 2,
+                shade:false,
+                skin: 'layui-layer-molv', //加上边框
+                area: ['400px', '150px'], //宽高
+                content: $('#top_form_box')
+            });
+        });
+    });
+    // 添加顶级分类表单
+    $('#topForm').on('submit',function(){
+        var data = $('#topForm').serialize();
+        $.post('business/inscription/addTopClass',data,function(res){
+            res_action(res);
+        });
+        return false;
+    });
+
+    // 添加子分类弹窗
+    $("#addsubNode").on('click',function(){
+        layer.close(box);
+        $('#show_cid').val(nowNode.name);
+        $('#cid').val(nowNode.id);
+        layui.use('layer', function(){
+            box = layer.open({
+                type: 1,
+                title: '添加 ' + nowNode.name + ' 的子分类',
+                anim: 2,
+                shade:false,
+                skin: 'layui-layer-molv', //加上边框
+                area: ['420px', '240px'], //宽高
+                content: $('#node_box')
+            });
+        });
+    });
+    //添加子分类
+    $("#addForm").on('submit',function(){
+        var data = $('#addForm').serialize();
+        $.post('business/inscription/addClass',data,function(res){
+            res_action(res);
+        });
+        return false;
+    })
+
+    // 编辑该分类弹窗
+    $("#editNode").on('click',function(){
+        // console.log(nowNode);
+        layer.close(box);
+        $("#name").val(nowNode.name);
+        layui.use('layer', function(){
+            box = layer.open({
+                type: 1,
+                title: '添加 ' + nowNode.name + ' 的子分类',
+                anim: 2,
+                shade:false,
+                skin: 'layui-layer-molv', //加上边框
+                area: ['420px', '240px'], //宽高
+                content: $('#edit_box')
+            });
+        });
+    });
+    // 编辑该分类表单
+    $("#editForm").on('submit',function(){
+        $("#this_id_e").val(nowNode.id);
+        var data = $("#editForm").serialize();
+        $.post('business/inscription/editClass',data,function(res){
+            res_action(res);
+        })
+        return false;
+    });
+
+    // 删除该分类
+    $("#delNode").on('click',function(){
+        var id = nowNode.id;
+        $.post('business/inscription/delClass',{id:id},function(res){
+            res_action(res);
+        });
+    })
+})
+
+// 响应动作
+function res_action(res){
+    if(res.code == 1){
+        layer.msg(res.msg);
+        setTimeout(function(){
+            window.location.reload();
+        },500);
+    }else{
+        layer.msg(res.msg);
+    }
+}
+function getTree(){
+    layui.use(['tree', 'layer'], function(){
+        var layer = layui.layer;
+        $.getJSON("{:url('inscription/TreeData')}", function(res){
+            // console.log(res);
+            layui.tree({
+                elem: '#tree',
+                nodes: res,
+                click:function(node){
+                    layui.use('layer', function(){
+                        box = layer.open({
+                            type: 1,
+                            title: '您要如何操作该节点',
+                            anim: 2,
+                            shade:false,
+                            skin: 'layui-layer-molv', //加上边框
+                            area: ['400px', '150px'], //宽高
+                            content: $('#ask_box')
+                        });
+                    });
+                    nowNode = node;
+                }
+            });
+        });
+    });    
+}
+</script>
+{/block}

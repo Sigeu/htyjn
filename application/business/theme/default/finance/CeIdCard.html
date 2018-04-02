@@ -1,0 +1,28 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<div class="layui-form-item">
+    <label class="layui-form-label">墓穴证编号</label>
+    <div class="layui-input-inline" >
+        <input type="text" name="dead_id_card" id="dead_id_card" required="required"  title="请输入墓穴证编号" placeholder="请输入墓穴证编号" class="layui-input">
+        <input type="hidden" value="{$order_sn}" id="order_sn">
+    </div>
+</div>
+<button class="layui-btn" onclick="set_dead_id_card();return false;">保存数据</button>
+<script type="text/javascript">
+	function set_dead_id_card(){
+		var dead_id_card = $('#dead_id_card').val();
+		var order_sn = $('#order_sn').val();
+		$.post('business/Finance/CeIdCard',{dead_id_card:dead_id_card,order_sn:order_sn},function(res){
+			if(res.code == 1){
+				layer.msg(res.msg);
+				setTimeout(function(){
+					window.location.reload();
+				},500);
+			}else{
+				layer.msg(res.msg);
+			}
+		})
+	}
+</script>
+{/block}

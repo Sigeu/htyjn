@@ -1,0 +1,122 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入商品名称" placeholder="请输入商品名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属分类</label>
+        <div class="layui-input-block">
+            <select name='cid' class='layui-select full-width'>
+                <option value="">请选择分类</option>
+                {foreach $menus as $menu}
+                {eq name='menu.id' value='$vo.cid|default=0'}
+                <option selected  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {else/}
+                <option  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {/eq}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">动画ID</label>
+        <div class="layui-input-block">
+            <input type="text" value='{$vo.btn_id|default=""}' title="暂未设置动画ID" placeholder="暂未设置动画ID" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">动画ID前缀</label>
+        <div class="layui-input-block">
+            <input id="btn-id" name="btn_id" type="text" value='{$vo.btn_id_prefix|default=""}' title="请输入动画ID前缀 如：btn" placeholder="请输入动画ID前缀 如：btn" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">持续时间</label>
+        <div class="layui-input-block">
+            <input type="number" name="duration" value='{$vo.duration|default=6}' title="持续时间" placeholder="持续时间" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">价格</label>
+        <div class="layui-input-block">
+            <input type="number" name="price" value='{$vo.price|default=0}' title="价格" placeholder="价格" class="layui-input">
+            <p class="help-block">通常为10的倍数</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">祭拜值</label>
+        <div class="layui-input-block">
+            <input type="number" name="user_integral" value='{$vo.user_integral|default=0}' title="祭拜值" placeholder="祭拜值" class="layui-input">
+            <p class="help-block">通常为价格/10</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">纪念馆值</label>
+        <div class="layui-input-block">
+            <input type="number" name="memorial_integral" value='{$vo.memorial_integral|default=0}' title="纪念馆值" placeholder="纪念馆值" class="layui-input">
+            <p class="help-block">通常为价格/10</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品描述</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入分类描述" title="请输入分类描述" class="layui-textarea" name="summary">{$vo.summary|default=""}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品图片</label>
+        <div class='layui-input-block'>
+
+            <!-- todo 默认图片设置 -->
+            <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image|default='static/admin/theme/default/img/image.png'}"/>
+            <input type="hidden" name="image" onchange="$(this).prev('img').attr('src', this.value)" value="{$vo.image|default=''}" class="layui-input">
+            <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="image">上传图片</a>
+            <p>建议上传商品图片的尺寸为xx px。</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">动画图片</label>
+        <div class='layui-input-block'>
+
+            <!-- todo 默认图片设置 -->
+            <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.gif|default='static/admin/theme/default/img/image.png'}"/>
+            <input type="hidden" name="gif" onchange="$(this).prev('img').attr('src', this.value)" value="{$vo.gif|default=''}" class="layui-input">
+            <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="gif">上传图片</a>
+            <p>建议上传动画图片的尺寸为xx px。</p>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button type='button' data-open='{:url("$classuri/index")}' class="layui-btn layui-btn-danger">返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    $(".layui-form").submit(function () {
+        var btn_id = $(".layui-select").find("option:selected").val();//选中的文本
+        var btn_id_prefix = $("#btn-id").val(); //获取动画ID前缀 如：btn
+        btn_id = btn_id_prefix + "_" + btn_id;
+        $("#btn-id").val(btn_id);
+    })
+</script>
+{/block}

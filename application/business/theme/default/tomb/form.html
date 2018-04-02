@@ -1,0 +1,119 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post" name="tomb">
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属陵园</label>
+        <div class="layui-input-block">
+            <select name='pid' required="required" class='layui-select full-width'>
+                <option value="">请选择陵园</option>
+                {foreach $cate as $cates}
+                {eq name='cates.id' value='$vo.pid|default=0'}
+                <option selected  value='{$cates.id}'>{$cates.spl}{$cates.name}</option>
+                {else/}
+                <option  value='{$cates.id}'>{$cates.spl}{$cates.name}</option>
+                {/eq}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓型分类</label>
+        <div class="layui-input-block">
+            <select name='cate_id' required="required" class='layui-select full-width'>
+                <option value="">请选择分类</option>
+                {foreach $menus as $menu}
+                {eq name='menu.id' value='$vo.cate_id|default=0'}
+                <option selected  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {else/}
+                <option  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {/eq}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓区名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入墓区名称" placeholder="请输入墓区名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓区编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="code" value='{$vo.code|default=""}' required="required" title="请输入墓区编号" placeholder="请输入墓区编号(数字)" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓区朝向</label>
+        <div class="layui-input-block">
+            <input type="text" name="direction" value='{$vo.direction|default=""}' required="required" title="请输入墓区朝向" placeholder="请输入墓区朝向" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面图片</label>
+        <div class='layui-input-block'>
+
+            <!-- todo 默认图片设置 -->
+            <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image_id|default='static/admin/theme/default/img/image.png'}"/>
+            <input type="hidden" name="image_id" onchange="$(this).prev('img').attr('src', this.value)" value="{$vo.image_id|default=''}" class="layui-input">
+            <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="image_id">上传图片</a>
+            <p>建议上传商品图片的尺寸为xx px。</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">价格区间</label>
+            <div class="layui-input-inline" style="width: 150px;">
+                <input type="text"  value='{$vo.price_min|default=""}' required="required" title="请输入最低价"  name="price_min" placeholder="请输入最低价" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 150px;">
+                <input type="text"  value='{$vo.price_max|default=""}' required="required" title="请输入最高价" name="price_max" placeholder="请输入最高价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">墓区图文详情</label>
+        <div class="layui-input-block">
+            <textarea name='desc'>{$vo.desc|default=''}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_by" value="{$user.create_by}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+<script>
+    $(function () {
+
+        require(['ueditor'], function () {
+
+            /*! 实例富文本编辑器  */
+            var editor, $item;
+
+            /*! 默认编辑第一篇图文 */
+            editor = window.createEditor('[name="desc"]', 'basic');
+
+            /*! 编辑器初始化成功 */
+            editor.ready(function () {
+                var $form = $('form[name="tomb"]'), $body = $('body');
+                $form.validate();
+            });
+        });
+    });
+</script>

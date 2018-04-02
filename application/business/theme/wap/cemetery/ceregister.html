@@ -1,0 +1,355 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="m-zs">
+            <p class="ui_title">请认真填写以下信息</p>
+        </div>
+        <form id="form" method="post">
+        <div class="m-bg">
+            <div class="m-wz1">订单信息</div>
+            <div class="m-reg">
+                    <dl>
+                        <dt><em>*</em>墓穴位置：</dt>
+                        <dd>
+                            <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                            <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                            <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>订单号：</dt>
+                        <dd>
+                            <input type="text"  name="order_sn" value="{$reser.order_sn}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+
+            </div><!--预定信息结束-->
+        </div>
+
+        <div class="m-bg">
+            <div class="m-wz1">附加信息</div>
+            <div class="m-reg">
+                    <dl>
+                        <dt><em>*</em>销售员：</dt>
+                        <dd>
+                            <input type="text"  name="seller" value="{$seller}" autocomplete="off" class="layui-input" >
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>支付金额：</dt>
+                        <dd>
+                            <input type="text" name="cost" autocomplete="off" required="required"  title="请输入支付金额" placeholder="请输入支付金额" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>安葬时间：</dt>
+                        <dd>
+                            <input name="dead_birthday_1" class="layui-input" value="" placeholder="安葬时间" id="LAY_demorange_b" required="required" title="请输入安葬时间" placeholder="请输入安葬时间">
+                        </dd>
+                    </dl>
+            </div><!--预定信息结束-->
+        </div>
+        <div class="m-bg">
+            <div class="m-wz1">使用者信息1</div>
+            <div class="m-reg">
+                    <dl>
+                        <dt><em>*</em>姓名：</dt>
+                        <dd>
+                            <input type="text" name="dead_name_1" value="{$dead1.dead_name|default=''}" autocomplete="off" required="required"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+                            <input type="hidden" name="dead_id_1" value="{$dead1.id|default=''}">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>性别：</dt>
+                        <dd>
+                            <select name="sex_1" lay-verify="required" style="height:26px; line-height:26px; margin-top:5px; width:200px;">
+                                <option value="">请选择</option>
+                                <option value="1" {if $dead1.sex eq 1} selected {/if} >男</option>
+                                <option value="2" {if $dead1.sex eq 2} selected {/if}>女</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>年龄：</dt>
+                        <dd>
+                            <input type="text" name="age_1" value=" {$dead1.age|default=''}" autocomplete="off"  title="请输入年龄" required="required" placeholder="请输入年龄" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>民族：</dt>
+                        <dd>
+                            <input type="text" name="dead_nation_1" value="{$dead1.dead_nation|default=''}" autocomplete="off"  class="layui-input" title="请输入民族" placeholder="请输入民族">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>户籍地：</dt>
+                        <dd>
+                            <input type="text" name="dead_domicile_1" value="{$dead1.dead_domicile|default=''}" autocomplete="off"  class="layui-input" title="请输入户籍地" placeholder="请输入户籍地">
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt><em>*</em>生前住址：</dt>
+                        <dd>
+                            <input type="text"  name="dead_address_1" value="{$dead1.address|default=''}" title="请输入生前住址" placeholder="请输入生前住址" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>出生时间：</dt>
+                        <dd>
+                            <input name="dead_birthday_1" class="layui-input" value="{$dead1.dead_birthday|default=''}" placeholder="出生时间" id="dead_birthday_1" required="required" title="请输入出生时间" placeholder="请输入出生时间">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>逝世时间：</dt>
+                        <dd>
+                            <input name="dead_deadday_1" class="layui-input" value="{$dead1.dead_deadday|default=''}" placeholder="逝世时间" id="dead_deadday_1" required="required" title="请输入逝世时间" placeholder="请输入逝世时间">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>火化证编号：</dt>
+                        <dd>
+                            <input type="text" name="dead_id_card_1"  value="{$dead1.dead_id_card|default=''}" autocomplete="off" required="required"  title="请输入火化证编号" placeholder="请输入火化证编号" class="layui-input" >
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>墓穴证编号：</dt>
+                        <dd>
+                            <input type="text" name="cemetery_id_1"  value="{$dead1.cemetery_id|default=''}" autocomplete="off" required="required"  title="请输入墓穴证编号" placeholder="请输入墓穴证编号" class="layui-input">
+                        </dd>
+                    </dl>
+            </div>
+        </div><!--客户信息结束-->
+
+        {if $vo.type eq 2}
+        <div class="m-bg">
+            <div class="m-wz1">使用者信息2</div>
+            <div class="m-reg">
+
+                    <dl>
+                        <dt><em>*</em>姓名：</dt>
+                        <dd>
+                            <input type="text" name="dead_name_2" value="{$dead2.dead_name|default=''}" autocomplete="off" required="required"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+                            <input type="hidden" name="dead_id_2" value="{$dead2.id|default=''}">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>性别：</dt>
+                        <dd>
+                            <select name="sex_2" lay-verify="" required="required" style="height:26px; line-height:26px; margin-top:5px; width:200px;">
+                                <option value="">请选择</option>
+                                <option value="1" {if $dead2.sex eq 1} selected {/if}>男</option>
+                                <option value="2" {if $dead2.sex eq 2} selected {/if}>女</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>年龄：</dt>
+                        <dd>
+                            <input type="text" name="age_2" value="{$dead2.age|default=''}" autocomplete="off"  title="请输入年龄" required="required" placeholder="请输入年龄" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>民族：</dt>
+                        <dd>
+                            <input type="text" name="dead_nation_2" value="{$dead2.dead_nation|default=''}" autocomplete="off"  class="layui-input" title="请输入民族" placeholder="请输入民族">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>户籍地：</dt>
+                        <dd>
+                            <input type="text" name="dead_domicile_2"  value="{$dead2.dead_domicile|default=''}" autocomplete="off"  class="layui-input" title="请输入户籍地" placeholder="请输入户籍地">
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt><em>*</em>生前住址：</dt>
+                        <dd>
+                            <input type="text"  name="dead_address_2" value="{$dead2.address|default=''}"  title="请输入生前住址" placeholder="请输入生前住址" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>出生时间：</dt>
+                        <dd>
+                            <input name="dead_birthday_2" class="layui-input" value="{$dead2.dead_birthday|default=''}" placeholder="出生时间" id="dead_birthday_2" required="required" title="请输入出生时间" placeholder="请输入出生时间">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>逝世时间：</dt>
+                        <dd>
+                            <input name="dead_deadday_2" class="layui-input" value="{$dead2.dead_deadday|default=''}" placeholder="逝世时间" id="dead_deadday_2" required="required" title="请输入逝世时间" placeholder="请输入逝世时间">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>火化证编号：</dt>
+                        <dd>
+                            <input type="text" name="dead_id_card_2"  value="{$dead2.dead_id_card|default=''}" autocomplete="off" required="required"  title="请输入火化证编号" placeholder="请输入火化证编号" class="layui-input" >
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>墓穴证编号：</dt>
+                        <dd>
+                            <input type="text" name="cemetery_id_2"  value="{$dead2.cemetery_id|default=''}" autocomplete="off" required="required"  title="请输入墓穴证编号" placeholder="请输入墓穴证编号" class="layui-input">
+                        </dd>
+                    </dl>
+
+
+            </div>
+        </div><!--客户信息结束-->
+        {/if}
+        <div class="m-bg">
+            <div class="m-wz1">客户信息</div>
+            <div class="m-reg">
+
+                    <dl>
+                        <dt><em>*</em>姓名：</dt>
+                        <dd>
+                            <input type="text" name="username" value="{$buyer.username|default=''}" autocomplete="off" required="required" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>身份证号：</dt>
+                        <dd>
+                            <input type="text" name="id_card" value="{$buyer.id_card|default=''}" autocomplete="off" required="required" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>手机号码：</dt>
+                        <dd>
+                            <input type="text" name="phone" value="{$buyer.phone|default=''}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>座机号码：</dt>
+                        <dd>
+                            <input id="txtPassword" name="data[c_shui]" class="u-txt" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>联系地址：</dt>
+                        <dd>
+                            <input type="text" name="address" value="{$buyer.address|default=''}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>电子邮件：</dt>
+                        <dd>
+                            <input type="email" name="mail" value="{$buyer.mail|default=''}" autocomplete="off"  class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>工作地址：</dt>
+                        <dd>
+                            <input type="text" name="work_address" value="{$buyer.work_address|default=''}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>与使用者1关系：</dt>
+                        <dd>
+                            <input type="text" name="ship1" value="{$reser.ship1|default=''}" autocomplete="off" required="required" class="layui-input">
+                        </dd>
+                    </dl>
+
+                    {if $vo.type eq 2}
+                    <dl>
+                        <dt><em>*</em>与使用者2关系：</dt>
+                        <dd>
+                            <input type="text" name="ship2" value="{$reser.ship2|default=''}" autocomplete="off" required="required" class="layui-input">
+                        </dd>
+                    </dl>
+                    {/if}
+                    <dl>
+                        <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd class="bt">
+                            <button type="button" class="u-btn _ajax_submit">提交</button>
+                        </dd>
+                    </dl>
+
+            </div>
+        </div><!--客户信息结束-->
+    </div>
+</div>
+</form>
+<!-- /容器1 -->
+<!-- /底部 -->
+</div>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#LAY_demorange_b'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#dead_birthday_1'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#dead_birthday_2'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#dead_deadday_1'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#dead_deadday_2'
+            ,showBottom: false//指定元素
+        });
+    });
+</script>
+
+
+<script>
+
+    $("._ajax_submit").click(function () {
+        var params = $('#form').serialize();
+        console.log(params);
+        $.ajax({
+            type: "POST",
+            url: '/business/cemetery/ceRegister',
+            data: {
+                params: params
+            },
+
+            success: function (data) {
+
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

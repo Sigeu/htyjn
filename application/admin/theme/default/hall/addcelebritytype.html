@@ -1,0 +1,43 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="celebrity_type_name" value='{$vo.celebrity_type_name|default=""}' required="required" title="请输入分类名称" placeholder="请输入分类名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="number" name="celebrity_type_sort" value='{$vo.celebrity_type_sort|default=""}' title="排序" placeholder="排序" class="layui-input">
+            <span style="animation-duration: 0.2s; padding-right: 20px; color: rgb(169, 68, 66); position: absolute; right: 0px; font-size: 12px; z-index: 2; display: block; width: 30px; text-align: center; pointer-events: none; top: 0px; padding-top: 0px; padding-bottom: 0px; line-height: 38px;"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block">
+            {if isset($vo.celebrity_type_status)}
+            {if $vo.celebrity_type_status eq 1}
+            <input type="radio" name="celebrity_type_status" value="1" title="正常" checked>
+            <input type="radio" name="celebrity_type_status" value="2" title="禁用">
+            {else/}
+            <input type="radio" name="celebrity_type_status" value="1" title="正常">
+            <input type="radio" name="celebrity_type_status" value="2" title="禁用" checked>
+            {/if}
+            {else/}
+            <input type="radio" name="celebrity_type_status" value="1" title="正常" checked>
+            <input type="radio" name="celebrity_type_status" value="2" title="禁用">
+            {/if}
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

@@ -1,0 +1,79 @@
+{include file="common/header"}
+<div class="header">
+    <h1> 员工中心</h1>
+    <a href="{:url('index/index')}" class="return"><i></i></a> </div>
+   <form class="uk-form uk-form-horizontal" method="post">
+    <!--内容区-->
+    <article class="main-container">
+        <div class="list list-title">
+            <ul class="line">
+                <li><i>姓名：</i>
+                    <input type="text" name="name" value='{$staff.name|default=""}' disabled>
+                </li>
+                <li><i>职　　位：</i>
+                    <input type="text" name="job"   value='{$staff.job|default=""}' disabled>
+                </li>
+                <li><i>邮　　箱：</i>
+                    <input type="text" id="mail" name="mail"   value='{$staff.mail|default=""}'>
+                </li>
+                <li><i>手机号码：</i>
+                    <input type="tel" id="phone" name="phone"   value='{$staff.phone|default=""}'>
+                </li>
+                <!--<li><i>性　　别：</i>
+                            <label><input type="radio" name="radio" id="radio" />男</label>&nbsp;&nbsp;
+                            <label><input type="radio" name="radio" id="radio" />女</label>&nbsp;&nbsp;
+                            <label><input type="radio" name="radio" id="radio" />保密</label></li> -->
+                <!--<li><i>出生日期：</i><input type="datetime" id="name" placeholder="填写您的出生日期"></li> -->
+                <!--<li class="head"><i>我的头像：</i><img src="/public/wap/member/img/head01.jpg"><input type="hidden" name="pic" id="pic" accept="image/gif, image/x-ms-bmp, image/jpeg" /><button class="line">点击上传<br><font>(200x200像素)</font></button></li> -->
+                <li><i>联系地址：</i>
+                    <input type="text" id="address" name="address" value='{$staff.address|default=""}'>
+                </li>
+            </ul>
+        </div>
+        <input type='hidden' value='{$staff.id}' name='id' id="id"/>
+        <div class="uk-form-row fixed">
+            <button type="button" class="uk-button uk-button-danger  ex uk-width-1-1 _ajax_submit">确定保存</button>
+        </div>
+    </article>
+</form>
+<script type="text/javascript">
+    $("._ajax_submit").click(function () {
+
+        var id = $("#id").val();
+        var mail = $("#mail").val();
+        var phone = $("#phone").val();
+        var address = $("#address").val();
+        $.ajax({
+            type: "POST",
+            url: '/business/staff/edit',
+            data: {
+                'mail': mail,
+                'phone' : phone,
+                'address' : address,
+                'id':id
+            },
+            success: function (data) {
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>

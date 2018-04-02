@@ -1,0 +1,141 @@
+{extend name='common/content' /}
+
+{block name="button"}
+
+<div class="pull-right" style="margin-top:10px">
+    {if auth("$classuri/delWorship")}
+    <button data-update data-field='delete' data-action='{:url("$classuri/delWorship")}' class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除记录</button>
+    {/if}
+
+    {if auth("$classuri/cleanWorship")}
+    <button data-modal='{:url("$classuri/cleanWorship")}?hall_id={$Think.get.hall_id|default=""}' class='layui-btn layui-btn-small layui-btn-danger'>
+        <i class='fa fa-remove'></i> {if $Think.get.hall_id eq ''}清空所有无效祭祀记录{else/}清空该馆无效祭祀记录{/if}
+    </button>
+    {/if}
+</div>
+
+
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="user_id" value="{$Think.get.user_id|default=''}" placeholder="用户ID"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="hall_id" value="{$Think.get.hall_id|default=''}" placeholder="纪念馆ID"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="layui-btn layui-btn-primary"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th>祭拜编号</th>
+                <th>纪念馆ID</th>
+                <th>用户ID</th>
+                <th>祭祀商品名称</th>
+                <th>祭祀商品数量</th>
+                <th>祭拜时间</th>
+                <th>有效期</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.worship_id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td>
+                    {$vo.worship_sn}
+                </td>
+                <td>
+                    {$vo.hall_id}
+                </td>
+                <td>
+                    {$vo.user_id}
+                </td>
+                <td>
+                    {$vo.goods_name}
+                </td>
+                <td>
+                    {$vo.goods_num}
+                </td>
+                <td>
+                    {$vo.create_at|format_moment}
+                </td>
+                <td>
+                    <?php $duration = sprintf("%.2f", ($vo['duration'] - time()) / 3600); ?>
+                    {if $duration lt 0}
+                    0
+                    {else/}
+                    {$duration}
+                    {/if}
+                    小时
+                </td>
+                <td class='text-center'>
+                    {if $duration gt 0}
+                    <span style="color:#090">有效</span>
+                    {else/}
+                    <span>已过期</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <div class="layui-btn-group">
+                        {if auth("$classuri/delWorship")}
+                        <button type="button" data-update="{$vo.worship_id}" data-field='delete' data-action='{:url("$classuri/delWorship")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+{/block}

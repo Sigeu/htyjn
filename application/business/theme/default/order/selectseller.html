@@ -1,0 +1,77 @@
+{extend name='common/content' /}
+
+{block name="button"}
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<!--<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">-->
+
+    <!--<div class="row">-->
+        <!--<div class="col-xs-3">-->
+            <!--<div class="form-group">-->
+                <!--<input type="text" name="username" value="{$Think.get.username|default=''}" placeholder="用户名"-->
+                       <!--class="input-sm form-control">-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-xs-3">-->
+            <!--<div class="form-group">-->
+                <!--<input type="text" name="phone" value="{$Think.get.phone|default=''}" placeholder="手机号"-->
+                       <!--class="input-sm form-control">-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-xs-1">-->
+            <!--<div class="form-group">-->
+                <!--<button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</form>-->
+<!-- 表单搜索 结束 -->
+
+<!--<form onsubmit="return false;" data-auto="" method="POST">-->
+    <input type="hidden" value="resort" name="action"/>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class='list-table-check-td'>
+                <!--<input data-none-auto="" data-check-target='.list-check-box' type='checkbox'/>-->
+            </th>
+            <th class='text-center'>用户账号</th>
+            <th class='text-center'>手机号</th>
+            <th class='text-center'>电子邮箱</th>
+            <th class='text-center'>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $key=>$vo}
+        <tr>
+            <td class='list-table-check-td'>
+                <input class="seller" value='{$vo.username}' type='checkbox'/>
+            </td>
+            <td class='text-center'>{$vo.username}</td>
+            <td class='text-center'>{$vo.phone|default="<span style='color:#ccc'>还没有设置手机号</span>"}</td>
+            <td class='text-center'>{$vo.mail|default="<span style='color:#ccc'>还没有设置邮箱</span>"}</td>
+            <td class='text-center'>
+                {if $vo.status eq 0}
+                <span>已禁用</span>
+                {elseif $vo.status eq 1}
+                <span style="color:#090">使用中</span>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    {if isset($page)}<p>{$page}</p>{/if}
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button data-add-seller="add-seller" type="button" class="layui-btn">确认添加</button>
+        </div>
+    </div>
+<!--</form>-->
+
+{/block}

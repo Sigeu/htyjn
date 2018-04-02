@@ -1,0 +1,56 @@
+<style>
+    .order-info, .order-info span {
+        font-size: 12px;
+        margin: auto 20px;
+    }
+
+</style>
+{/* 订单信息 */}
+<div class="ibox-title">
+    <h5>订单信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>订单号: {$orderInfo.order_sn}</span>
+        <span>
+            订单状态:
+            {if $orderInfo.order_state eq 10}
+            <b>未完成</b>
+            {elseif $orderInfo.order_state eq 20}
+            <b style="color:#c40880">已完成未付款</b>
+            {elseif $orderInfo.order_state eq 30}
+            <b style="color:#090">已付款</b>
+            {/if}
+        </span>
+        <span>费用: {$orderInfo.order_amount}</span>
+    </div>
+
+</blockquote>
+
+{/* 买家信息 */}
+<div class="ibox-title">
+    <h5>买家信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>买家: {$orderInfo.buyer_name}</span>
+        <span>下单时间: {$orderInfo.add_time|format_time}</span>
+    </div>
+
+</blockquote>
+
+{/* 销售人员 */}
+<div class="ibox-title">
+    <h5>销售人员</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>姓名: {$seller.name}</span>
+        <span>电话: {$seller.phone}</span>
+    </div>
+
+</blockquote>
+
+
+
+

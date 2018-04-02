@@ -1,0 +1,192 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="m-zs">
+            <p class="ui_title">请认真填写以下信息</p>
+        </div>
+
+        <form id="form"  method="post" >
+
+            <div class="m-bg">
+                <div class="m-wz1">预定信息</div>
+                <div class="m-reg">
+
+                    <dl>
+                        <dt><em>*</em>墓穴位置：</dt>
+                        <dd>
+                            <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                            <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                            <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>预定日期：</dt>
+                        <dd>
+                            <input id="reserve_time" name="reserve_time" class="u-txt" value="" type="text" id="reserve_time" placeholder="请选择预定日期" required>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>预定到期日期：</dt>
+                        <dd>
+                            <input id="reserve_end_time" name="reserve_end_time" value="" class="u-txt" type="text" placeholder="请选择预定到期日期">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>定金金额：</dt>
+                        <dd>
+                            <input id="deposit" name="deposit"  class="u-txt"  value="" type="text" placeholder="请输入定金金额">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><em>*</em>选择销售员：</dt>
+                        <dd>
+                            <select name="seller" style="height:26px; line-height:26px; margin-top:5px; width:200px;">
+                                <option value="">请选择</option>
+                                {volist name="staff" id='staffs'}
+                                <option id="seller" value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                                {/volist}
+                            </select>
+                        </dd>
+                    </dl>
+                </div><!--预定信息结束-->
+            </div>
+            <div class="m-bg">
+                <div class="m-wz1">客户信息</div>
+                <div class="m-reg">
+                        <dl>
+                            <dt><em>*</em>姓名：</dt>
+                            <dd>
+                                <input  id="username" name="username"  value="" class="u-txt" type="text" placeholder="请输入姓名">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><em>*</em>联系地址：</dt>
+                            <dd>
+                                <input  id="address" name="address" value="" class="u-txt" type="text" placeholder="请输入联系地址">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>电子邮件：</dt>
+                            <dd>
+                                <input type="email" id="mail" name="mail" value="" class="u-txt" type="text" placeholder="请输入电子邮件">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>工作地址：</dt>
+                            <dd>
+                                <input id="work_address" name="work_address" value="" class="u-txt" type="text" placeholder="请输入工作地址">
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt>座机号码：</dt>
+                            <dd>
+                                <input id="plane" name="plane" value="" class="u-txt" type="text" placeholder="请输入座机号码">
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt><em>*</em>身份证号：</dt>
+                            <dd>
+                                <input id="id_card" name="id_card" value="" class="u-txt" type="text" placeholder="请输入身份证号码">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><em>*</em>手机号码：</dt>
+                            <dd>
+                                <input  id="phone" name="phone" value=""  class="u-txt" type="text" placeholder="请输入手机号码">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><em>*</em>与使用者1关系：</dt>
+                            <dd>
+                                <input type="text" id="ship1" name="ship1" value="" autocomplete="off" required="required" class="layui-input" placeholder="请输入与使用者关系">
+                                {if $vo.type eq 1}
+                                <input type="hidden" id="ship2" name="ship2" value="" autocomplete="off"  class="layui-input">
+                                {/if}
+                            </dd>
+                        </dl>
+
+                        {if $vo.type eq 2}
+                        <dl>
+                            <dt><em>*</em>与使用者2关系：</dt>
+                            <dd>
+                                <input type="text" name="ship2" value="" autocomplete="off" required="required" class="layui-input" placeholder="请输入与使用者关系">
+                            </dd>
+                        </dl>
+                        {/if}
+                        <dl>
+                            <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                            <dd class="bt">
+                                <button type="button" class="u-btn _ajax_submit">提交</button>
+                            </dd>
+                        </dl>
+
+                </div>
+            </div><!--客户信息结束-->
+
+        </form>
+    </div>
+</div>
+<!-- /容器1 -->
+<!-- /底部 -->
+</div>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#reserve_time'
+            ,showBottom: false//指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#reserve_end_time'
+            ,showBottom: false//指定元素
+        });
+    });
+</script>
+
+<script>
+
+    $("._ajax_submit").click(function () {
+        var params = $('#form').serialize();
+        $.ajax({
+            type: "POST",
+            url: '/business/cemetery/reserve',
+            data: {
+                params: params
+            },
+            success: function (data) {
+
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

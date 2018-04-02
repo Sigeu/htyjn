@@ -1,0 +1,402 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+
+</div>
+{/block}
+
+{block name="content"}
+<form  class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <h2 class="layui-colla-title">订单信息</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓穴位置</label>
+        <div class="layui-input-inline">
+            <div class="layui-input-inline" >
+                <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <label class="layui-form-label">订单号</label>
+        <div class="layui-input-inline">
+            <div class="layui-input-inline" >
+                <input type="text"  name="order_sn" value="{$reser.order_sn}" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+
+    </div>
+
+    {if !empty($pack)}
+    <hr>
+    <h2 class="layui-colla-title">已选套餐</h2>
+    <br>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">已选套餐</label>
+        <div class="layui-collapse layui-input-block">
+
+            {volist name="pack" id="packs"}
+            <div >
+                <h2 class="layui-colla-title">{$packs.name}</h2>
+                <div class="layui-colla-content layui-show">{$packs.desc}</div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    {/if}
+
+
+
+    <hr>
+    <h2 class="layui-colla-title">附加信息</h2>
+    <br>
+
+
+    <div class="layui-container">
+    <div class="layui-form-item">
+        <label class="layui-form-label">销 售 员</label>
+        <div class="layui-input-inline" >
+            <div class="layui-input-inline" style="width: 190px;">
+                <!-- <input type="text"  name="seller" value="{$seller.id} | {$seller.name} | {$seller.phone}" autocomplete="off" class="layui-input" > -->
+                <p style="line-height: 38px;">{$seller.id} | {$seller.name} | {$seller.phone}</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付金额</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="cost" autocomplete="off" required="required"  title="请输入支付金额" value="0.00" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">安葬时间</label>
+        <div class="layui-input-inline">
+            <input name="bury_time" class="layui-input" value="" placeholder="安葬时间" id="LAY_demorange_b" required="required" title="请输入安葬时间" placeholder="请输入安葬时间">
+        </div>
+
+</div>
+        <div class="layui-col-md6">
+        <label class="layui-form-label">到期时间</label>
+
+       <div class="layui-input-inline">
+           <input name="dead_birthday_1" class="layui-input" value="" placeholder="到期时间" id="LAY_demorange_e" required="required" title="请输入到期时间" placeholder="请输入到期时间">
+       
+   </div>
+    </div>
+    </div>
+
+    <hr>
+        <h2 class="layui-colla-title">使用者信息1</h2>
+        <br>
+        <div class="layui-container">  
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dead_name_1" value="{$dead1.dead_name|default=''}" autocomplete="off" required="required"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+                <input type="hidden" name="dead_id_1" value="{$dead1.id|default=''}">
+            </div>
+
+            <label class="layui-form-label">火化证编号</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dead_id_card1"  value="{$dead1.dead_id_card|default=''}" autocomplete="off" required="required"  title="请输入火化证编号" placeholder="请输入火化证编号" class="layui-input" >
+            </div>
+        </div>
+           <div class="layui-col-md6">
+              <div class="layui-form-item">
+            <label class="layui-form-label">墓穴证编号</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="cemetery_id_card"  value="{$reser.cemetery_id_card}" autocomplete="off" required="required"  title="请输入墓穴证编号" placeholder="请输入墓穴证编号" class="layui-input">
+            </div>
+        </div>
+    </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <select name="sex_1" lay-verify="" required="required">
+                        <option value=""></option>
+                        <option value="1" {if $dead1.sex eq 1} selected {/if} >男</option>
+                        <option value="2" {if $dead1.sex eq 2} selected {/if}>女</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="age_1" value=" {$dead1.age|default=''}" autocomplete="off"  title="请输入年龄" required="required" placeholder="请输入年龄" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-form-item">
+                <label class="layui-form-label">出生时间</label>
+                <div class="layui-input-inline">
+                    <input name="dead_birthday_1" class="layui-input" value="{$dead1.dead_birthday|default=''}" placeholder="出生时间" id="LAY_demorange_s" title="请输入出生时间" placeholder="请输入出生时间">
+                </div>
+
+                <label class="layui-form-label">逝世时间</label>
+                <div class="layui-input-inline">
+                    <input name="dead_deadday_1" class="layui-input" value="{$dead1.dead_deadday|default=''}" placeholder="逝世时间" id="LAY_demorange_e" title="请输入逝世时间" placeholder="请输入逝世时间">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">户籍地</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dead_domicile_1" value="{$dead1.dead_domicile|default=''}" autocomplete="off"  class="layui-input" title="请输入户籍地" placeholder="请输入户籍地">
+            </div>
+
+            <label class="layui-form-label">民族</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dead_nation_1" value="{$dead1.dead_nation|default=''}" autocomplete="off"  class="layui-input" title="请输入民族" placeholder="请输入民族">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">生前住址</label>
+            <div class="layui-input-block">
+                <input type="text"  name="dead_address_1" value="{$dead1.address|default=''}" title="请输入生前住址" placeholder="请输入生前住址" class="layui-input">
+            </div>
+        </div>
+    <hr>
+
+    <!-- {if $vo.Ctype eq 2}
+    <h2 class="layui-colla-title">使用者信息2</h2>
+    <br>
+
+    <div class="layui-form-item">
+
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="dead_name_2" value="{$dead2.dead_name|default=''}" autocomplete="off" required="required"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+            <input type="hidden" name="dead_id_2" value="{$dead2.id|default=''}">
+        </div>
+     
+        <label class="layui-form-label">火化证编号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="dead_id_card2"  value="{$dead2.dead_id_card|default=''}" autocomplete="off" required="required"  title="请输入火化证编号" placeholder="请输入火化证编号" class="layui-input" >
+        </div>
+
+          <div class="layui-col-md6">
+
+        <label class="layui-form-label">墓穴证编号</label>
+        <div class="layui-input-inline"  >
+            <input type="text" name="cemetery_id_card"  value="{$reser.cemetery_id_card}" autocomplete="off" required="required"  title="请输入墓穴证编号" placeholder="请输入墓穴证编号" class="layui-input">
+        </div>
+    </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <select name="sex_2" lay-verify="" required="required">
+                    <option value=""></option>
+                    <option value="1" {if $dead2.sex eq 1} selected {/if}>男</option>
+                    <option value="2" {if $dead2.sex eq 2} selected {/if}>女</option>
+                </select>
+            </div>
+        </div>
+
+        <label class="layui-form-label">年龄</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="age_2" value="{$dead2.age|default=''}" autocomplete="off"  title="请输入年龄" required="required" placeholder="请输入年龄" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <label class="layui-form-label">出生时间</label>
+            <div class="layui-input-inline">
+                <input name="dead_birthday_2" class="layui-input" value="{$dead2.dead_birthday|default=''}" placeholder="出生时间" id="LAY_demorange_birth" required="required" title="请输入出生时间" placeholder="请输入出生时间">
+            </div>
+
+            <label class="layui-form-label">逝世时间</label>
+            <div class="layui-input-inline">
+                <input name="dead_deadday_2" class="layui-input" value="{$dead2.dead_deadday|default=''}" placeholder="逝世时间" id="LAY_demorange_deadday" required="required" title="请输入逝世时间" placeholder="请输入逝世时间">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">户籍地</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="dead_domicile_2"  value="{$dead2.dead_domicile|default=''}" autocomplete="off"  class="layui-input" title="请输入户籍地" placeholder="请输入户籍地">
+        </div>
+
+        <label class="layui-form-label">民族</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="dead_nation_2" value="{$dead2.dead_nation|default=''}" autocomplete="off"  class="layui-input" title="请输入民族" placeholder="请输入民族">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">生前住址</label>
+        <div class="layui-input-block">
+            <input type="text"  name="dead_address_2" value="{$dead2.address|default=''}"  title="请输入生前住址" placeholder="请输入生前住址" class="layui-input">
+        </div>
+    </div>
+ {/if} -->
+
+    <hr>
+
+    <h2 class="layui-colla-title">客户信息</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="username" value="{$buyer.username|default=''}" autocomplete="off" required="required" class="layui-input">
+        </div>
+      <div class="layui-col-md6">
+        <div class="layui-inline">
+
+            <label class="layui-form-label">联系地址</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input type="text" name="address" value="{$buyer.address|default=''}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline" >
+            <input type="email" name="mail" value="{$buyer.mail|default=''}" autocomplete="off"  class="layui-input">
+        </div>
+ <div class="layui-col-md6">
+        <div class="layui-inline">
+            <label class="layui-form-label">工作地址</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input type="text" name="work_address" value="{$buyer.work_address|default=''}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="id_card" value="{$buyer.id_card|default=''}" autocomplete="off" required="required" class="layui-input">
+        </div>
+
+ <div class="layui-col-md6">
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input type="text" name="phone" value="{$buyer.phone|default=''}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+</div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">与逝者1关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship1" value="{$reser.ship1_1}" autocomplete="off" required="required" class="layui-input">
+            </div>
+        </div>
+
+        {if $vo.Ctype eq 2}
+        <div class="layui-inline">
+            <label class="layui-form-label">与逝者2关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship2" value="{$reser.ship2_1}" autocomplete="off" required="required" class="layui-input">
+            </div>
+        </div>
+        {/if}
+
+        <div class="layui-inline">
+            <label class="layui-form-label">座机号码</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="plane" value="{$buyer.plane|default=''}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+    <h2 class="layui-colla-title">安葬指派</h2>
+    <br>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择操作员</label>
+        <div class="layui-input-block" style="width: 190px;">
+            <select name="opera" lay-verify="required" >
+                <option value=""></option>
+                {volist name="staff_d" id='staffs'}
+                <option value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark">{$reserve.remark|default=""}</textarea>
+        </div>
+    </div>
+
+
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+
+        <!--{if isset($res['id'])}<input type='hidden' value='{$res.id}' name='id'/>{/if}-->
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+{/block}
+
+{block name="script"}
+<script>window.form.render();</script>
+
+<script>
+
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_e'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_birth'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_deadday'
+            , max: '2099-06-16 23:59:59'
+        });
+
+        laydate.render({
+            elem: '#LAY_demorange_b'
+            , max: '2099-06-16 23:59:59'
+            ,done: function(value, date){
+                // layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+                // console.log(date.year+20+'-'+date.month+'-'+date.date);
+                $('#LAY_demorange_e').val(date.year+20+'-'+date.month+'-'+date.date);
+            }
+        });
+
+    });
+</script>
+
+{/block}

@@ -1,0 +1,68 @@
+{extend name='common/content' /}
+
+
+{block name="content"}
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='list-table-sort-td'>
+                    <button type="submit" class="layui-btn layui-btn-normal layui-btn-mini">排 序</button>
+                </th>
+                <th>文章标题</th>
+                <th>分类</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='list-table-sort-td'>
+                    <input name="_{$vo.id}" value="{$vo.sort}" class="list-sort-input"/>
+                </td>
+                <td>{$vo.title}</td>
+                <td>{if $vo.category eq 1}商城咨询{else/} 墓地优惠{/if}</td>
+                <td class='text-center nowrap'>
+
+                    <div class="layui-btn-group">
+                        {if $vo.is_recom eq 0 and auth("$classuri/forbid")}
+                        <button type="button" data-update="{$vo.id}" data-field='is_recom' data-value='1' data-action='{:url("$classuri/recom")}' class="layui-btn layui-btn-primary layui-btn-small">推荐</button>
+                        {elseif auth("$classuri/resume")}
+                        <button type="button" data-update="{$vo.id}" data-field='is_recom' data-value='0' data-action='{:url("$classuri/forbid")}' class="layui-btn layui-btn-primary layui-btn-small">取消推荐</button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+{/block}

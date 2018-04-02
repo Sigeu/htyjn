@@ -1,0 +1,248 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+
+</div>
+{/block}
+
+{block name="content"}
+<form  class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <h2 class="layui-colla-title">预定信息</h2>
+    <br>
+    <div class="layui-form-item">
+         <label class="layui-form-label">墓穴位置</label>
+         <div class="layui-input-inline">
+             <div class="layui-input-inline" >
+                 <input type="text"  value="{$vo.name}-{$vo.cemetery_sn}" autocomplete="off" class="layui-input" disabled>
+                 <input type="hidden"  name="cemetery_sn" value="{$vo.cemetery_sn}" autocomplete="off" class="layui-input" >
+                 <input type="hidden"  name="goods_name" value="{$vo.name}" autocomplete="off" class="layui-input">
+             </div>
+          </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">预定日期</label>
+        <div class="layui-input-inline">
+            <input name="reserve_time" class="layui-input" value="" required="required" title="请输入预定日期" placeholder="请输入预定日期" id="LAY_demorange_s" >
+        </div>
+
+        <label class="layui-form-label">预定到期日期</label>
+        <div class="layui-input-inline">
+            <input name="reserve_end_time" class="layui-input" value="" required="required" title="请输入预定到期日期" placeholder="请输入预定到期日期" id="LAY_demorange_e" >
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">定金金额</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="deposit" value="" required="required" title="请输入定金金额" placeholder="请输入定金金额" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择销售员</label>
+        <div class="layui-input-block" style="width: 190px;">
+            <select name="seller" lay-verify="required" >
+                <option value=""></option>
+                {volist name="staff" id='staffs'}
+                <option value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+
+
+<hr>
+
+    <h2 class="layui-colla-title">客户信息1</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="username1" value="" autocomplete="off" required="required" title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">联系地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="address1" value="" required="required" title="请输入联系地址" placeholder="请输入联系地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline" >
+            <input type="email" name="mail1" value="" autocomplete="off"  placeholder="请输入电子邮件" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">工作地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="work_address1" value="" autocomplete="off" placeholder="请输入工作地址" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="id_card1" value="" autocomplete="off" required="required" title="请输入身份证号" placeholder="请输入身份证号" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="phone1" value="" autocomplete="off" required="required" title="请输入手机号码" placeholder="请输入手机号码" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者1关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship1_1" value="" autocomplete="off" required="required" placeholder="请输入与使用者1的关系" class="layui-input">
+                {if $vo.type eq 1}
+                <input type="hidden" name="ship2_1" value="" autocomplete="off"  class="layui-input">
+                {/if}
+            </div>
+        </div>
+
+        {if $vo.type eq 2}
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者2关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship2_1" value="" autocomplete="off" required="required" placeholder="请输入与使用者2的关系" class="layui-input">
+            </div>
+        </div>
+        {/if}
+
+        <div class="layui-inline">
+            <label class="layui-form-label">座机号码</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="plane1" value="" autocomplete="off" placeholder="请输入座机号码" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <h2 class="layui-colla-title">客户信息2</h2>
+    <br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="username2" value="" autocomplete="off"  title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">联系地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="address2" value=""  title="请输入联系地址" placeholder="请输入联系地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline" >
+            <input type="email" name="mail2" value="" autocomplete="off"  placeholder="请输入电子邮件" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">工作地址</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="work_address2" value="" autocomplete="off" placeholder="请输入工作地址" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="id_card2" value="" autocomplete="off"  title="请输入身份证号" placeholder="请输入身份证号" class="layui-input">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline" style="width: 300px;">
+                <input type="text" name="phone2" value="" autocomplete="off"  title="请输入手机号码" placeholder="请输入手机号码" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者1关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship1_2" value="" autocomplete="off"  placeholder="请输入与使用者1的关系" class="layui-input">
+                {if $vo.type eq 1}
+                <input type="hidden" name="ship2_2" value="" autocomplete="off"  class="layui-input">
+                {/if}
+            </div>
+        </div>
+
+        {if $vo.type eq 2}
+        <div class="layui-inline">
+            <label class="layui-form-label">与使用者2关系</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="ship2_2" value="" autocomplete="off"  placeholder="请输入与使用者2的关系" class="layui-input">
+            </div>
+        </div>
+        {/if}
+
+        <div class="layui-inline">
+            <label class="layui-form-label">座机号码</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="plane2" value="" autocomplete="off" placeholder="请输入座机号码" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+{/block}
+
+{block name="script"}
+<script>window.form.render();</script>
+
+<script>
+
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_e'
+            , max: '2099-06-16 23:59:59'
+        });
+    });
+</script>
+
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+
+{/block}

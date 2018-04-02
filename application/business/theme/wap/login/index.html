@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>员工登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="__PUBLIC__/static/wap/static/js/rem.js"></script>
+    <script src="__PUBLIC__/static/wap/static/js/jquery.min.js"></script>
+    <link rel="shortcut icon" href="{:sysconf('browser_icon')}" />
+    <link rel="stylesheet" href="__PUBLIC__/static/plugs/layer_mobile/need/layer.css">
+    <script src="__PUBLIC__/static/plugs/layer_mobile/layer.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/base.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/page.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/all.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/mui.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/loaders.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/loading.css">
+    <script type="text/javascript">
+        $(window).load(function(){
+            $(".loading").addClass("loader-chanage")
+            $(".loading").fadeOut(300)
+        })
+    </script>
+    <style>
+        .login h3 { font-size:.6rem;}
+        .login-btn a{font-size:.6rem;height: 1rem;line-height: 1rem;}
+    </style>
+</head>
+<!--loading页开始-->
+<div class="loading">
+    <div class="loader">
+        <div class="loader-inner pacman">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<!--loading页结束-->
+<body>
+<form class="uk-form login" action="" method="post">
+    <div class="login clearfloat box-s">
+        <h3>员工登录</h3>
+        <div class="list clearfloat">
+            <ul>
+                <li class="ra3">
+                    <p class="fl clearfloat"> <span class="opa5"></span> <i class="iconfont icon-yonghuming"></i> </p>
+                    <div class="nr clearfloat fl"> <span class="opa3"></span>
+                        <input id="username" type="text"  name="username" placeholder="手机号" />
+                    </div>
+                </li>
+                <li class="ra3">
+                    <p class="fl clearfloat"> <span class="opa5"></span> <i class="iconfont icon-mima"></i> </p>
+                    <div class="nr clearfloat fl"> <span class="opa3"></span>
+                        <input id="pwd" type="password" name="password" placeholder="登录密码" />
+                    </div>
+                </li>
+                <!--<li class="ra3">
+						<p class="fl clearfloat">
+							<span class="opa5"></span>
+							<i class="iconfont icon-yanzhengma"></i>
+						</p>
+						<div class="nr nrtwo clearfloat fl">
+							<span class="opa3"></span>
+							<input type="text" name="" id="" value="" placeholder="验证码" />
+							<samp class="db fr">0212</samp>
+						</div>
+					</li>-->
+            </ul>
+        </div>
+        <!--<div class="login-btn"><button type="button" class="_ajax_submit">立即登录</button></div>-->
+        <div class="login-btn"> <a href="javascript:;"  class="_ajax_submit"> 登录 </a> </div>
+    </div>
+</form>
+</body>
+</html>
+<script>
+
+    $("._ajax_submit").click(function () {
+
+        var username = $("#username").val();
+        var pwd = $("#pwd").val();
+        $.ajax({
+            type: "POST",
+            url: '/business/Login/index',
+            data: {
+                'username': username,
+                'password' : pwd
+            },
+            success: function (data) {
+                if (data.code) {
+                    // 成功
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                        ,end: function(){
+                            window.location.href = data.url;
+                        }
+                    });
+                } else {
+                    // 错误
+                    layer.open({
+                        content: data.msg
+                        ,skin: 'msg'
+                        ,anim: 'scale'
+                        ,time: data.wait //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    })
+</script>

@@ -1,0 +1,92 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <button data-update data-field='delete' data-action='{:url("$classuri/delOrder")}'
+            class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除订单
+    </button>
+</div>
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="pd_member_name" value="{$Think.get.pd_member_name|default=''}" placeholder="会员名称"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="pd_sn" value="{$Think.get.pd_sn|default=''}" placeholder="充值单号"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class='list-table-check-td'>
+                <input data-none-auto="" data-check-target='.list-check-box' type='checkbox'/>
+            </th>
+            <th class='text-center'>充值单号</th>
+            <th class='text-center'>会员名称</th>
+            <th class='text-center'>创建时间</th>
+            <th class='text-center'>付款时间</th>
+            <th class='text-center'>付款方式</th>
+            <th class='text-center'>充值金额</th>
+            <th class='text-center'>支付状态</th>
+            <th class='text-center'>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $key=>$vo}
+        <tr>
+            <td class='list-table-check-td'>
+                <input class="list-check-box" value='{$vo.pd_id}' type='checkbox'/>
+            </td>
+            <td class='text-center'>{$vo.pd_sn}</td>
+            <th class='text-center'>{$vo.pd_member_name}</th>
+            <th class='text-center'>{$vo.pd_add_time|format_time}</th>
+            <th class='text-center'>{$vo.pd_payment_time|format_time}</th>
+            <th class='text-center'>{$vo.pd_payment_name}</th>
+            <th class='text-center'>{$vo.pd_amount}</th>
+            <th class='text-center'>
+                {if $vo.pd_payment_state eq 1 and $vo.pd_order_state eq 4}
+                已完成
+                {elseif $vo.pd_order_state eq 5 or $vo.pd_add_time lt (time()-3600) /}
+                已超时
+                {elseif $vo.pd_payment_state eq 0 and $vo.pd_order_state eq 3 /}
+                已取消
+                {elseif $vo.pd_payment_state eq 0 and $vo.pd_order_state eq 0 /}
+                待付款
+                {/if}
+            </th>
+            <td class='text-center'>
+                {if auth("$classuri/delOrder")}
+                <button type="button" data-update="{$vo.pd_id}" data-field='delete' data-action='{:url("$classuri/delOrder")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+{/block}

@@ -1,0 +1,141 @@
+<div class="layui-input-block">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            {foreach $category as $key=>$cate}
+            {eq name='key' value='0'}
+            <li class="layui-this">{$cate.name}</li>
+            {else/}
+            <li>{$cate.name}</li>
+            {/eq}
+            {/foreach}
+        </ul>
+        <div class="layui-tab-content" style="height: auto;">
+
+            {foreach $category as $key=>$cate}
+            <div class="layui-tab-item {eq name='key' value='0'}layui-show{/eq}" style="height: 260px; overflow: auto">
+
+                {if isset($cate['sub'])}
+                {foreach $cate['sub'] as $skey=>$sub}
+                <div class="layui-form">
+                    <table class="layui-table" lay-skin="line">
+                        <colgroup>
+                            <col width="100">
+                            <col width="100">
+                            <col width="50">
+                            <col width="100">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>
+                                <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                            </th>
+                            <th colspan="3">{$sub.name}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {foreach $sub['goods'] as $gkey=>$goods}
+                        <tr>
+                            <td>
+                                <input class="list-check-box" value='{$goods.cemetery_sn}' lay-skin="primary" type="checkbox">
+                            </td>
+                            <td>{$goods.name}</td>
+
+                            <td>{$goods.price}</td>
+
+                        </tr>
+                        {/foreach}
+
+                        </tbody>
+                    </table>
+                </div>
+                {/foreach}
+                {else/}
+                <div class="layui-form">
+                    <table class="layui-table" lay-skin="line">
+                        <colgroup>
+                            <col width="100">
+                            <col width="100">
+                            <col width="50">
+                            <col width="100">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>
+                                <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                            </th>
+                            <th colspan="3">{$cate.name}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {foreach $cate['goods'] as $gkey=>$goods}
+
+                        <tr>
+                            <td>
+                                <input class="list-check-box" value='{$goods.cemetery_sn}' lay-skin="primary" type="checkbox">
+                            </td>
+                            <td>{$goods.name}</td>
+
+                            <td>￥{$goods.price}</td>
+                            <td>{$goods.cemetery_sn}</td>
+                            <td>
+                                <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$goods.image_id}" alt="{$goods.name}"/>
+                            </td>
+                        </tr>
+                        {/foreach}
+
+                        </tbody>
+                    </table>
+                </div>
+                {/if}
+
+
+
+            </div>
+
+            {/foreach}
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button data-add-goods="add-goods" type="button" class="layui-btn">确认添加</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{block name="script"}
+<script>
+    /* 渲染layui js效果 */
+    window.form.render();
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+    });
+
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+
+//    $('.menu-delete').on('click', function () {
+//        self.$btn = $(this).parent('td').parent('tr');
+//        var index = $.msg.confirm('确认删除套餐中的产品吗？', function () {
+//            self.$btn.remove(), $.msg.close(index);
+//        });
+//    });
+</script>
+{/block}

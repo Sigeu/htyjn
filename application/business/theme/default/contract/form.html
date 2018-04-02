@@ -1,0 +1,82 @@
+{extend name='common/content' /}
+{block name="content"}
+<style>
+    /* 标签添加 搜索建议置顶显示 */
+    .ui-widget-content {
+        z-index: 29891017!important;
+    }
+</style>
+<link rel="stylesheet" href="__PUBLIC__/static/plugs/tag/jquery.tag-editor.css?ver={:date('ymd')}"/>
+{block name="content"}
+
+<form name="article" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">合同标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" value='{$vo.title|default=""}' required="required"  title="请输入合同标题" placeholder="请输入合同标题" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div style="width: 850px;">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">合同内容</label>
+                        <div class="layui-input-block">
+                            <textarea name='content'>{$vo.content|default=''}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_time" value="{:date('Y-m-d')}">
+        <input type="hidden" name="create_by" value="{$user.create_by}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" lay-submit="" lay-filter="submit">保存数据</button>
+        <button type='button' data-open='{:url("$classuri/index")}' class="layui-btn layui-btn-danger">返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use(['form', 'laydate', 'element'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,element = layui.element; //选项卡 依赖element 模块
+    });
+</script>
+
+{/block}
+{block name='script'}
+<script>
+    $(function () {
+
+        require(['ueditor'], function () {
+
+
+            /*! 实例富文本编辑器  */
+            var editor, $item;
+            /*! 默认编辑第一篇图文 */
+            editor = window.createEditor('[name="content"]', 'basic');
+
+            /*! 编辑器初始化成功 */
+            editor.ready(function () {
+                var $form = $('form[name="article"]'), $body = $('body');
+                $form.validate();
+            });
+        });
+    });
+</script>
+{/block}
+

@@ -1,0 +1,166 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <!--<button data-open='{:url("$classuri/addInscription")}' data-title="添加碑文" class='layui-btn layui-btn-small'><i class='fa fa-plus'></i> 添加碑文</button>-->
+    <button data-update data-field='delete' data-action='{:url("$classuri/delInscription")}' class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除碑文</button>
+</div>
+{/block}
+
+{block name="content"}
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="order_sn" value="{$Think.get.order_sn|default=''}" placeholder="订单编号" class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="cemetery_sn" value="{$Think.get.cemetery_sn|default=''}" placeholder="墓穴编号" class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="member_name" value="{$Think.get.member_name|default=''}" placeholder="客户姓名" class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th>ID</th>
+                <th>订单编号</th>
+                <th>墓位编号</th>
+                <th>碑文名称</th>
+                <th>客户姓名</th>
+                <th>订单价格</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td>{$vo.id}</td>
+                <td>{$vo.order_sn}</td>
+                <td>{$vo.cemetery_sn}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.member_name}</td>
+                <td>{$vo.cost}</td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                    <span style="color:#090">已完成</span>
+                    {else/}
+                    <span>未完成</span>
+                    {/if}
+                </td>
+
+                <td class='text-center nowrap'>
+                    <div class="layui-btn-group">
+
+                        <!-- {if b_auth("$classuri/addcontract")}
+                        <a class="layui-btn layui-btn-primary layui-btn-small upload-beiwen" data-id="{$vo.id}" data-file="mtl" data-type="ico,png,jpg" data-field="image">上传碑文</a>
+                        {/if} -->
+
+                        {if b_auth("$classuri/showInscription")}
+                        <button type="button" data-modal='{:url("$classuri/showInscription")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small">订单详情</button>
+                        {/if}
+
+                        <!-- {if b_auth("$classuri/editInscription")}
+                        <button type="button" data-open='{:url("$classuri/editInscription")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small">操作</button>
+                        {/if} -->
+
+                        {if $vo.order_state eq 30}
+                        {if $vo.status eq 0}
+                        <button type="button" onclick="mkSureIns({$vo.id})" class="layui-btn layui-btn-primary layui-btn-small">确认完成</button>
+                        {/if}
+                        {/if}
+
+                        {if b_auth("$classuri/delInscription")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delInscription")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+
+            <input type="hidden" name="image" onchange="add_img(this.value)" value="" class="layui-input">
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+
+<script>
+
+    var orderId = '';
+    $(".upload-beiwen").click(function () {
+        orderId = $(this).attr('data-id');
+    })
+
+    function add_img(value) {
+        $.post('{:url("$classuri/inscriptionImage")}',{id:orderId, value:value},function (result) {
+            if (result){
+                layer.msg('上传成功！')
+            }else{
+                layer.msg('上传失败！')
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript">
+    function mkSureIns(id){
+        // alert(id);
+        $.post('business/inscription/mkSureIns',{id:id},function(res){
+            layer.msg(res.msg);
+            if(res.code ==1){
+                setTimeout(function(){
+                    window.location.reload();
+                },500);
+            }
+        });
+    }
+</script>
+
+{/block}

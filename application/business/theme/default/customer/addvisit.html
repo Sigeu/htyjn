@@ -1,0 +1,68 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="{:url()}" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" value="{$vo.username|default=''}" required="required" title="请输入用户名称" placeholder="请输入用户名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">回访人</label>
+        <div class="layui-input-block">
+            <input type="text" name="visit" value="{$vo.visit|default=''}" required="required" title="请输入回访人" placeholder="请输入回访人" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">回访标题</label>
+        <div class="layui-input-block">
+            <select name="title" lay-verify="required" >
+                <option value=""></option>
+                {volist name="retitle" id='ti'}
+                <option value="{$ti.title}">{$ti.title}</option>
+                {/volist}
+            </select>
+            <!--<input type="text" name="title" value="{$vo.title|default=''}"   required=""  title="请输入回访标题" placeholder="请输入回访标题" class="layui-input">-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">回访内容</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入回访内容" title="请输入回访内容" class="layui-textarea" name="content">{$vo.content|default=''}</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">回访时间</label>
+        <div class="layui-input-block">
+            <input name="time" class="layui-input" value="{$vo.time|default=''}" placeholder="回访时间" id="LAY_demorange_s">
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_by" value="{$user.create_by}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+{block name="script"}
+<script>window.form.render();</script>
+<script>
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            , max: '2099-06-16 23:59:59'
+        });
+
+    });
+</script>
+{/block}

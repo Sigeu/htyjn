@@ -1,0 +1,92 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline">
+            <input type="text" disabled value='{$customerInfo.username|default=""}' title="请输入姓名" placeholder="请输入姓名" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">联系电话</label>
+        <div class="layui-input-inline">
+            <input type="text" disabled value='{$customerInfo.phone|default=""}' title="请输入联系电话" placeholder="请输入联系电话" class="layui-input">
+        </div>
+    </div>
+
+
+    <!--<div class="layui-form-item">-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">与使用人关系</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="relation" value='{$vo.relation|default=""}' required="required" title="请输入与使用人关系" placeholder="请输入与使用人关系" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系地址</label>
+        <div class="layui-input-block">
+            <input type="text" disabled value='{$customerInfo.address|default=""}' title="请输入联系地址" placeholder="请输入联系地址" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <label class="layui-form-label">取走人姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="leaver" value='' required="required" title="请输入取走人姓名" placeholder="请输入取走人姓名" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">取走日期</label>
+            <div class="layui-input-inline">
+                <input name="end_time" class="layui-input" value="" placeholder="取走日期" id="LAY_demorange_leave">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="leave_remark"></textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+{/block}
+
+{block name="script"}
+<script>window.form.render();</script>
+
+<script>
+    layui.use(['laydate'], function(){
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#LAY_demorange_leave'
+            , max: '2099-06-16 23:59:59'
+        });
+        // var end = {
+        //     max: '2099-06-16 23:59:59'
+        //     ,istoday: false
+        //     ,choose: function(datas){
+        //         start.max = datas; //结束日选好后，重置开始日的最大日期
+        //     }
+        // };
+
+        // document.getElementById('LAY_demorange_leave').onclick = function(){
+        //     end.elem = this
+        //     laydate(end);
+        // }
+    });
+</script>
+
+{/block}

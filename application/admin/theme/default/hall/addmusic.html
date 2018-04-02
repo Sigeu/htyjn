@@ -1,0 +1,118 @@
+{extend name='common/content' /}
+
+{block name='content'}
+
+<style>
+    /* 标签添加 搜索建议置顶显示 */
+    .ui-widget-content {
+        z-index: 29891017!important;
+    }
+</style>
+<link rel="stylesheet" href="__PUBLIC__/static/plugs/tag/jquery.tag-editor.css?ver={:date('ymd')}"/>
+
+<form name="hall" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-tab">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">乐曲名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="music_name" value='{$vo.music_name|default=""}' required="required" lay-verify="music_name" title="请输入乐曲名称" placeholder="请输入乐曲名称" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属分类</label>
+                    <div class="layui-input-block">
+                        <select name='music_type' class='layui-select full-width'>
+                            {if isset($vo.music_type)}
+                                <option value='0' {eq name="vo.music_type" value="0"} selected = "selected" {\eq}>推荐乐曲</option>
+                                <option value='1' {eq name="vo.music_type" value="1"} selected = "selected" {\eq}>佛教乐曲</option>
+                                <option value='2' {eq name="vo.music_type" value="2"} selected = "selected" {\eq}>西方宗教</option>
+                            {else/}
+                                <option value='0' selected = "selected">推荐乐曲</option>
+                                <option value='1'>佛教乐曲</option>
+                                <option value='2'>西方宗教</option>
+                            {/if}
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">乐曲路径</label>
+                    <div class='layui-input-block'>
+
+                        <!-- todo 默认图片设置 -->
+                       <!-- <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image|default='static/admin/theme/default/img/image.png'}"/>-->
+                        <span>{$vo.music_url|default=""}</span>
+                        <input type="hidden" name="music_url" onchange="$(this).prev('span').text(this.value)" value="{$vo.music_url|default=''}" class="layui-input" lay-verify="music_url">
+                        <a class="btn btn-link" data-file="one" data-type="mp3" data-field="music_url">上传歌曲</a>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否显示</label>
+                    <div class="layui-input-block">
+                        {if isset($vo.music_status)}
+                        {if $vo.music_status eq 1}
+                        <input type="radio" name="music_status" value="1" title="显示" checked>
+                        <input type="radio" name="music_status" value="2" title="隐藏">
+                        {else/}
+                        <input type="radio" name="music_status" value="1" title="显示">
+                        <input type="radio" name="music_status" value="2" title="隐藏" checked>
+                        {/if}
+                        {else/}
+                        <input type="radio" name="music_status" value="1" title="显示" checked>
+                        <input type="radio" name="music_status" value="2" title="隐藏">
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" lay-submit="" lay-filter="submit">保存数据</button>
+        <button id="list-article" class="layui-btn layui-btn-danger" type='reset'>返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use(['form', 'laydate', 'element'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,element = layui.element; //选项卡 依赖element 模块
+
+
+        //自定义验证规则
+        form.verify({
+            /*music_name: function(value){
+                if(value.length < 1){
+                    return '得5个字符啊';
+                }
+            },*/
+            music_url: function(value){
+                if(!value){
+                    return '请上传文件';
+                }
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $('#list-article').click(function () {
+        window.location.href = "admin.html#/admin/hall/musiclist.html?spm={$spm}";
+    });
+</script>
+{/block}
+

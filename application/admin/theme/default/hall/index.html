@@ -1,0 +1,154 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+
+    {if $hallType == 1 && !$isFamous}
+    <select name='famous_type' id="famous_type" class='layui-select' style="height: 30px; line-height: 30px; vertical-align: middle;">
+        {foreach $ct as $key=>$vo}
+            <option  value='{$vo.id}'>{$vo.name}</option>
+        {/foreach}
+    </select>
+
+    <button  data-update data-field='famous_type' data-value="" data-action='{:url("$classuri/AddFamous")}'
+            class='layui-btn layui-btn-small layui-btn-danger'> 移至名人馆
+    </button>
+    {/if}
+
+    <button data-open="{:url('hall/addHall', ['hall_type'=>$hallType, 'is_famous'=>$isFamous])}" data-title="添加纪念馆" class='layui-btn layui-btn-small'><i
+            class='fa fa-plus'></i> 添加纪念馆
+    </button>
+
+</div>
+{/block}
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="hall_name" value="{$Think.get.hall_name|default=''}" placeholder="纪念馆名称"
+                       class="input-sm form-control">
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='text-center'>ID</th>
+                <th class='text-center'>纪念馆名称</th>
+                <th class='text-center'>纪念馆类型</th>
+                <th class='text-center'>建馆者</th>
+                <th class='text-center'>建馆时间</th>
+                <th class='text-center'>纪念值</th>
+                <th class='text-center'>馆等级</th>
+                <th class='text-center'>关注人数</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='text-center'>{$vo.id}</td>
+                <td class='text-center'>
+                    <a href="{:url('home/Hall/detail', ['id' => $vo.id])}" target="_blank" title="进入 {$vo.hall_name} 纪念馆">{$vo.hall_name}</a>
+                </td>
+                <td class='text-center'>
+                    {if $vo.hall_type eq 1}
+                        <span>个人馆</span>
+                    {elseif $vo.hall_type eq 2}
+                        <span>双人馆</span>
+                    {elseif $vo.hall_type eq 3}
+                        <span>家族馆</span>
+                    {/if}
+                </td>
+                <td class='text-center'>{$vo.member_nickname}</td>
+                <td class='text-center'>{$vo.create_at|format_time=###, 'Y-m-d'}</td>
+                <td class='text-center'>{$vo.memorial_value}</td>
+                <td class='text-center'>Lv.{$vo.hall_level}</td>
+                <td class='text-center'>{$vo.follow_cnt}</td>
+                <td class='text-center'>
+                    {if $vo.hall_status eq 1}
+                        <span style="color:#090">正常</span>
+                    {else}
+                        <span style="color:#d80909">锁定</span>
+                    {/if}
+
+                </td>
+                <td class='text-center'>
+                    <div class="layui-btn-group">
+                        {if auth("$classuri/Photo")}
+                        <button type="button" data-open="{:url('/')}admin.html#{:url('/admin/Goods/worshipRecords')}?hall_id={$vo.id}&spm={$spm}" class="layui-btn layui-btn-primary layui-btn-small">祭录</button>
+                        {/if}
+                        <a class="edit-hall-son" href="{:url('/')}admin.html#{:url('Photo')}?hall_id={$vo.id}&spm={$spm}">相册</a>
+
+
+                        {if auth("$classuri/Photo")}
+                        <button type="button" data-open='{:url("$classuri/Photo")}?hall_id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small">相册</button>
+                        {/if}
+
+                        {if auth("$classuri/Article")}
+                        <button type="button" data-open='{:url("$classuri/Article")}?hall_id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small">文章</button>
+                        {/if}
+
+                        {if auth("$classuri/editHall")}
+                        <button type="button" data-open='{:url("$classuri/editHall")}?hall_id={$vo.id}&hall_type={$hallType}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+
+                        {if auth("$classuri/delHall")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delHall")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+<script>window.form.render();</script>
+
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+<script>
+    $(".layui-btn").click(function () {
+        $(this).attr('data-value',$("#famous_type option:selected") .val())
+    });
+</script>
+
+{/block}

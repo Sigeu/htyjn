@@ -1,0 +1,30 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="u-hh">
+            <span>{$grave.name}</span><span>&gt;</span><span>{$tomb.name}</span>
+        </div>
+        <ul>
+            <li>
+                {foreach $data as $key=>$value}
+                <div class="{if $value.order_state eq 20} u-sales{elseif $value.order_state eq null/}u-sales2{else/}u-sales1{/if}">
+                    <a href="{:url('cemetery/ceinfo')}?id={$value.id}">
+                        <div class="ys">{if $value.order_state eq 20} 已售{elseif $value.order_state eq null/}空缺{else/}预定{/if}</div>
+                        <div class="bh" style="font-size: 12px;"><?php echo substr($value['cemetery_sn'], (stripos($value['cemetery_sn'], "-")+1)); ?></div>
+                    </a>
+
+                </div>
+                {/foreach}
+            </li>
+
+        </ul>
+    </div>
+    <!-- /容器1 -->
+
+    <!-- /底部 -->
+</div>
+</body>
+</html>

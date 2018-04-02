@@ -1,0 +1,204 @@
+{extend name='common/content' /}
+<style>
+    .layui-form-select dl {
+        z-index: 9002;
+    }
+</style>
+{block name="content"}
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <blockquote class="layui-elem-quote">指派碑文订单</blockquote>
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓穴</label>
+        <div class="layui-input-block">
+            <input type="text" name="cemetery_sn" value='{$reserve.cemetery_sn|default=""}' required="required"  class="layui-input" disabled>
+            <input type="hidden" name="cemetery_sn" value='{$reserve.cemetery_sn|default=""}'  >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="order_sn" value='{$reserve.order_sn|default=""}' required="required"  placeholder="请输入碑文名称" class="layui-input" disabled>
+            <input type="hidden" name="order_sn" value='{$reserve.order_sn|default=""}' >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择操作员</label>
+        <div class="layui-input-block" style="width: 190px;">
+            <select name="opera" lay-verify="required" >
+                <option value=""></option>
+                {volist name="staff" id='staffs'}
+                <option value="{$staffs.id}">{$staffs.name}-{$staffs.sector}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    {if empty($pack)}
+    {else/}
+    <div class="layui-form-item">
+    <label class="layui-form-label">已选套餐</label>
+        <div class="layui-collapse layui-input-block">
+
+            {volist name="pack" id="packs"}
+            <div >
+                <h2 class="layui-colla-title">{$packs.name}-{$packs.cost}元</h2>
+                <div class="layui-colla-content layui-show">{$packs.desc}</div>
+            </div>
+            {/volist}
+
+            <input type="hidden" name="cost" value='{$packs.cost}' required="required">
+        </div>
+    </div>
+    {/if}
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付金额</label>
+        <div class="layui-input-inline" >
+            <input type="text" name="cost" autocomplete="off" required="required"  title="请输入支付金额" value="0.00" class="layui-input">
+        </div>
+    </div>
+
+    <!-- <div class="layui-form-item">
+        <label class="layui-form-label">指派碑文备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark">{$reserve.remark|default=""}</textarea>
+        </div>
+    </div> -->
+
+    <hr>
+    <blockquote class="layui-elem-quote">添加碑文信息</blockquote>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择所属分类</label>
+        <div class="layui-input-block" onclick="choose();return false;">
+            <input type="text" name="pid_name" id="pid_name" value='{$Info.name|default=""}' required="required"  placeholder="请选择分类" class="layui-input">
+            <input type="hidden" name="pid" id="pid" value='{$Info.id|default=""}' required="required"  placeholder="请选择分类" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择碑文模板</label>
+        <div class="layui-input-block layui-form" lay-filter="selFilter">
+            <select name='id' id="select_box">
+                <option value="-1">请选择碑文模板模板</option>
+                <!-- {foreach name="$InsTmps" id="datas"}
+                <option value='{$datas.id}'>{$datas.title}</option>
+                {/foreach} -->
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">碑文名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入碑文名称" placeholder="请输入碑文名称" class="layui-input">
+        </div>
+    </div>
+<div style="width: 618px;">
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">碑文内容</label>
+        <div class="layui-input-block editor">
+            <textarea name='content' id="InsContent">{$vo.content|default=''}</textarea>
+        </div>
+    </div>
+</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">添加碑文备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark2">{$vo.remark|default=""}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+<div style="display: none;" id="tree_box">
+    <ul id="tree"></ul>
+</div>
+<script>window.form.render();</script>
+<script>
+    $(function () {
+        requierUeditor();
+    });
+function requierUeditor(){
+    requirejs.undef("ueditor");//先去除加载的模块的缓存
+    require(['ueditor'], function () {
+        /*! 实例富文本编辑器  */
+        var editor, $item;
+        /*! 默认编辑第一篇图文 */
+        editor = window.createEditor('[name="content"]', 'basic');
+        /*! 编辑器初始化成功 */
+        editor.ready(function () {
+            var $form = $('form[name="article"]'), $body = $('body');
+            $form.validate();
+        });
+        $('.layui-anim-upbit dd').on('click',function () {
+            var id = $(this).attr('lay-value');
+            $.post('business/order/InsTmpsContent',{'id':id},function(data){
+                var contract = data.result
+                editor.setContent(contract);//把获取到的模板填充到富文本编辑器
+            })
+        })
+    });
+}
+</script>
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+    getTree();
+})
+function choose(){
+    layui.use('layer', function(){
+        box = layer.open({
+            type: 1,
+            title: '选择分类',
+            anim: 2,
+            shade:false,
+            skin: 'layui-layer-molv', //加上边框
+            area: ['420px', '640px'], //宽高
+            content: $('#tree_box')
+        });
+    });
+}
+
+function getTree(){
+    layui.use(['tree', 'layer'], function(){
+        var layer = layui.layer;
+        $.getJSON("{:url('inscription/TreeData')}", function(res){
+            layui.tree({
+                elem: '#tree',
+                nodes: res,
+                click:function(node){
+                    nowNode = node;
+                    $("#pid_name").val(nowNode.name);
+                    $.post('business/order/getTabletClassSons',{id:nowNode.id},function(res){
+                        var html='<option value="-1">请选择</option>';
+                        for(var i=0;i<res.length;i++){
+                            html += '<option value="' + res[i].id + '">' + res[i].title + '</option>'
+                        }
+                        $("#select_box").html(html);
+                        window.form.render(); 
+                        requierUeditor();
+                    });
+                    layer.close(box);
+                }
+            });
+        });
+    });    
+}
+</script>
+{/block}

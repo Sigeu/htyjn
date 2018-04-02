@@ -1,0 +1,109 @@
+{extend name='common/content' /}
+
+{block name="button"}
+{/block}
+
+{block name="content"}
+<!--<form onsubmit="return false;" data-auto="" method="POST">-->
+    <input type="hidden" value="resort" name="action"/>
+    <table class="table table-hover" id="cusTable" style="height: 600px;">
+        <thead>
+        <tr>
+            <!-- <th class='list-table-check-td'>
+                <input data-none-auto="" data-check-target='.list-check-box' type='checkbox'/>
+            </th> -->
+            
+            <th class='text-center'></th>
+            <th class='text-center' data-field="username" data-sortable="true">用户账号</th>
+            <th class='text-center' data-field="phone">手机号</th>
+            <th class='text-center' data-field="mail">电子邮箱</th>
+            <th class='text-center' data-field="status">状态</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    {if isset($page)}<p>{$page}</p>{/if}
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button data-add-storage-customer-rewrite="add-storage-customer" type="button" class="layui-btn">确认添加</button>
+        </div>
+    </div>
+<!--</form>-->
+
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__PUBLIC__/static/plugs/bootstrap_table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/plugs/bootstrap_table/bootstrap-table-mobile.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/plugs/bootstrap_table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript">
+function initTable() {
+    //先销毁表格
+    $('#cusTable').bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#cusTable").bootstrapTable({
+        method: "post",  //使用get请求到服务器获取数据
+        url: "{:url('business/storage/selectregister')}", //获取数据的地址
+        striped: true,  //表格显示条纹
+        search:false, //开启搜索框
+        singleSelect : true, // 单选checkbox 
+        searchOnEnterKey:false, //回车搜索
+        strictSearch:false, //模糊搜索
+        searchTimeOut:500, //设置搜索超时时间
+        showColumns:false, //字段选择下拉框
+        showRefresh:true, //显示刷新按钮
+        pagination: true, //启动分页
+        pageSize: 20,  //每页显示的记录数
+        pageNumber:1, //当前第几页
+        pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+        sidePagination: "server", //表示服务端请求
+        paginationFirstText: "首页",
+        paginationPreText: "上一页",
+        paginationNextText: "下一页",
+        paginationLastText: "尾页",
+        queryParamsType : "undefined",
+        columns : [{
+            checkbox: true,
+            formatter:function(value,row,index){
+                if (row.state == true)
+                return {
+                    checked : true//设置选中
+                };
+                return value;
+            }
+        }],
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+            };
+            return param;
+        },
+        onLoadSuccess: function(res){  //加载成功时执行
+            if(111 == res.code){
+                window.location.reload();
+            }
+            layer.msg("加载成功", {time : 1000});
+        },
+        onLoadError: function(){  //加载失败时执行
+            layer.msg("加载数据失败");
+        }
+    });
+}
+
+$(function () {
+    //调用函数，初始化表格
+    initTable();
+    //当点击查询按钮的时候执行
+
+    $("#search").on("click", function(){
+        var username = $('#username').val();
+        initTable(username,0);
+    });
+
+
+});
+
+</script>
+{/block}

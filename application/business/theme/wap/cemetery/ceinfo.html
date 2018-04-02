@@ -1,0 +1,60 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+
+    <!-- 容器1 -->
+    <div class="m-red">
+        <!--  <div class="service">
+     <div class="slider">
+     <div class="slick-list"><div class="slick-track"><img src="img/5809848541d04.jpg">
+         <div class="tit">
+           <p class="one">昆明公墓/云南省昆明市化带</p>
+         </div>
+       </div></div></div>
+     </div> -->
+        <div class="service-ctent">
+            <div class="recom-tit">
+                <p>基本信息</p>
+            </div>
+            <div class="service-list">
+
+                <p class="service-tit">墓位名称：{$cemeinfo.name|default=''}--{$cemeinfo.cemetery_sn|default=''}</p>
+                <p class="service-tit">墓穴类型：{if $cemeinfo.type eq 1}单人墓{else/}双人墓{/if}</p>
+
+
+                <p class="service-tit">墓位价格：{$cemeinfo.price}￥</p>
+                <p class="service-tit">墓位面积：{$cemeinfo.area}</p>
+                <p class="service-tit">墓穴材料：{$cemeinfo.stuff}</p>
+
+            </div>
+        </div>
+        <!-- <div class="service-ctent">
+          <div class="recom-tit">
+            <p>墓园介绍</p>
+          </div>
+          <p class="tit">  蒙河高速公路是云南第一条国门高速公路，是云南省的“滇越大通道”，是中国昆明通往越南河内的重要公路段，是我国外接越南及东南亚的重要国际大通道，也是我省滇东及滇南的主要经济干线，更是促进红河州经济发展的交通运输枢纽。媒体形式为单立柱，形象十分突出，具有发布面积大、可视距离广、视众人数多、视觉效果明显、介入强势、影响深远等特点。是建立品牌长廊的主要载体。是企业推广品牌、产
+      品及形象的首选。
+      </p>
+        </div> -->
+
+        <div class="m-btn">
+            <span>
+                {if $cemeinfo.is_sell eq 0 and  $cemeinfo.is_move eq 0}
+                <a href='{:url("$classuri/reserve")}?id={$cemeinfo.id}' class="u-gwc">立即预定</a>
+                {/if}
+            </span>
+            <span>
+                {if $cemeinfo.is_sell neq 1}
+                <a  href='{:url("$classuri/cebuy")}?id={$cemeinfo.id}' class="u-pay">立即购买</a>
+                {/if}
+            </span>
+        </div>
+    </div>
+</div>
+<!-- /容器1 -->
+
+
+<!-- /底部 -->
+</div>
+</body>
+</html>

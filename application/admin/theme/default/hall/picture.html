@@ -1,0 +1,32 @@
+<style type="text/css">
+    #img div{float: left;margin: 15px;}
+    #img img{height:auto;max-height:96px;min-width:96px;}
+</style>
+<div class='layui-input-block' style="margin-left: 15px;">
+    <input type="hidden" name="image" onchange="add_img(this.value)" value="{$vo.image|default=''}" class="layui-input">
+    <a class="btn layui-btn layui-btn-small " data-file="mtl" data-type="ico,png,jpg" data-field="image">上传图片</a>
+</div>
+<div id="img">
+    {$html|default=''}
+</div>
+<input type="hidden" id="id" value="{$id}">
+<script type="text/javascript">
+    function del_img(id) {
+        $.post('{:url("$classuri/DelPicture")}',{id:id,field:'delete'},function (result) {
+            if (result == '删除成功！'){
+                $("#img_"+id).remove()
+            }
+            layer.msg(result)
+        })
+    }
+    function add_img(value) {
+        $.post('{:url("$classuri/AddPicture")}',{id:$("#id").val(),value:value},function (result) {
+            if (result){
+                $('#img').append(result)
+            }else{
+                layer.msg('上传失败！')
+            }
+        })
+    }
+</script>
+

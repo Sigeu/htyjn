@@ -1,0 +1,51 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}'   placeholder="请输入陵园名称" class="layui-input" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园代码编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="code" value='{$vo.code|default=""}'   placeholder="请输入代码编号" class="layui-input" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">所在省份</label>
+            <div class="layui-input-inline"  style="width: 253px;">
+                <input type="text" name="grave_province"  value='{$vo.grave_province|default=""}'    placeholder="请输入陵园所在省份"  class="layui-input" disabled>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">所在城市</label>
+            <div class="layui-input-inline" style="width: 253px;">
+                <input type="text" name="grave_city" value='{$vo.grave_city|default=""}'   placeholder="请输入陵园所在城市" autocomplete="off" class="layui-input" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园星级</label>
+        <div class="layui-input-block">
+            <input type="text" name="start_level" value='{$vo.start_level|default=""}' required="required"  title="请输入陵园星级" placeholder="请输入陵园星级" class="layui-input" >
+            <small style="color: red">星级范围1-5（必须填写数字），数字越大星级越大</small>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_by" value="{$user.create_by}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

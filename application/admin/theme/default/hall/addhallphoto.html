@@ -1,0 +1,41 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">相册名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="photo_name" value='{$vo.photo_name|default=""}' required="required" title="请输入相册名称" placeholder="请输入相册名称" class="layui-input">
+        </div>
+    </div>
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">封面图片</label>
+        <div class='layui-input-block'>
+            &lt;!&ndash; todo 默认图片设置 &ndash;&gt;
+            <div id="img">
+                &lt;!&ndash;<img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image|default='static/admin/theme/default/img/image.png'}"/>&ndash;&gt;
+            </div>
+            <input type="hidden" name="image" onchange="show_img(this.value)" value="{$vo.image|default=''}" class="layui-input">
+            <a class="btn btn-link" data-file="mtl" data-type="ico,png,jpg" data-field="image">上传图片</a>
+        </div>
+    </div>
+-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="1" title="正常" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>正常</span></div>
+            <input type="radio" name="status" value="2" title="禁用"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>禁用</span></div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        {if isset($vo['hall_id'])}
+            <input type="hidden" value="{$vo.hall_id}" name="hall_id" />
+        {else/}
+            <input type="hidden" value="{$Think.get.hall_id}" name="hall_id" />
+        {/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

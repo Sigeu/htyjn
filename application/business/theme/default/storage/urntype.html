@@ -1,0 +1,116 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <button data-modal='{:url("$classuri/addUrnType")}' data-title="添加骨灰盒" class='layui-btn layui-btn-small'><i
+            class='fa fa-plus'></i> 添加骨灰盒
+    </button>
+    <button data-update data-field='delete' data-action='{:url("$classuri/delUrnType")}'
+            class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除骨灰盒
+    </button>
+</div>
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="name" value="{$Think.get.name|default=''}" placeholder="骨灰盒型名称"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="description" value="{$Think.get.description|default=''}" placeholder="骨灰盒型描述"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='text-center'>ID</th>
+                <th class='text-center'>骨灰盒型名称</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='text-center'>{$vo.id}</td>
+                <td class='text-center'>{$vo.name}</td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                    <span style="color:#090">使用中</span>
+                    {else/}
+                    <span>已禁用</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <div class="layui-btn-group">
+                        {if $vo.status eq 1 and b_auth("$classuri/forbidUrnType")}
+                        <button type="button" data-update="{$vo.id}" data-field='status' data-value='0' data-action='{:url("$classuri/forbidUrnType")}' class="layui-btn layui-btn-primary layui-btn-small">禁用</button>
+                        {elseif b_auth("$classuri/resumeUrnType")}
+                        <button type="button" data-update="{$vo.id}" data-field='status' data-value='1' data-action='{:url("$classuri/resumeUrnType")}' class="layui-btn layui-btn-primary layui-btn-small">启用</button>
+                        {/if}
+
+                        {if b_auth("$classuri/editUrnType")}
+                        <button type="button" data-modal='{:url("$classuri/editUrnType")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+
+                        {if b_auth("$classuri/delUrnType")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delUrnType")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+{/block}

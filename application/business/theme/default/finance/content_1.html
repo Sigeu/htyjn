@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="__PUBLIC__/static/admin/echarts.min.js"></script>
+    <script src="__PUBLIC__/static/admin/jquery.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 100%;height:400px;"></div>
+    <div>
+        <p style="color: #BF0A10;text-indent: 4rem; font-size: 14px;">
+            红色时间段：{$RedS|date="Y年m月d日",###}~{$RedE|date="Y年m月d日",###}
+            <span style="color: #4C556E;margin-left: 15px;">蓝色时间段：{$BlueS|date="Y年m月d日",###}~{$BlueE|date="Y年m月d日",###}</span>
+        </p>
+    </div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        option = {
+            title: {
+                text: '销售额对比'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['选择时间段','对比时间段']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                show:true,
+                feature: {
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: true,
+                data: [{volist name="$Xdata" id="v"}"{$v}",{/volist}]
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '￥{value}'
+                }
+            },
+            series: [
+                {
+                    name:'选择时间段',
+                    type:'line',
+                    smooth: true,
+                    data:[{volist name="$data1" id="v"}{$v},{/volist}]
+                },
+                {
+                    name:'对比时间段',
+                    type:'line',
+                    smooth: true,
+                    data:[{volist name="$data2" id="vo"}{$vo},{/volist}]
+                }
+            ]
+        };
+        $(function(){
+            myChart.setOption(option); // 使用刚指定的配置项和数据显示图表。
+        });
+    </script>
+</body>
+</html>

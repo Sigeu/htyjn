@@ -1,0 +1,225 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    {if isset($vo.id)}
+    <button data-modal='{:url("$classuri/urnLeave")}?register_id={$vo.id}' data-title="寄存取走" class='layui-btn layui-btn-small'> 寄存取走</button>
+
+    <button data-modal='{:url("$classuri/urnRenewal")}?register_id={$vo.id}' data-title="寄存续费" class='layui-btn layui-btn-small'> 寄存续费</button>
+    <button data-open='{:url("$classuri/order")}?register_id={$vo.id}' data-title="查看续费记录" class='layui-btn layui-btn-small'> 查看续费记录</button>
+    {/if}
+
+</div>
+{/block}
+
+{block name="content"}
+<style>
+    .urn-breadcrumb a {text-decoration: none;}
+</style>
+
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+
+    <!-- 面包屑 -->
+    <span class="urn-breadcrumb">
+        <a href="javascript:;">寄存位置</a> &gt;
+        <a href="javascript:;">{$parentCname}</a> &gt;
+        <a href="javascript:;">{$categoryName}</a> &gt;
+        <a><cite>{$urnInfo.urn_sn}</cite></a>
+    </span>
+
+    <!-- 寄存信息 -->
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>寄存信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <label class="layui-form-label">与使用人关系</label>
+        <div class="layui-input-block">
+            <input type="text" name="relation" value='{$vo.relation|default=""}' required="required" title="请输入与使用人关系" placeholder="请输入与使用人关系" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <label class="layui-form-label">起始时间</label>
+            <div class="layui-input-inline">
+                <input name="start_time" class="layui-input" value="{$vo.start_time|default=''}" placeholder="开始时间" id="LAY_demorange_s">
+            </div>
+            <div class="layui-input-inline">
+                <input name="end_time" class="layui-input" value="{$vo.end_time|default=''}" placeholder="截止时间" id="LAY_demorange_e">
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用人资料 -->
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>使用人资料</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dead_name" value='{$deadInfo.dead_name|default=""}' required="required" title="请输入使用人姓名" placeholder="请输入使用人姓名" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">火化证编号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dead_id_card" value='{$deadInfo.dead_id_card|default=""}' required="required" title="请输入使用人火化证编号" placeholder="请输入使用人火化证编号" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-inline">
+            {if isset($vo.id)}
+            <input type="radio" name="sex" value="1" title="男" {if $deadInfo.sex eq 1}checked=""{/if}>
+            <input type="radio" name="sex" value="2" title="女" {if $deadInfo.sex eq 2}checked=""{/if}>
+            {else/}
+            <input type="radio" name="sex" value="1" title="男" checked="">
+            <input type="radio" name="sex" value="2" title="女">
+            {/if}
+        </div>
+
+        <label class="layui-form-label">出生年月</label>
+        <div class="layui-input-inline">
+            <input name="dead_birthday" class="layui-input" value="{$deadInfo.dead_birthday|default=''}" placeholder="出生年月" id="LAY_demorange_birth">
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">户籍地</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dead_domicile" value='{$deadInfo.dead_domicile|default=""}' title="请输入使用人户籍地" placeholder="请输入使用人户籍地" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">死亡日期</label>
+        <div class="layui-input-inline">
+            <input name="dead_deadday" class="layui-input" value="{$deadInfo.dead_deadday|default=''}" placeholder="死亡日期" id="LAY_demorange_deadday">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">生前住址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" value='{$deadInfo.address|default=""}' required="required" title="请输入使用人生前住址" placeholder="请输入使用人生前住址" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">工作单位</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dead_workplace" value='{$deadInfo.dead_workplace|default=""}' title="请输入使用人工作单位" placeholder="请输入使用人工作单位" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">民族</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dead_nation" value='{$deadInfo.dead_nation|default=""}' title="请输入使用人民族" placeholder="请输入使用人民族" class="layui-input">
+        </div>
+    </div>
+
+    <!-- 寄存人资料 -->
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>寄存人资料</legend>
+    </fieldset>
+
+    <label class="layui-form-label">已选寄存人</label>
+    <div class="layui-input-block">
+        <input id="customer-id" name="customer_id" value="{$vo.customer_id|default=''}"  autocomplete="off" class="layui-input" type="hidden" >
+        <input id="customer" name="customer_name" value="{$vo.customer_name|default=''}"  autocomplete="off" title="暂未选择寄存人" placeholder="暂未选择寄存人" class="layui-input" type="text" >
+        <br>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择寄存人</label>
+        <div class="layui-input-block">
+            <button type="button" data-modal="{:url('selectRegister')}" data-title="选择寄存人" class='layui-btn layui-btn-small'><i
+                    class='fa fa-plus'></i> 请选择寄存人
+            </button>
+        </div>
+    </div>
+
+    <!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">-->
+        <!--<legend>套餐</legend>-->
+    <!--</fieldset>-->
+
+    <!--{if !empty($stor_pack)}-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">寄存套餐</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--{volist name="stor_pack" id="stpack"}-->
+            <!--<input type="checkbox"  name="packages[]"  value="{$stpack.type}-{$stpack.id}-{$stpack.cost}" title="{$stpack.name}-{$stpack.cost}元">-->
+            <!--{/volist}-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--{/if}-->
+
+    <script>
+        $(".tc").click(function () {
+            var tc_id = $(this).attr('data-id');
+//            alert(tc_id)
+            $("#tt-" + tc_id).show(300).siblings(".ttt").hide(300);
+        })
+    </script>
+
+
+
+    <!-- 其他信息 -->
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>其他信息</legend>
+    </fieldset>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">费用</label>
+        <div class="layui-input-block">
+            <input type="text" name="cost" value='{$vo.cost|default=""}' required="required" title="请输入费用" placeholder="请输入费用" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark">{$vo.remark|default=""}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+{/block}
+
+{block name="script"}
+<script>window.form.render();</script>
+
+<script>
+
+    layui.use(['laydate'], function() {
+        var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#LAY_demorange_s'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_e'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_birth'
+            , max: '2099-06-16 23:59:59'
+        });
+        laydate.render({
+            elem: '#LAY_demorange_deadday'
+            , max: '2099-06-16 23:59:59'
+        });
+
+    });
+</script>
+
+{/block}

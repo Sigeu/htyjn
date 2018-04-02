@@ -1,0 +1,137 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <!--<button data-open='{:url("$classuri/addInscription")}' data-title="添加碑文" class='layui-btn layui-btn-small'><i class='fa fa-plus'></i> 添加碑文</button>-->
+    <button data-update data-field='delete' data-action='{:url("$classuri/delBury")}' class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除安葬订单</button>
+</div>
+{/block}
+
+{block name="content"}
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="order_sn" value="{$Think.get.order_sn|default=''}" placeholder="订单编号"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="cemetery_sn" value="{$Think.get.cemetery_sn|default=''}" placeholder="墓穴编号"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="member_name" value="{$Think.get.member_name|default=''}" placeholder="客户姓名"
+                       class="input-sm form-control">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th>ID</th>
+                <th>订单编号</th>
+                <th>墓位编号</th>
+                <th>客户姓名</th>
+                <th>订单价格</th>
+                <th>安装人员</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td>{$vo.id}</td>
+                <td>{$vo.order_sn}</td>
+                <td>{$vo.cemetery_sn}</td>
+                <td>{$vo.member_name}</td>
+                <td>{$vo.cost}</td>
+                <td>{$vo.opera_name}/{$vo.opera_phone}</td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                    <span style="color:#090">已安葬</span>
+                    {else/}
+                    <span>未安葬</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <div class="layui-btn-group">
+                        {if b_auth("$classuri/showBury")}
+                        <button type="button" data-modal='{:url("$classuri/showBury")}?id={$vo.id}' class="layui-btn layui-btn-primary layui-btn-small">订单详情</button>
+                        {/if}
+
+                        {if $vo.status eq 0 and $vo.order_state eq 30}
+                        {if b_auth("$classuri/ceregister")}
+                        <!-- <button type="button" data-update="{$vo.id}" data-action='{:url("cemetery/ceregister")}' class="layui-btn layui-btn-primary layui-btn-small">确认安葬</button> -->
+                        <button class="layui-btn layui-btn-primary layui-btn-small" onclick="mkSureBury({$vo.id});return false;">确认安葬</button>
+                        {/if}
+                        {/if}
+
+                        {if b_auth("$classuri/delBury")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delBury")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    function mkSureBury(id){
+        $.post('business/cemetery/ceregister',{id:id},function(res){
+            layer.msg(res.msg);
+            if(res.code ==1){
+                setTimeout(function(){
+                    window.location.reload();
+                },500);
+            }
+        });
+    }
+</script>
+
+{/block}

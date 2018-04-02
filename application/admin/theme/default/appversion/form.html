@@ -1,0 +1,43 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">版本名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入版本名称" placeholder="请输入版本名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">版本号</label>
+        <div class="layui-input-block">
+            <input type="text" name="version" value='{$vo.version|default=""}' required="required" title="请输入版本号" placeholder="请输入版本号" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">App下载地址</label>
+        <div class='layui-input-block'>
+
+            <!-- todo 默认图片设置 -->
+            <span>{$vo.url|default=""}</span>
+            <input type="hidden" name="url" onchange="$(this).prev('span').text(this.value)" value="{$vo.url|default=''}" class="layui-input" lay-verify="url">
+            <a class="btn btn-link" data-file="one" data-type="apk" data-field="url">上传Apk文件</a>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">App版本描述</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入App版本描述" title="请输入App版本描述" class="layui-textarea" name="description">{$vo.description|default=""}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

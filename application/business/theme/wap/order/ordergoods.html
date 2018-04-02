@@ -1,0 +1,82 @@
+<include file="header"/>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>订单详情</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="__PUBLIC__/static/wap/static/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/static/wap/static/js/rem.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/dd_base.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/dd_page.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/fangan/base.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/style.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/font.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/header.css">
+    <link rel="stylesheet" href="__PUBLIC__/static/wap/static/css/index.css">
+</head>
+<body>
+<div class="headertwo clearfloat" id="header"> <a href="javascript:history.go(-1)" class="fl box-s"><i class="icon iconfont">&#xe660;</i></a>
+    <p class="fl">订单详情</p>
+</div>
+<div class="clearfloat" id="main">
+
+    <div class="service-ctent clearfloat">
+        <ul class="order">
+            <li>
+                <p><span>订单号：{$orderInfo.order_sn}</span></p>
+                <p><span>
+                     订单状态:
+                    {if $orderInfo.order_state eq 0}
+                    <b>已取消</b>
+                    {elseif $orderInfo.order_state eq 10}
+                    <b style="color:#090">待付款</b>
+                    {elseif $orderInfo.order_state eq 20}
+                    <b style="color:#090">已购买</b>
+                    {/if}
+                </span></p>
+                <p><span>订单总价格: {$orderInfo.order_amount}</span></p>
+                <p><span>买家: {$orderInfo.buyer_name}</span></p>
+                <p><span>下单时间: {$orderInfo.create_at|format_time}</span></p>
+
+            </li>
+        </ul>
+    </div>
+
+
+    <!--<div class="clearfloat" id="main1">-->
+        <!--<div class="service-ctent clearfloat">-->
+            <!--<div class="recom-tit clearfloat box-s">-->
+                <!--<p>合同媒体</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<ul class="order">-->
+            <!--<li>-->
+                <!--<p><span>订单号：{$orderInfo.order_sn}</span></p>-->
+                <!--<p><span>-->
+                     <!--订单状态:-->
+                    <!--{if $orderInfo.order_state eq 0}-->
+                    <!--<b>已取消</b>-->
+                    <!--{elseif $orderInfo.order_state eq 10}-->
+                    <!--<b style="color:#090">待付款</b>-->
+                    <!--{elseif $orderInfo.order_state eq 20}-->
+                    <!--<b style="color:#090">已购买</b>-->
+                    <!--{/if}-->
+                <!--</span></p>-->
+                <!--<p><span>订单总价格: {$orderInfo.order_amount}</span></p>-->
+                <!--<p><span>买家: {$orderInfo.buyer_name}</span></p>-->
+                <!--<p><span>下单时间: {$orderInfo.create_at|format_time}</span></p>-->
+
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+</div>
+<!--<div class="reportcard">
+			    <a href="#" class="db ta-center print">一键分享</a>
+				<a href="#" class="db ta-center">保存到手机</a>
+		</div>-->
+</body>
+</html>

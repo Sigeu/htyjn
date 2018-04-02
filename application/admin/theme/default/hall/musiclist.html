@@ -1,0 +1,114 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <button id="add-music" data-title="添加乐曲" class='layui-btn layui-btn-small'><i
+            class='fa fa-plus'></i> 添加乐曲
+    </button>
+    <button data-update data-field='delete' data-action='{:url("$classuri/delmusic")}'
+            class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除乐曲
+    </button>
+</div>
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <input type="text" name="music_name" value="{$Think.get.music_name|default=''}" placeholder="乐曲名称" class="input-sm form-control">
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th class='text-center'>乐曲名称</th>
+                <th class='text-center'>乐曲类型</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td class='text-center'>{$vo.music_name}</td>
+                <td class='text-center'>
+                    {if $vo.music_type eq 0}
+                        <span>推荐乐曲</span>
+                    {elseif $vo.music_type eq 1}
+                        <span>佛教乐曲</span>
+                    {elseif $vo.music_type eq 2}
+                        <span>西方宗教</span>
+                    {/if}
+                </td>
+                <td class='text-center'>
+                    {if $vo.music_status eq 1}
+                        <span style="color:#090">显示</span>
+                    {elseif $vo.music_status eq 2}
+                        <span style="color:#d80909">隐藏</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <a class="edit-music" href="javascript:void(0)" data-id="{$vo.id}">编辑</a>
+                    <span class="text-explode">|</span>
+                    <a data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/DelMusic")}'
+                       href="javascript:void(0)">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+<script>
+    /* 乐曲新增 按钮点击跳转 */
+    $('#add-music').click(function () {
+        window.location.href = "{:url('/')}admin.html#{:url('AddMusic')}?spm={$spm}";
+    });
+    /* 乐曲编辑 按钮点击跳转 */
+    $('.edit-music').click(function () {
+        window.location.href = "{:url('/')}admin.html#{:url('EditMusic')}?id="+$(this).attr('data-id')+"&spm={$spm}";
+    });
+</script>
+
+{/block}

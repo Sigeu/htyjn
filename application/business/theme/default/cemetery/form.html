@@ -1,0 +1,328 @@
+{extend name='common/content' /}
+{block name="content"}
+<style>
+    /* 标签添加 搜索建议置顶显示 */
+    .ui-widget-content {
+        z-index: 29891017!important;
+    }
+</style>
+<link rel="stylesheet" href="__PUBLIC__/static/plugs/tag/jquery.tag-editor.css?ver={:date('ymd')}"/>
+{block name="content"}
+
+<form name="article" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                {if isset($vo.id)}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属墓区</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" value='{$grave.name|default=""}-{$tomb.name|default=""}-{$vo.row_id|default=""}排-{:msubstr($vo.cemetery_sn, -4,4,false)}号' required="required"  title="请输入墓穴名称" placeholder="请输入墓穴名称" class="layui-input" disabled>
+                        <input type="hidden" name="cemetery_sn" value='{$vo.cemetery_sn|default=""}' class="layui-input">
+                    </div>
+                </div>
+                {/if}
+
+            {if !isset($vo.id)}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择墓区</label>
+                    <div class="layui-input-inline">
+                        <select name="province" lay-filter="province"  required="required">
+                            <option value="">请选择陵园</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="display: none;">
+                        <select name="city" lay-filter="city">
+                            <option value="">请选择墓区</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<div class="layui-form-item">
+                    <label class="layui-form-label">墓穴名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" value='{$vo.name|default=""}' required="required"  title="请输入墓穴名称" placeholder="请输入墓穴名称" class="layui-input">
+                    </div>
+                </div>
+				
+                <div class="layui-form-item">
+                    <label class="layui-form-label">当前排编号起始数字</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="row_id" value='{$vo.row_id|default=""}' required="required"  title="请输入墓穴排号" placeholder="请输入墓穴排号" class="layui-input">
+                    </div>
+                    <small style="color: red">输入当前排第一个墓穴的编号</small>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品库存</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="stock" value='{$vo.stock|default=""}' required="required"  title="请输入产品库存" placeholder="请输入产品库存" class="layui-input">
+                    </div>
+                    <small style="color: red">输入当前排总的墓穴数量，用于批量生成</small>
+                </div>
+             {/if}
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">墓穴类型</label>
+                    <div class="layui-input-block">
+                        {if !isset($vo.id)}
+                        <input type="radio" name="type" value="1" title="单人墓" checked required="required">
+                        <input type="radio" name="type" value="2" title="双人墓" >
+                        {else}
+                        <input type="radio" name="type" value="1" title="单人墓" {if condition="$vo.type eq 1"}checked{/if} required="required">
+                        <input type="radio" name="type" value="2" title="双人墓" {if condition="$vo.type eq 2"}checked{/if}>
+                        {/if}
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">墓穴规格面积</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="area" value='{$vo.area|default=""}' required="required"  title="请输入墓穴面积" placeholder="请输入墓穴面积" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">墓穴材料</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="stuff" value='{$vo.stuff|default=""}' required="required"  title="请输入墓穴材料" placeholder="请输入墓穴材料" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">墓地租用费</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="rent_fee" value='{$vo.rent_fee|default=""}' required="required"  title="请输入产品价格墓地租用费" placeholder="请输入产品价格" class="layui-input fee">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周期管理费</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="manage_fee" value='{$vo.manage_fee|default=""}' required="required"  title="请输入周期管理费" placeholder="请输入产品价格" class="layui-input fee">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">材料费</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="material_fee" value='{$vo.material_fee|default=""}' required="required"  title="请输入产品价格" placeholder="请输入材料费" class="layui-input fee">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">其他费用</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="other_fee" value='{$vo.other_fee|default=""}' required="required"  title="请输入产品价格" placeholder="请输入其他费用" class="layui-input fee">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品价格</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="price" value='{$vo.price|default=""}' required="required"  title="请输入产品价格" placeholder="请输入产品价格" class="layui-input price">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">封面图片</label>
+                    <div class='layui-input-block'>
+                        <!-- todo 默认图片设置 -->
+                        <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image_id|default='static/admin/theme/default/img/image.png'}"/>
+                        <input type="hidden" name="image_id" onchange="$(this).prev('img').attr('src', this.value)" value="{$vo.image_id|default=''}" class="layui-input">
+                        <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="image_id">上传图片</a>
+
+                        <p>建议上传商品图片的尺寸为xx px。</p>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">产品描述</label>
+                    <div class="layui-input-block">
+                        <textarea name='description'>{$vo.description|default=''}</textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_by" value="{$user.create_by}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" lay-submit="" lay-filter="submit">保存数据</button>
+        <button type='button' data-open='{:url("$classuri/index")}' class="layui-btn layui-btn-danger">返回列表</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    layui.use(['form', 'laydate', 'element'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate
+            ,element = layui.element; //选项卡 依赖element 模块
+    });
+</script>
+
+<script>
+    (function($){var proto=$.ui.autocomplete.prototype,initSource=proto._initSource;function filter(array,term){var matcher=new RegExp($.ui.autocomplete.escapeRegex(term),"i");return $.grep(array,function(value){return matcher.test($("<div>").html(value.label||value.value||value).text());});}$.extend(proto,{_initSource:function(){if(this.options.html&&$.isArray(this.options.source)){this.source=function(request,response){response(filter(this.options.source,request.term));};}else{initSource.call(this);}},_renderItem:function(ul,item){return $("<li></li>").data("item.autocomplete",item).append($("<a></a>")[this.options.html?"html":"text"](item.label)).appendTo(ul);}});})(jQuery);
+
+    var cache = {};
+    function tagSuggest(request, response) {
+        var term = request.term;
+        if (term in cache) { response(cache[term]); return; }
+        $.ajax({
+            url: 'admin/Article/tagSuggest',
+            dataType: '',
+            data: { format: 'json', q: term },
+            success: function(data) {
+                var suggestions = [];
+                try { var results = data.results; } catch(e) { var results = []; }
+                $.each(results, function() {
+                    try {
+                        var s = this.toLowerCase();
+                        suggestions.push({label: s.replace(term, '<b style="color: red;">'+term+'</b>'), value: s});
+                    } catch(e){}
+                });
+                cache[term] = suggestions;
+                response(suggestions);
+            }
+        });
+    }
+
+    var initTag = "{$vo.tags|default=''}";
+    var initTags = new Array();
+    if(initTag != []){
+        initTags = initTag.split(",");
+    }
+
+    $('#article-tag').tagEditor({
+
+        initialTags: initTags, delimiter: ', ',
+        autocomplete: { minLength: 1, maxLength: 10, delay: 200, html: true, position: { collision: 'flip' }, source: tagSuggest },
+        forceLowercase: false,
+        placeholder: '请输入标签名称 ...'
+    });
+
+</script>
+{/block}
+{block name='script'}
+<script>
+    $(function () {
+
+        require(['ueditor'], function () {
+
+            /*! 实例富文本编辑器  */
+            var editor, $item;
+
+            /*! 默认编辑第一篇图文 */
+            editor = window.createEditor('[name="description"]', 'basic');
+
+            /*! 编辑器初始化成功 */
+            editor.ready(function () {
+                var $form = $('form[name="article"]'), $body = $('body');
+                $form.validate();
+            });
+        });
+    });
+</script>
+
+
+<script>
+
+
+    //初始数据
+    var areaData = {$categoryList};
+//    var areaData = Area;
+//    console.log(areaData)
+    var $form;
+    var form;
+    var $;
+    layui.use(['jquery', 'form'], function() {
+        $ = layui.jquery;
+        form = layui.form;
+        $form = $('form');
+        loadProvince();
+    });
+    //加载省数据
+    function loadProvince() {
+        var proHtml = '';
+        for (var i = 0; i < areaData.length; i++) {
+            proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+        }
+        //初始化省数据
+        $form.find('select[name=province]').append(proHtml);
+        form.render();
+        form.on('select(province)', function(data) {
+            $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            if (count > 0) {
+                loadCity(areaData[index].mallCityList);
+            } else {
+                $form.find('select[name=city]').parent().hide();
+            }
+        });
+    }
+    //加载市数据
+    function loadCity(citys) {
+        var cityHtml = '';
+        for (var i = 0; i < citys.length; i++) {
+            cityHtml += '<option value="' + citys[i].cityCode + /*'_' + citys[i].mallAreaList.length + '_' + i +*/ '">' + citys[i].cityName + '</option>';
+        }
+        $form.find('select[name=city]').html(cityHtml).parent().show();
+        form.render();
+//        form.on('select(city)', function(data) {
+//            var value = data.value;
+//            var d = value.split('_');
+//            var code = d[0];
+//            var count = d[1];
+//            var index = d[2];
+//            if (count > 0) {
+//                loadArea(citys[index].mallAreaList);
+//            } else {
+//                $form.find('select[name=area]').parent().hide();
+//            }
+//        });
+    }
+//    //加载县/区数据
+//    function loadArea(areas) {
+//        var areaHtml = '';
+//        for (var i = 0; i < areas.length; i++) {
+//            areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
+//        }
+//        $form.find('select[name=area]').html(areaHtml).parent().show();
+//        form.render();
+//        form.on('select(area)', function(data) {
+//            //console.log(data);
+//        });
+//    }
+
+</script>
+<script type="text/javascript">
+$(function(){
+    $('.fee').on('blur',function(){
+        // $('.price')[0].value = Number($('.price')[0].value) + Number(this.value);
+        var aFee = $('.fee');
+        var fee = 0;
+        for(var i=0; i<aFee.length; i++){
+            fee += Number(aFee[i].value);
+        }
+        $('.price')[0].value = fee;
+    });
+})
+</script>
+{/block}
+

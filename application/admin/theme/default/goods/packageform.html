@@ -1,0 +1,102 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">套餐名称</label>
+        <div class="layui-input-block">
+            <input name="name" value="{$vo.name|default=''}" lay-verify="name" required="required" autocomplete="off" title="请输入套餐名称" placeholder="请输入套餐名称" class="layui-input" type="text">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">已选产品</label>
+        <div class="layui-input-block">
+            <input id="goods-ids" name="goods_ids" value="{$vo.goods_ids|default=''}" lay-verify="goods_ids" autocomplete="off" title="暂未选择产品" placeholder="暂未选择产品" class="layui-input" type="text">
+            <!--<table class="layui-table selected-goods" lay-skin="line">
+                <colgroup>
+                    <col width="50">
+                    <col width="100">
+                    <col width="50">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>描述</th>
+                    <th>图片</th>
+                    <th>价格</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {if condition="isset($vo.goods) AND $vo.goods neq null"}
+                    {foreach $vo.goods as $goods}
+                    <tr>
+                        <td>{$goods.id}</td>
+                        <td>{$goods.name}</td>
+                        <td>{$goods.summary}</td>
+                        <td>
+                            <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$goods.image}" alt="{$goods.name}"/>
+                        </td>
+                        <td>{$goods.price}</td>
+                        &lt;!&ndash;<td>
+                            <input name="goods_ids[{$goods.id}]" autocomplete="off" class="layui-input" value="{$goods.number|default='0'}" type="number">
+                        </td>&ndash;&gt;
+                        <td>
+                            <a class="menu-delete">删除</a>
+                        </td>
+                    </tr>
+
+                    {/foreach}
+                {/if}
+                </tbody>
+            </table>-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择产品</label>
+        <div class="layui-input-block">
+            <button type="button" data-modal="{:url('selectGoods')}" data-title="选择产品" class='layui-btn layui-btn-small'><i
+                    class='fa fa-plus'></i> 请选择产品
+            </button>
+            <!--<a data-modal="{:url('selectGoods')}" data-title="选择产品" href="javascript:void(0)">选择产品</a>-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+            <button class="layui-btn" type="submit">保存数据</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>
+{/block}
+
+{block name="script"}
+<script>
+    /* 渲染layui js效果 */
+    window.form.render();
+//    layui.use('element', function(){
+//        var $ = layui.jquery
+//            ,element = layui.element(); //Tab的切换功能，切换事件监听等，需要依赖element模块
+//    });
+
+//    $('.menu-delete').on('click', function () {
+//        self.$btn = $(this).parent('td').parent('tr');
+//        var index = $.msg.confirm('确认删除套餐中的产品吗？', function () {
+//            self.$btn.remove(), $.msg.close(index);
+//        });
+//    });
+
+
+
+</script>
+{/block}

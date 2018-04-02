@@ -1,0 +1,111 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入陵园名称" placeholder="请输入陵园名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园代码编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="code" value='{$vo.code|default=""}' required="required" title="请输入代码编号" placeholder="请输入代码编号" class="layui-input">
+        </div>
+        <small style="color: red">填写陵园名称字母缩写(如八宝山，填写BBS)</small>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">所在省份</label>
+            <div class="layui-input-inline"  style="width: 253px;">
+                <input type="text" name="grave_province"  value='{$vo.grave_province|default=""}'  required="required" title="请输入陵园所在省份" placeholder="请输入陵园所在省份"  class="layui-input">
+                <small style="color: red">请填写标准省份名称(如云南，填写云南省)</small>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">所在城市</label>
+            <div class="layui-input-inline" style="width: 253px;">
+                <input type="text" name="grave_city" value='{$vo.grave_city|default=""}' required="required" title="请输入陵园所在城市" placeholder="请输入陵园所在城市" autocomplete="off" class="layui-input">
+                <small style="color: red">请填写标准城市名称(如昆明，填写昆明市)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园地址</label>
+         <div class="layui-input-block">
+            <input type="text" name="address" value='{$vo.address|default=""}' required="required" title="请输入陵园详细地址" placeholder="请输入陵园详细地址" class="layui-input">
+         </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">经营范围</label>
+        <div class="layui-input-block">
+            <input type="text" name="range" value='{$vo.range|default=""}' required="required" title="请输入陵园经营范围" placeholder="请输入陵园经营范围" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园联系电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" value='{$vo.phone|default=""}' required="required" title="请输入陵园联系电话" placeholder="请输入陵园联系电话" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园和市区的距离</label>
+        <div class="layui-input-block">
+            <input type="text" name="distance" value='{$vo.distance|default=""}' required="required" title="请输入陵园和市区的距离" placeholder="请输入陵园和市区的距离" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面图片</label>
+        <div class='layui-input-block'>
+
+            <!-- todo 默认图片设置 -->
+            {if isset($vo.image_id)}
+            <img id="1" data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{$vo.image_id}"/>
+            {else /}
+            <img data-tips-image style="height:auto;max-height:32px;min-width:32px" src="{:get_pic_by_id(-4)}"/>
+            {/if}
+
+            <input type="hidden" name="image_id" onchange="$(this).prev('img').attr('src', $(this).attr('data-url'))" required="required" value="{$vo.image_id|default=''}" class="layui-input">
+            <a class="btn btn-link" data-file="one" data-type="ico,png,jpg" data-field="image_id">上传图片</a>
+            <p>建议上传商品图片的尺寸为xx px。</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">价格区间</label>
+            <div class="layui-input-inline" style="width: 150px;">
+                <input type="text"  value='{$vo.price_min|default=""}' required="required" title="请输入最低价"  name="price_min" placeholder="请输入最低价" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 150px;">
+                <input type="text"  value='{$vo.price_max|default=""}' required="required" title="请输入最高价" name="price_max" placeholder="请输入最高价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">陵园简介</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入陵园简介" title="请输入陵园简介" class="layui-textarea" name="desc">{$vo.desc|default=""}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="create_by" value="{:input('get.id')}">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

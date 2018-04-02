@@ -1,0 +1,233 @@
+<style>
+.order-info, .order-info span {
+    font-size: 12px;
+    margin: auto 20px;
+}
+
+</style>
+{/* 订单信息 */}
+<div class="ibox-title">
+    <h5>订单信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>订单号: {$orderInfo.order_sn}</span>
+        <span>
+            订单状态:
+            {if $orderInfo.status eq 0}
+            <b>未完成</b>
+            {elseif $orderInfo.status eq 1}
+            <b style="color:#090">已完成</b>
+            {/if}
+        </span>
+        <span>费用: {$orderInfo.cost}</span>
+    </div>
+
+</blockquote>
+
+{/* 买家信息 */}
+<div class="ibox-title">
+    <h5>买家信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+    <div class="order-info">
+        <span>买家: {$orderInfo.member_name}</span>
+        <span>下单时间: {$orderInfo.create_at|format_time}</span>
+    </div>
+
+</blockquote>
+
+{/* 安葬信息 */}
+<div class="ibox-title">
+    <h5>安葬信息</h5>
+</div>
+<blockquote class="layui-elem-quote layui-quote-nm">
+
+    <div class="order-info">
+         {if $ceOrderInfo.is_bury neq 3}
+        <h5>逝者信息{if $Type eq 2}1{/if}：</h5>
+        <br>
+        <span>墓穴位置</span>
+        <div class="layui-input-inline" >
+            <p>{$ceOrderInfo.goods_name}-{$ceOrderInfo.cemetery_sn}</p>
+        </div>
+        <br><br>
+        <span>姓&emsp;&emsp;名:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo1.dead_name}" disable class="layui-input">
+        </div>
+
+        <span>性&emsp;&emsp;别:</span>
+        <div class="layui-input-inline" >
+            {if $deaderInfo1.sex eq 1}<input type="text"  value="男" disable class="layui-input">
+            {else}<input type="text"  value="女" disable class="layui-input">
+            {/if}
+        </div>
+        <br><br>
+
+        <span>墓穴证号:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$ceOrderInfo.cemetery_id_card}" disable class="layui-input">
+        </div>
+
+        <span>火化证号:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$ceOrderInfo.dead_id_card1}" disable class="layui-input">
+        </div>
+        <br> <br>
+
+        
+
+        <span>出生时间:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo1.dead_birthday}" disable class="layui-input">
+        </div>
+        <span>逝世时间:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo1.dead_deadday}" disable class="layui-input">
+        </div>
+        <br> <br>
+
+        <span>民&emsp;&emsp;族:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo1.dead_nation}" disable class="layui-input">
+        </div>
+        <span>户&emsp;&emsp;籍:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo1.dead_domicile}" disable class="layui-input">
+        </div>
+        <br> <br> 
+        {/if}
+        
+        {if $Type eq 2}
+        {if $ceOrderInfo.is_bury eq 3}
+        <h5>逝者信息2：</h5>
+<!--         <br><br>
+        <span>墓穴位置：</span>
+        <div class="layui-input-inline" >
+            <p>{$ceOrderInfo.goods_name}-{$ceOrderInfo.cemetery_sn}</p>
+        </div>
+        <br><br><br>
+        <span>姓名: </span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_name}" disable class="layui-input">
+        </div>
+
+        <span>性&emsp;&emsp;别:</span>
+        <div class="layui-input-inline" >
+            {if $deaderInfo1.sex eq 1}<input type="text"  value="男" disable class="layui-input">
+            {else}<input type="text"  value="女" disable class="layui-input">
+            {/if}
+        </div>
+        <br>
+        <br>
+
+        <span>墓穴证号: </span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$ceOrderInfo.cemetery_id_card}" disable class="layui-input">
+        </div>
+        <br>
+
+        <span>出生时间: </span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_birthday}" disable class="layui-input">
+        </div>
+        <br><br>
+        <span>户籍: </span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_domicile}" disable class="layui-input">
+        </div>
+        <br> <br> 
+
+        <br>
+        <span>逝世时间: {$deaderInfo2.dead_deadday}</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_deadday}" disable class="layui-input">
+        </div>
+
+        <span>民族: </span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_nation}" disable class="layui-input">
+        </div>
+        <br> <br> -->
+        <br>
+        <span>墓穴位置</span>
+        <div class="layui-input-inline" >
+            <p>{$ceOrderInfo.goods_name}-{$ceOrderInfo.cemetery_sn}</p>
+        </div>
+        <br><br>
+        <span>姓&emsp;&emsp;名:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_name}" disable class="layui-input">
+        </div>
+
+        <span>性&emsp;&emsp;别:</span>
+        <div class="layui-input-inline" >
+            {if $deaderInfo2.sex eq 1}<input type="text"  value="男" disable class="layui-input">
+            {else}<input type="text"  value="女" disable class="layui-input">
+            {/if}
+        </div>
+        <br>
+        <br>
+
+        <span>墓穴证号:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$ceOrderInfo.cemetery_id_card}" disable class="layui-input">
+        </div>
+        <span>火化证号:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$ceOrderInfo.dead_id_card2}" disable class="layui-input">
+        </div>
+        <br><br>
+
+        
+
+        <span>出生时间:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_birthday}" disable class="layui-input">
+        </div>
+        <span>逝世时间:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_deadday}" disable class="layui-input">
+        </div>
+        <br><br>
+
+
+        <span>民&emsp;&emsp;族:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_nation}" disable class="layui-input">
+        </div>
+        <span>户&emsp;&emsp;籍:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value="{$deaderInfo2.dead_domicile}" disable class="layui-input">
+        </div>
+        <br> <br> 
+        {/if}
+        {/if}
+
+        <h5>安葬信息：</h5>
+        <br>
+        <span>操作人员:</span>
+        <div class="layui-input-inline" >
+            <p>{$opera.id} | {$opera.name} | {$opera.phone}</p>
+        </div>
+        <br><br>
+        <span>安葬时间:</span>
+        <div class="layui-input-inline" >
+            <input type="text"  value='{$orderInfo.bury_time|date="Y-m-d",###}' disable class="layui-input">
+        </div>
+        <br><br>
+        <span>备&emsp;&emsp;注:</span>
+        <div class="layui-input-inline" style="width: 80%">
+            <!-- <input type="text"  value="{$orderInfo.remark}" disable class="layui-input"> -->
+            <textarea disable class="layui-textarea">{$orderInfo.remark}</textarea>
+        </div>
+
+    </div>
+
+
+</blockquote>
+
+
+
+

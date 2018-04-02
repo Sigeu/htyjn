@@ -1,0 +1,79 @@
+{extend name='common/content' /}
+
+{block name="button"}
+
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<!--<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">-->
+
+    <!--<div class="row">-->
+        <!--<div class="col-xs-3">-->
+            <!--<div class="form-group">-->
+                <!--<input type="text" name="customer" value="{$Think.get.customer|default=''}" placeholder="回访客户"-->
+                       <!--class="input-sm form-control">-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-xs-3">-->
+            <!--<div class="form-group">-->
+                <!--<input type="text" name="title" value="{$Think.get.title|default=''}" placeholder="回访标题"-->
+                       <!--class="input-sm form-control">-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-xs-1">-->
+            <!--<div class="form-group">-->
+                <!--<button type="submit" class="btn btn-sm btn-white"><i class="fa fa-search"></i> 搜索</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</form>-->
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <!--<th class='list-table-check-td'>-->
+                <!--<input data-none-auto="" data-check-target='.list-check-box' type='checkbox'/>-->
+            <!--</th>-->
+            <th class='text-center'>订单号</th>
+            <th class='text-center'>公墓编号</th>
+            <th class='text-center'>成交价</th>
+            <th class='text-center'>买家</th>
+            <th class='text-center'>销售人员</th>
+            <th class='text-center'>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $key=>$vo}
+        <tr>
+            <!--<td class='list-table-check-td'>-->
+
+            <!--</td>-->
+            <td class='text-center'>{$vo.order_sn}</td>
+            <td class='text-center'>{$vo.cemetery_sn}</td>
+            <td class='text-center'>{$vo.order_amount}</td>
+            <td class='text-center'>{$vo.buyer_name}</td>
+            <td class='text-center'>{$vo.salesperson}</td>
+            <td class='text-center nowrap'>
+
+
+                <div class="layui-btn-group">
+
+                    {if b_auth("$classuri/delvisit")}
+                    <button type="button" data-update="{$vo.order_id}" data-field='delete' data-action='{:url("$classuri/delvisit")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                    {/if}
+                </div>
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+{/block}

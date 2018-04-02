@@ -1,0 +1,52 @@
+{extend name='common/content' /}
+
+{block name="content"}
+<form name="article" class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓氏名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入姓氏名称" placeholder="请输入姓氏名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">姓氏历史</label>
+        <div class="layui-input-block">
+            <textarea name='name_history'>{$vo.name_history|default=''}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+{/block}
+
+{block name='script'}
+<script>
+    $(function () {
+
+        require(['ueditor'], function () {
+
+            /*! 实例富文本编辑器  */
+            var editor, $item;
+
+            /*! 默认编辑第一篇图文 */
+            editor = window.createEditor('[name="name_history"]', 'basic');
+
+            /*! 编辑器初始化成功 */
+            editor.ready(function () {
+                var $form = $('form[name="article"]'), $body = $('body');
+                $form.validate();
+            });
+        });
+    });
+</script>
+{/block}
+

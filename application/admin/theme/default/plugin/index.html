@@ -1,0 +1,112 @@
+{extend name='common/content' /}
+
+{block name="button"}
+
+{/block}
+
+{block name="content"}
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        {foreach $list as $key=>$li}
+        <li {if $key eq 'payment'}class="layui-this"{/if}>
+        {if $key eq 'payment'}
+            支付插件
+        {elseif $key eq 'login'}
+            登录插件
+        {elseif $key eq 'shipping'}
+            物流插件
+        {elseif $key eq 'function'}
+            功能插件
+        {/if}
+        </li>
+        {/foreach}
+    </ul>
+    <div class="layui-tab-content">
+        {foreach $list as $key=>$li}
+        <div class="layui-tab-item {if $key eq 'payment'}layui-show{/if}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                    </th>
+                    <th class='text-center'>插件名称</th>
+                    <th class='text-center'>插件描述</th>
+                    <th class='text-center'>插件图片</th>
+                    <th class='text-center'>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $li as $vo}
+                <tr>
+                    <td>
+                        <input class="list-check-box" value='' lay-skin="primary" type="checkbox">
+                    </td>
+                    <td class='text-center'>{$vo.name}</td>
+                    <td class='text-center'>{$vo.desc}</td>
+                    <td class='text-center'>
+                        <img data-tips-image src="/plugins/{$key}/{$vo.code}/{$vo.icon}" style="height:auto;max-height:32px;min-width:32px">
+                    </td>
+                    <td class='text-center nowrap'>
+                        <div class="layui-btn-group">
+                            {if $vo.status eq 0}
+                            <button type="button" onClick="installPlugin('{$vo.type}','{$vo.code}',1)" class="layui-btn layui-btn-primary layui-btn-small">一键安装</button>
+                            {else /}
+                            <button type="button" data-open='{:url("$classuri/setting", ["type"=>$vo["type"], "code"=>$vo["code"]])}' data-title="配置插件" class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i> 配置</button>
+                            <button type="button" onClick="installPlugin('{$vo.type}','{$vo.code}',0)" class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i> 卸载</button>
+                            {/if}
+                        </div>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+        {/foreach}
+    </div>
+</div>
+
+
+
+
+<script>window.form.render();</script>
+
+<script>
+
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+    });
+
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+
+    //插件安装(卸载)
+    function installPlugin(type,code,type2){
+        var url = '/admin/Plugin/install?type='+type+'&code='+code+'&install='+type2;
+        $.get(url,function(data){
+            var obj = JSON.parse(data);
+            layer.alert(obj.msg, {icon: 2});
+            //layer.alert(obj.msg, {icon: 2});
+            if(obj.status == 1){
+                window.location.reload();
+
+//                window.location.href='{url("$classuri/index")}?spm={$spm}';
+            }
+        });
+    }
+</script>
+
+{/block}

@@ -1,0 +1,24 @@
+{include file="common/__header"}
+<body>
+<div class="g-wrap">
+    <!-- 容器1 -->
+    <div class="m-red">
+        <div class="mx">
+            {foreach $menus as $key=>$value}
+            <p class="yl" style="text-align: center">{$value.name}</p>
+            <div class="yl2">
+                {foreach $value['children'] as $k=>$v}
+                <div class="yl1"><a href="{:url('cemetery/cetree')}?id={$v.id}">{$v.name}</a></div>
+                {/foreach}
+            </div>
+            {/foreach}
+        </div>
+    </div>
+    <!-- /容器1 -->
+
+    <!-- 底部导航 -->
+    <!-- /底部导航 -->
+    <!-- /底部 -->
+</div>
+</body>
+</html>

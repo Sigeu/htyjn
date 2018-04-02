@@ -1,0 +1,151 @@
+{extend name='common/content' /}
+<style>
+    .layui-form-select dl {
+        z-index: 9999;
+    }
+</style>
+{block name="content"}
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择碑文模板</label>
+        <div class="layui-input-block">
+            <select name='id' required="required" class='layui-select full-width'>
+                <option value="-1">请选择碑文模板模板</option>
+                {foreach $data as $datas}
+                {eq name='datas.id' value='$vo.id|default=0'}
+                <option selected  value='{datas.id}'>{$datas.title}</option>
+                {else/}
+                <option   value='{$datas.id}'>{$datas.title}</option>
+                {/eq}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">墓穴</label>
+        <div class="layui-input-block">
+            <input type="text" name="cemetery_sn" value='{$vo.cemetery_sn|default=""}' required="required" placeholder="请输入碑文名称" class="layui-input" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="order_sn" value='{$vo.order_sn|default=""}' required="required"  placeholder="请输入碑文名称" class="layui-input" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择销售员</label>
+        <div class="layui-input-block" style="width: 190px;">
+            <input type="text"  name="seller" value="{$seller}" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">碑文名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入碑文名称" placeholder="请输入碑文名称" class="layui-input">
+        </div>
+    </div>
+
+    {if empty($pack)}
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付金额</label>
+        <div class="layui-input-block">
+            <input type="number" name="cost" value='{$vo.cost|default=""}' required="required" title="请输入支付金额" placeholder="请输入支付金额" class="layui-input">
+        </div>
+    </div>
+    {else/}
+    <div class="layui-form-item">
+    <label class="layui-form-label">已选套餐</label>
+        <div class="layui-collapse layui-input-block">
+
+            {volist name="pack" id="packs"}
+            <div >
+                <h2 class="layui-colla-title">{$packs.name}-{$packs.cost}元</h2>
+                <div class="layui-colla-content layui-show">{$packs.desc}</div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">套餐总价格</label>
+    <div class="layui-input-block">
+        <input value='{$cost|default=""}' required="required" title="请输入支付金额" placeholder="请输入支付金额" class="layui-input" disabled>
+        <input type="hidden" name="cost" value='{$cost|default=""}' >
+    </div>
+    </div>
+    {/if}
+
+<div style="width: 850px;">
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">碑文内容</label>
+        <div class="layui-input-block">
+            <textarea name='content'>{$vo.content|default=''}</textarea>
+        </div>
+    </div>
+</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入备注信息" title="请输入备注信息" class="layui-textarea" name="remark">{$vo.remark|default=""}</textarea>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>
+
+<script>
+    $(function () {
+
+        require(['ueditor'], function () {
+
+            /*! 实例富文本编辑器  */
+            var editor, $item;
+
+            /*! 默认编辑第一篇图文 */
+            editor = window.createEditor('[name="content"]', 'basic');
+
+            /*! 编辑器初始化成功 */
+            editor.ready(function () {
+                var $form = $('form[name="article"]'), $body = $('body');
+                $form.validate();
+            });
+
+            $('.layui-anim-upbit dd').on('click',function () {
+
+                var id = $(this).attr('lay-value');
+
+                var url="{:url('business/order/ajaxContract')}"
+                $.post(url,{'id':id},function(data){
+                    var contract =data.result
+
+                    editor.setContent(contract);//把获取到的模板填充到富文本编辑器
+                })
+
+            })
+        });
+    });
+</script>
+
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+{/block}

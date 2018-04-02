@@ -1,0 +1,61 @@
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__SELF__" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择寄存分类</label>
+        <div class="layui-input-block">
+            <select name='pid' required="required" class='layui-select full-width'>
+                <option value="">请选择分类</option>
+                {foreach $menus as $menu}
+                {eq name='menu.id' value='$vo.pid|default=0'}
+                <option selected  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {else/}
+                <option  value='{$menu.id}'>{$menu.spl}{$menu.name}</option>
+                {/eq}
+                {/foreach}
+            </select>
+            <p class="help-block">寄存分类只允许选择最下级分类，如果该分类已经生成过，不能重复生成寄存位！</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">寄存位名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value='{$vo.name|default=""}' required="required" title="请输入寄存位名称" placeholder="请输入寄存位名称" class="layui-input">
+            <p class="help-block">批量初始化寄存位名称</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">行数</label>
+        <div class="layui-input-block">
+            <input type="number" name="row" value='{$vo.row|default="10"}' required="required" title="请输入行数" placeholder="请输入行数" class="layui-input">
+            <p class="help-block">该分类下骨灰盒位置的行数 默认为：10 行</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">列数</label>
+        <div class="layui-input-block">
+            <input type="number" name="column" value='{$vo.column|default="10"}' required="required" title="请输入列数" placeholder="请输入列数" class="layui-input">
+            <p class="help-block">该分类下骨灰盒位置的列数 默认为：10 列</p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">价格</label>
+        <div class="layui-input-block">
+            <input type="number" name="price" value='{$vo.price|default=""}' required="required" title="请输入价格" placeholder="请输入价格" class="layui-input">
+            <p class="help-block">寄存位价格 默认为：空</p>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'/>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
+<script>window.form.render();</script>

@@ -1,0 +1,120 @@
+{extend name='common/content' /}
+
+{block name="button"}
+<div class="nowrap pull-right" style="margin-top:10px">
+    <button data-update data-field='delete' data-action='{:url("$classuri/delOrder")}' class='layui-btn layui-btn-small layui-btn-danger'><i class='fa fa-remove'></i> 删除订单</button>
+</div>
+{/block}
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form class="animated form-search" action="__SELF__" onsubmit="return false" method="get">
+
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="order_sn" value="{$Think.get.order_sn|default=''}" placeholder="订单编号"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="layui-form">
+                <input type="text" name="customer_name" value="{$Think.get.customer_name|default=''}" placeholder="客户姓名"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <button type="submit" class="layui-btn layui-btn-primary"><i class="fa fa-search"></i> 搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="" method="POST">
+    <input type="hidden" value="resort" name="action"/>
+    <div class="layui-form">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <input data-none-auto="" data-check-target='.list-check-box' lay-skin="primary" lay-filter="allChoose" type="checkbox">
+                </th>
+                <th>订单编号</th>
+                <th>寄存登记编号</th>
+                <th>客户姓名</th>
+                <th>寄存位名称</th>
+                <th>费用</th>
+                <th>备注信息</th>
+                <th class='text-center'>状态</th>
+                <th class='text-center'>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td>
+                    <input class="list-check-box" value='{$vo.id}' lay-skin="primary" type="checkbox">
+                </td>
+                <td>
+                    {$vo.order_sn}
+                </td>
+                <td>
+                    {$vo.register_sn}
+                </td>
+                <td>
+                    {$vo.customer_name}
+                </td>
+                <td>
+                    {$vo.urn_name}
+                </td>
+                <td>
+                    {$vo.cost}
+                </td>
+                <td>
+                    {$vo.remark}
+                </td>
+                <td class='text-center'>
+                    {if $vo.status eq 1}
+                    <span style="color:#090">支付完成</span>
+                    {else/}
+                    <span>未支付</span>
+                    {/if}
+                </td>
+                <td class='text-center nowrap'>
+                    <div class="layui-btn-group">
+                        {if b_auth("$classuri/delOrder")}
+                        <button type="button" data-update="{$vo.id}" data-field='delete' data-action='{:url("$classuri/delOrder")}' class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    {if isset($page)}<p>{$page}</p>{/if}
+</form>
+
+<script>window.form.render();</script>
+<script>
+    layui.use('form', function(){
+        var $ = layui.jquery, form = layui.form;
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+    });
+</script>
+
+{/block}
